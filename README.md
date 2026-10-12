@@ -1,6 +1,6 @@
-# AI Consult Agency — website
+# Fands — website
 
-Static site for the West Hollywood AI agency. One page, no build dependencies.
+Static site for Fands, the West Hollywood AI agency, live at https://fands.io. One page, no build dependencies.
 
 > We build and deploy AI systems that create measurable outcomes for your business.
 
@@ -17,6 +17,5 @@ Static site for the West Hollywood AI agency. One page, no build dependencies.
 - Respects `prefers-reduced-motion`; works at phone width.
 
 ## Before launch, replace
-- The working name "Signal" (in `<title>`, nav, email, footer).
-- Street address, phone, email, social links (all marked "placeholder" on the page).
+- Street address, phone, social links (all marked "placeholder" on the page). The hello@fands.io mailbox still needs to be created.
 - The pilot numbers (71%, 38/wk, 9 hrs) are labelled targets. Swap in real case studies as pilots complete.
