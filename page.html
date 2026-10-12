@@ -1,0 +1,369 @@
+<title>Signal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a pale grey world. Thirty thousand ink particles sit behind the page; they start as noise in the hero and,
+   as you scroll through "what we measure", settle into a bar chart, a bookings grid and a rising line. Single light world. */
+:root{
+  --bg:#aab0bb; --bg2:#b9bec8; --paper:#dfe2e8; --fg:#121521; --fg2:#3b4050; --mute:#6b7182; --line:rgba(18,21,33,.16);
+  --signal:#ff5a1f;
+  --display:"Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --body:"Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono:"IBM Plex Mono", "SF Mono", Menlo, monospace;
+  --gutter:clamp(16px, 4.5vw, 64px);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:clamp(15px,1.05vw,18px);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--fg);color:var(--bg)}
+:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+h1,h2,h3{margin:0;font-weight:500;letter-spacing:-.035em;text-wrap:balance;line-height:.98}
+p{margin:0}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+
+#loader{position:fixed;inset:0;z-index:60;background:var(--bg);display:grid;place-items:center;pointer-events:none;transition:opacity .6s;animation:bail 1s 3.2s forwards}
+#loader.done{opacity:0}
+#loader .m{display:flex;gap:6px;align-items:center}
+#loader .m i{display:block;height:3px;width:10px;background:var(--fg);animation:morse 1.1s ease-in-out infinite}
+#loader .m i:nth-child(2n){width:22px}
+#loader .m i:nth-child(2){animation-delay:.1s}#loader .m i:nth-child(3){animation-delay:.2s}#loader .m i:nth-child(4){animation-delay:.3s}#loader .m i:nth-child(5){animation-delay:.4s}#loader .m i:nth-child(6){animation-delay:.5s}#loader .m i:nth-child(7){animation-delay:.6s}
+@keyframes morse{0%,100%{opacity:.15}50%{opacity:1}}
+@keyframes bail{to{opacity:0;visibility:hidden}}
+
+#stage{position:fixed;inset:0;z-index:0;pointer-events:none}
+#stage canvas{width:100%;height:100%;display:block}
+
+nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:40;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:18px var(--gutter);background:linear-gradient(rgba(170,176,187,.95),rgba(170,176,187,0));font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+nav .mark{font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:-.02em;text-transform:none}
+nav .mark::before{content:"";display:inline-block;width:8px;height:8px;background:var(--signal);margin-right:10px;vertical-align:1px}
+nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0}
+nav ul a{opacity:.7;transition:opacity .3s}nav ul a:hover{opacity:1}
+nav .right{justify-self:end}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;background:var(--fg);color:var(--paper);border:0;border-radius:3px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .25s,transform .25s}
+.btn:hover{background:var(--signal);color:#fff;transform:translateY(-1px)}
+.btn.line{background:transparent;color:var(--fg);box-shadow:inset 0 0 0 1px var(--line)}
+.btn.line:hover{background:rgba(18,21,33,.06);color:var(--fg)}
+@media (max-width:760px){nav ul{display:none}nav{grid-template-columns:1fr auto}}
+
+main{position:relative;z-index:2}
+section{padding-left:var(--gutter);padding-right:var(--gutter)}
+
+#hero{min-height:86svh;display:grid;grid-template-columns:1.1fr .9fr;align-content:end;gap:32px;padding-top:20vh;padding-bottom:7vh}
+#hero h1{font-size:clamp(46px,7.6vw,122px);max-width:9ch}
+#hero h1 em{font-style:normal;color:var(--signal)}
+#hero .side{display:grid;gap:22px;align-self:end;max-width:46ch}
+#hero .side p{font-size:clamp(16px,1.25vw,20px);color:var(--fg2)}
+#hero .side .cta{display:flex;gap:10px;flex-wrap:wrap}
+#hero .meta{grid-column:1/-1;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:22px;border-top:1px solid var(--line);color:var(--fg2)}
+@media (max-width:860px){#hero{grid-template-columns:1fr;padding-top:16vh}}
+
+/* measure: pinned copy, particles morph behind */
+#measure{padding:0}
+#measure .pin{position:sticky;top:0;height:100svh;display:grid;align-content:center;padding:0 var(--gutter);pointer-events:none}
+#measure .pin > *{pointer-events:auto}
+#measure .label{color:var(--fg2);margin-bottom:18px}
+#measure .stat{display:grid;gap:10px;max-width:14ch}
+#measure .stat b{font-weight:500;font-size:clamp(72px,12vw,200px);line-height:.85;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+#measure .stat b small{font-size:.3em;color:var(--signal);letter-spacing:-.02em;margin-left:6px}
+#measure .stat h2{font-size:clamp(24px,2.6vw,40px)}
+#measure .stat p{color:var(--fg2);max-width:38ch;font-size:1.02em}
+#measure .steps{height:300svh}
+#measure .steps > div{height:100svh}
+#measure .idx{position:absolute;right:var(--gutter);bottom:26px;display:grid;gap:12px;font-family:var(--mono);font-size:11px;color:var(--mute);background:rgba(170,176,187,.8);backdrop-filter:blur(8px);padding:14px 16px;border-radius:4px}
+#measure .idx span{display:flex;align-items:center;gap:10px;transition:color .3s}
+#measure .idx span::before{content:"";width:28px;height:1px;background:currentColor}
+#measure .idx span.on{color:var(--fg)}
+#measure .idx span.on::before{background:var(--signal)}
+#measure .note{position:absolute;left:var(--gutter);bottom:26px;font-family:var(--mono);font-size:10.5px;color:var(--mute);max-width:60ch;line-height:1.6}
+@media (max-width:760px){#measure .idx{display:none}#measure .pin{align-content:start;padding-top:18vh}}
+
+/* services: a list; hovering reveals the room */
+#services{padding-top:16vh;padding-bottom:12vh;position:relative}
+#services .head{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:end;margin-bottom:6vh}
+#services h2{font-size:clamp(36px,5.2vw,84px)}
+#services .head p{color:var(--fg2);max-width:42ch;justify-self:end}
+.list{border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:60px 1.1fr 1fr 40px;gap:20px;align-items:center;padding:26px 0;border-bottom:1px solid var(--line);transition:padding .3s;cursor:default}
+.row:hover{padding-left:12px}
+.row .k{font-family:var(--mono);font-size:11px;color:var(--mute)}
+.row h3{font-size:clamp(22px,2.6vw,40px);font-weight:500}
+.row p{color:var(--fg2);max-width:40ch;font-size:.98em}
+.row .arrow{justify-self:end;width:22px;height:22px;opacity:.4;transition:opacity .3s,transform .3s}
+.row:hover .arrow{opacity:1;transform:translateX(4px)}
+.row .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.row .tags span{font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;padding:4px 8px;background:rgba(18,21,33,.07);border-radius:3px;color:var(--fg2)}
+#peek{position:fixed;width:260px;aspect-ratio:4/5;pointer-events:none;z-index:5;opacity:0;transform:translate(-50%,-50%) scale(.9) rotate(-3deg);transition:opacity .35s,transform .5s cubic-bezier(.2,.7,.2,1);overflow:hidden;border-radius:4px;box-shadow:0 30px 60px rgba(18,21,33,.35)}
+#peek.on{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0)}
+#peek img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0;transition:opacity .35s}
+#peek img.on{opacity:1}
+@media (max-width:860px){#services .head{grid-template-columns:1fr}#services .head p{justify-self:start}.row{grid-template-columns:40px 1fr;grid-template-rows:auto auto}.row p{grid-column:2}.row .arrow{display:none}#peek{display:none}}
+
+/* principles */
+#how{padding-top:14vh;padding-bottom:12vh}
+#how h2{font-size:clamp(36px,5.2vw,84px);max-width:14ch;margin-bottom:7vh}
+#how .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+#how .c{display:grid;gap:16px;align-content:start;padding-top:18px;border-top:1px solid var(--fg)}
+#how .c .k{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--signal)}
+#how .c h3{font-size:clamp(22px,1.9vw,30px)}
+#how .c p{color:var(--fg2);font-size:.98em}
+#how .c figure{margin:14px 0 0;aspect-ratio:1;overflow:hidden;border-radius:4px;background:var(--bg2)}
+#how .c img{width:100%;height:100%;object-fit:cover;filter:saturate(.75) contrast(1.05);transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+#how .c:hover img{transform:scale(1.05)}
+@media (max-width:1000px){#how .grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){#how .grid{grid-template-columns:1fr}}
+
+/* plan */
+#plan{padding-top:14vh;padding-bottom:12vh;background:var(--paper);margin:0;padding-left:var(--gutter);padding-right:var(--gutter)}
+#plan h2{font-size:clamp(36px,5.2vw,84px);max-width:16ch;margin-bottom:7vh}
+.timeline{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.timeline::before{content:"";position:absolute;left:0;right:0;top:6px;height:1px;background:var(--line)}
+.t{position:relative;padding-top:30px;display:grid;gap:12px;align-content:start}
+.t::before{content:"";position:absolute;left:0;top:0;width:13px;height:13px;border-radius:50%;background:var(--paper);border:2px solid var(--fg)}
+.t:nth-child(1)::before{background:var(--signal);border-color:var(--signal)}
+.t .k{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.t h3{font-size:clamp(24px,2.4vw,36px)}
+.t .price{font-size:clamp(26px,2.6vw,40px);font-weight:500;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.t .price small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin-top:4px;font-weight:400}
+.t p{color:var(--fg2);max-width:34ch}
+@media (max-width:860px){.timeline{grid-template-columns:1fr}.timeline::before{display:none}}
+
+/* contact */
+#contact{padding-top:14vh;padding-bottom:8vh}
+#contact .grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--gutter);align-items:start}
+#contact h2{font-size:clamp(46px,8vw,130px)}
+#contact h2 em{font-style:normal;color:var(--signal)}
+.dl{margin-top:36px;display:grid}
+.dl div{display:grid;grid-template-columns:90px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--line)}
+.dl .k{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);padding-top:5px}
+.dl .v{user-select:all}
+.dl .v small{display:block;font-family:var(--mono);font-size:10.5px;color:var(--mute);user-select:none;margin-top:3px}
+form{display:grid;gap:16px;background:var(--paper);padding:26px;border-radius:4px}
+.field{display:grid;gap:8px}
+.field label{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.field input,.field textarea{width:100%;min-width:0;background:#fff;border:1px solid var(--line);border-radius:3px;color:var(--fg);font:inherit;padding:12px 14px;transition:border-color .3s}
+.field input:focus,.field textarea:focus{outline:0;border-color:var(--fg)}
+.field textarea{min-height:90px;resize:vertical}
+form .ok{display:none;padding:18px;border:1px solid var(--signal);border-radius:3px}
+form.sent .ok{display:block}form.sent .fields,form.sent .btn{display:none}
+@media (max-width:860px){#contact .grid{grid-template-columns:1fr}}
+
+.marq{overflow:hidden;white-space:nowrap;border-top:1px solid var(--line);padding:16px 0;margin-top:10vh}
+.marq .track{display:inline-flex;animation:tick 34s linear infinite}
+.marq span{font-size:clamp(18px,2.2vw,30px);font-weight:500;letter-spacing:-.02em;padding:0 22px;color:var(--fg2)}
+.marq span::after{content:"";display:inline-block;width:7px;height:7px;background:var(--signal);margin-left:44px;vertical-align:middle}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+footer{position:relative;z-index:2;padding:30px var(--gutter);display:flex;flex-wrap:wrap;gap:14px 36px;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);border-top:1px solid var(--line);background:var(--bg)}
+footer ul{list-style:none;display:flex;gap:20px;margin:0;padding:0}footer a:hover{color:var(--fg)}
+
+.r{transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.js .r{opacity:0;transform:translateY(22px)}.js .r.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.js .r{opacity:1;transform:none}.marq .track{animation:none}#loader .m i{animation:none}html{scroll-behavior:auto}}
+</style>
+
+<div id="loader" aria-hidden="true"><div class="m"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div id="stage" aria-hidden="true"><canvas id="gl"></canvas></div>
+<div id="peek" aria-hidden="true"><img src="img/barista.jpg" alt="" data-for="0"><img src="img/boutique-neutral.jpg" alt="" data-for="1"><img src="img/la-day.jpg" alt="" data-for="2"><img src="img/florist.jpg" alt="" data-for="3"><img src="img/office-1.jpg" alt="" data-for="4"></div>
+
+<nav>
+  <a class="mark" href="#top">Signal</a>
+  <ul><li><a href="#measure">What we measure</a></li><li><a href="#services">Services</a></li><li><a href="#plan">Plan</a></li><li><a href="#contact">Contact</a></li></ul>
+  <div class="right"><a class="btn" href="#contact">Book a walk-through</a></div>
+</nav>
+
+<main id="top">
+  <section id="hero">
+    <h1>Measured, <em>not promised.</em></h1>
+    <div class="side">
+      <p>We build and deploy AI systems that create measurable outcomes for your business. Practical, affordable, and reviewed with you every month, by people you can reach in person.</p>
+      <div class="cta"><a class="btn" href="#contact">Book a free walk-through</a><a class="btn line" href="#measure">What we measure</a></div>
+    </div>
+    <div class="meta mono"><span>West Hollywood, CA</span><span>Owner-led businesses · 1–50 staff</span><span>In person, not a ticket queue</span></div>
+  </section>
+
+  <section id="measure">
+    <div class="pin">
+      <div class="label mono" id="mlabel">What we measure · 01 / 03</div>
+      <div class="stat">
+        <b><span id="mnum">71</span><small id="munit">%</small></b>
+        <h2 id="mtitle">Calls answered</h2>
+        <p id="mtext">After-hours calls picked up and booked by the AI receptionist. Before: voicemail. We count every one.</p>
+      </div>
+      <div class="idx"><span class="on">Calls answered</span><span>Bookings kept</span><span>Hours back</span></div>
+      <p class="note">Targets set for our first pilots, shown so you know what we measure. Real case studies replace them as pilots complete.</p>
+    </div>
+    <div class="steps"><div></div><div></div><div></div></div>
+  </section>
+
+  <section id="services">
+    <div class="head">
+      <h2 class="r">Five services. We start with the one that costs you the most.</h2>
+      <p class="r">Hover a row to see where it lives. Every build ships with one number attached, agreed before we start.</p>
+    </div>
+    <div class="list" id="list">
+      <div class="row r" data-i="0"><span class="k">01</span><div><h3>Automation &amp; AI agents</h3><div class="tags"><span>AI phone receptionist</span><span>Booking</span><span>CRM follow-ups</span><span>Zapier · Make · n8n</span></div></div><p>An AI receptionist that answers calls and chats, books the slot, and chases the lead that went quiet. The admin runs itself.</p><svg class="arrow" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11h15M12 5l6 6-6 6"/></svg></div>
+      <div class="row r" data-i="1"><span class="k">02</span><div><h3>Web &amp; apps</h3><div class="tags"><span>Websites</span><span>Landing pages</span><span>Web &amp; mobile apps</span><span>Internal tools</span></div></div><p>Websites and landing pages that book, not just look. Apps and internal tools built around how your team already works.</p><svg class="arrow" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11h15M12 5l6 6-6 6"/></svg></div>
+      <div class="row r" data-i="2"><span class="k">03</span><div><h3>Marketing</h3><div class="tags"><span>Google &amp; Meta ads</span><span>Local SEO</span><span>Google Business Profile</span></div></div><p>Ads set up to be measured, local SEO that moves the map pin, and a Google Business Profile that answers before you do.</p><svg class="arrow" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11h15M12 5l6 6-6 6"/></svg></div>
+      <div class="row r" data-i="3"><span class="k">04</span><div><h3>Content</h3><div class="tags"><span>Email &amp; SMS</span><span>AI photo &amp; video</span><span>Social</span></div></div><p>Email and SMS that bring regulars back, AI photo and video of the real room, and a social calendar that gets kept.</p><svg class="arrow" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11h15M12 5l6 6-6 6"/></svg></div>
+      <div class="row r" data-i="4"><span class="k">05</span><div><h3>Data &amp; ops</h3><div class="tags"><span>Dashboards</span><span>Reporting</span><span>Process audit</span><span>AI training</span></div></div><p>Dashboards you'll read on a Monday, process audits that find the hours, and AI training so your team runs it without you.</p><svg class="arrow" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11h15M12 5l6 6-6 6"/></svg></div>
+    </div>
+  </section>
+
+  <section id="how">
+    <h2 class="r">Practical. Affordable. Measurable. And down the street.</h2>
+    <div class="grid">
+      <div class="c r"><span class="k">Practical</span><h3>The task, not the demo.</h3><p>We start with what eats your week, not the most impressive thing AI can do. If it doesn't change a Tuesday, we don't build it.</p><figure><img src="img/salon-blowdry.jpg" alt="A stylist blow-drying a client's hair"></figure></div>
+      <div class="c r"><span class="k">Affordable</span><h3>Priced for twelve people.</h3><p>Starter systems from one to three thousand dollars. Retainers from five hundred a month. No enterprise tiers.</p><figure><img src="img/pilates.jpg" alt="A pilates studio in use"></figure></div>
+      <div class="c r"><span class="k">Measurable</span><h3>One number per system.</h3><p>Calls answered, hours back, bookings kept. Agreed before we build, reviewed with you monthly.</p><figure><img src="img/spa-shelves.jpg" alt="Product shelves in a spa"></figure></div>
+      <div class="c r"><span class="k">Local</span><h3>In person, not a ticket.</h3><p>We're in West Hollywood. We walk your floor before we write a line, and you have a number that rings on a Saturday.</p><figure><img src="img/hotel-desk.jpg" alt="A boutique hotel front desk"></figure></div>
+    </div>
+  </section>
+
+  <section id="plan">
+    <h2 class="r">Three steps. The first one is free and happens at your place.</h2>
+    <div class="timeline">
+      <div class="t r"><span class="k">01 · Walk-through</span><h3>We come to you</h3><div class="price">$0<small>60 minutes · in person</small></div><p>We watch how your day runs and pick the one task worth automating first. You leave with a one-page plan and a number on it.</p></div>
+      <div class="t r"><span class="k">02 · Starter build</span><h3>One system, live</h3><div class="price">$1,000 – $3,000<small>one-time · 2–3 weeks</small></div><p>Built, connected to your tools, and launched with your team in the room. One outcome agreed before we start.</p></div>
+      <div class="t r"><span class="k">03 · Run &amp; measure</span><h3>Kept honest</h3><div class="price">$500 – $2,000<small>per month · cancel any month</small></div><p>We keep it running, review the number with you monthly, and add the next system when the first pays for itself.</p></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="grid">
+      <div class="r">
+        <h2>Come by. <em>Or text.</em></h2>
+        <div class="dl">
+          <div><span class="k">Studio</span><span class="v">Santa Monica Blvd, West Hollywood, CA 90069<small>Street address placeholder</small></span></div>
+          <div><span class="k">Text</span><span class="v">(310) 000-0000<small>Placeholder number</small></span></div>
+          <div><span class="k">Email</span><span class="v">hello@signal.la<small>Placeholder address</small></span></div>
+          <div><span class="k">Hours</span><span class="v">Mon – Sat, 9 – 7<small>And whenever your place is open, usually</small></span></div>
+        </div>
+      </div>
+      <form id="f" class="r" novalidate>
+        <div class="fields" style="display:grid;gap:16px">
+          <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="f-biz">Your business</label><input id="f-biz" name="business" placeholder="e.g. a 24-room hotel in WeHo" required></div>
+          <div class="field"><label for="f-pain">What's eating your week?</label><textarea id="f-pain" name="pain" placeholder="Missed calls after 8pm. Rebooking texts. The spreadsheet nobody updates."></textarea></div>
+        </div>
+        <button class="btn" type="submit">Request a walk-through</button>
+        <div class="ok" role="status">Got it. We'll text you within one business day to pick a time, and we'll come to you.</div>
+      </form>
+    </div>
+    <div class="marq" aria-label="Industries"><div class="track"><span>Restaurants</span><span>Bars</span><span>Hotels</span><span>Salons</span><span>Spas</span><span>Boutiques</span><span>Fitness</span><span>Design studios</span><span>Creators</span><span>Restaurants</span><span>Bars</span><span>Hotels</span><span>Salons</span><span>Spas</span><span>Boutiques</span><span>Fitness</span><span>Design studios</span><span>Creators</span></div></div>
+  </section>
+</main>
+<footer><div>Signal · West Hollywood, CA</div><ul><li><a href="#top">Instagram</a></li><li><a href="#top">LinkedIn</a></li><li><a href="#top">Google</a></li></ul><div>© 2026</div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var loader = document.getElementById('loader'); setTimeout(function(){ loader.classList.add('done'); setTimeout(function(){ loader.remove(); }, 700); }, 900);
+  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }); },{threshold:.1, rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('.r').forEach(function(el){ io.observe(el); });
+
+  /* measure steps */
+  var steps = [
+    {num:'71', unit:'%',   title:'Calls answered', text:'After-hours calls picked up and booked by the AI receptionist. Before: voicemail. We count every one.'},
+    {num:'38', unit:'/wk', title:'Bookings kept',  text:'Appointments confirmed, rebooked and reminded without a human touching them. Fewer no-shows, fuller chairs.'},
+    {num:'9',  unit:'hrs', title:'Hours back',     text:'Owner hours a week returned by one starter system. We agree this number before we build, and review it monthly.'}
+  ];
+  var measure = document.getElementById('measure'), mnum = document.getElementById('mnum'), munit = document.getElementById('munit'), mtitle = document.getElementById('mtitle'), mtext = document.getElementById('mtext'), mlabel = document.getElementById('mlabel'), idx = document.querySelectorAll('#measure .idx span'), cur = -1, morph = 0;
+  function measureScroll(){
+    var r = measure.getBoundingClientRect(), total = measure.offsetHeight - innerHeight; var p = Math.max(0, Math.min(1, -r.top/total));
+    /* morph target: 0 cloud (hero) → 1 bars → 2 grid → 3 line */
+    var heroP = Math.max(0, Math.min(1, (innerHeight*.5 - r.top)/(innerHeight*.5)));
+    morph = r.top > 0 ? heroP : 1 + p*2;
+    var s = Math.min(2, Math.floor(p*3 + .0001)); if(p >= .999) s = 2;
+    if(s !== cur){ cur = s; var d = steps[s]; mnum.textContent = d.num; munit.textContent = d.unit; mtitle.textContent = d.title; mtext.textContent = d.text; mlabel.textContent = 'What we measure · 0'+(s+1)+' / 03'; idx.forEach(function(el,i){ el.classList.toggle('on', i===s); }); }
+    fadeT = r.bottom < innerHeight ? Math.max(0, Math.min(1, (r.bottom - innerHeight*.35)/(innerHeight*.65))) : 1;
+    heroLift = 1 - Math.min(1, morph);
+  }
+  var fadeT = 1, heroLift = 1;
+
+  /* peek images */
+  var peek = document.getElementById('peek'), peekImgs = peek.querySelectorAll('img'), list = document.getElementById('list'), px = 0, py = 0, tx = 0, ty = 0;
+  list.querySelectorAll('.row').forEach(function(row){
+    row.addEventListener('pointerenter', function(){ peek.classList.add('on'); peekImgs.forEach(function(im){ im.classList.toggle('on', im.dataset.for === row.dataset.i); }); });
+    row.addEventListener('pointerleave', function(){ peek.classList.remove('on'); });
+  });
+  addEventListener('pointermove', function(e){ tx = e.clientX; ty = e.clientY; }, {passive:true});
+  (function follow(){ px += (tx - px)*.12; py += (ty - py)*.12; peek.style.left = px+'px'; peek.style.top = py+'px'; requestAnimationFrame(follow); })();
+
+  var f = document.getElementById('f');
+  f.addEventListener('submit', function(ev){ ev.preventDefault(); if(!f.name.value.trim() || !f.business.value.trim()){ (f.name.value.trim()? f.business : f.name).focus(); return; } f.classList.add('sent'); });
+  addEventListener('scroll', measureScroll, {passive:true}); measureScroll();
+
+  /* ---------- particles ---------- */
+  if(!window.THREE) return;
+  var canvas = document.getElementById('gl'), renderer;
+  try { renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:false, alpha:true, powerPreference:'high-performance'}); } catch(e){ return; }
+  var dpr = Math.min(devicePixelRatio, 1.5); renderer.setPixelRatio(dpr);
+  var scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(34, 1, .1, 100); camera.position.set(0, 0, 14);
+  var mobile = innerWidth < 760, COUNT = mobile ? 14000 : 32000;
+  var gauss = function(){ var u = 0, v = 0; while(u===0) u = Math.random(); while(v===0) v = Math.random(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); };
+  var p0 = new Float32Array(COUNT*3), p1 = new Float32Array(COUNT*3), p2 = new Float32Array(COUNT*3), p3 = new Float32Array(COUNT*3), seed = new Float32Array(COUNT);
+  var bars = [.35,.42,.5,.46,.6,.72,.66,.8,.86,.78,.95,1], NB = bars.length, barW = 9/NB;
+  var cols = 7, rows = 5, dens = []; for(var c=0;c<cols*rows;c++) dens.push(.25+Math.random()*.75);
+  for(var i=0;i<COUNT;i++){
+    /* 0: noise cloud, wide and loose */
+    p0[i*3] = gauss()*3.2; p0[i*3+1] = gauss()*1.7; p0[i*3+2] = gauss()*1.6;
+    /* 1: bar chart */
+    var b = i % NB, h = bars[b]*5.2; p1[i*3] = -4.5 + barW*(b+.5) + (Math.random()-.5)*barW*.78; p1[i*3+1] = -2.6 + Math.random()*h; p1[i*3+2] = (Math.random()-.5)*.5;
+    /* 2: bookings grid: cells filled by density */
+    var cell = i % (cols*rows), cx = cell % cols, cy = Math.floor(cell/cols); var rr = Math.sqrt(Math.random())*.42*dens[cell], a = Math.random()*6.283;
+    p2[i*3] = -3.9 + cx*1.3 + Math.cos(a)*rr; p2[i*3+1] = 2.2 - cy*1.1 + Math.sin(a)*rr; p2[i*3+2] = (Math.random()-.5)*.3;
+    /* 3: rising line, thick ribbon */
+    var x = -5 + Math.random()*10; var y = x*.32 + Math.sin(x*1.3)*.5 + (Math.random()-.5)*.35*(1-Math.abs(Math.random()-.5));
+    p3[i*3] = x; p3[i*3+1] = y; p3[i*3+2] = (Math.random()-.5)*.8;
+    seed[i] = Math.random();
+  }
+  var geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(p0, 3)); geo.setAttribute('p1', new THREE.BufferAttribute(p1, 3)); geo.setAttribute('p2', new THREE.BufferAttribute(p2, 3)); geo.setAttribute('p3', new THREE.BufferAttribute(p3, 3)); geo.setAttribute('seed', new THREE.BufferAttribute(seed, 1));
+  var mat = new THREE.ShaderMaterial({
+    transparent:true, depthWrite:false,
+    uniforms:{ uM:{value:0}, uT:{value:0}, uPx:{value:dpr}, uInk:{value:new THREE.Color(0x121521)}, uSig:{value:new THREE.Color(0xff5a1f)}, uFade:{value:1} },
+    vertexShader:[
+      'attribute vec3 p1,p2,p3; attribute float seed; uniform float uM,uT,uPx; varying float vS; varying float vOrg;',
+      'float w(float k){ float d=1.-abs(uM-k); d=clamp(d,0.,1.); return d*d*(3.-2.*d); }',
+      'void main(){',
+      ' float w0=w(0.),w1=w(1.),w2=w(2.),w3=w(3.); float ws=w0+w1+w2+w3+1e-5;',
+      ' vec3 p=(position*w0+p1*w1+p2*w2+p3*w3)/ws;',
+      ' float org=(w1+w2+w3)/ws; vOrg=org;',
+      ' float n=1.-org*.85;',
+      ' p+=vec3(sin(uT*.7+seed*40.),cos(uT*.6+seed*31.),sin(uT*.5+seed*17.))*(.18*n+.015);',
+      ' vS=seed;',
+      ' vec4 mv=modelViewMatrix*vec4(p,1.);',
+      ' gl_PointSize=(1.6+seed*2.2)*uPx*(9./-mv.z)*(1.+org*.3);',
+      ' gl_Position=projectionMatrix*mv;',
+      '}'].join('\n'),
+    fragmentShader:[
+      'uniform vec3 uInk,uSig; uniform float uFade; varying float vS; varying float vOrg;',
+      'void main(){ vec2 c=gl_PointCoord-.5; float d=dot(c,c); if(d>.25) discard; float a=smoothstep(.25,.12,d);',
+      ' vec3 col=mix(uInk,uSig,step(.955,vS)*(.4+.6*vOrg));',
+      ' gl_FragColor=vec4(col,a*(.55+.4*vOrg)*uFade); }'].join('\n')
+  });
+  var pts = new THREE.Points(geo, mat); scene.add(pts);
+  var mouse = {x:0,y:0}, mt = {x:0,y:0};
+  addEventListener('pointermove', function(e){ mt.x = (e.clientX/innerWidth-.5)*2; mt.y = (e.clientY/innerHeight-.5)*2; }, {passive:true});
+  function layout(){ renderer.setSize(innerWidth, innerHeight, false); camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix(); camera.position.z = innerWidth < 760 ? 20 : 14; pts.userData.bx = innerWidth < 860 ? 0 : 1.6; }
+  addEventListener('resize', layout); layout();
+  var shown = 0, fade = 1, clock = new THREE.Clock();
+  function frame(){
+    var t = clock.getElapsedTime();
+    mouse.x += (mt.x-mouse.x)*.05; mouse.y += (mt.y-mouse.y)*.05;
+    shown += (morph - shown)*.06; fade += (fadeT - fade)*.1;
+    mat.uniforms.uM.value = shown; mat.uniforms.uT.value = reduce ? 0 : t; mat.uniforms.uFade.value = fade;
+    var liftY = innerWidth < 760 ? 1.6 : 1.5, liftX = innerWidth < 860 ? 0 : 1.2;
+    pts.position.y += ((heroLift*liftY + (innerWidth < 760 ? -1.2*(1-heroLift) : 0)) - pts.position.y)*.06; pts.position.x += ((pts.userData.bx + heroLift*liftX) - pts.position.x)*.06;
+    pts.rotation.y = mouse.x*.18 + (reduce?0:Math.sin(t*.15)*.05)*(1-Math.min(1,shown)); pts.rotation.x = mouse.y*.1;
+    renderer.render(scene, camera); requestAnimationFrame(frame);
+  }
+  frame();
+})();
+</script>
