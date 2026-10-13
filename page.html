@@ -456,7 +456,7 @@ footer a:hover{color:var(--fg)}
   /* hero placement: the cloud sits in the right 40% on wide screens and above the headline on phones */
   function heroTarget(){
     var w = innerWidth, aspect = w/innerHeight, halfH = camera.position.z*Math.tan(camera.fov/2*Math.PI/180), halfW = halfH*aspect;
-    if(w < 860) return {x:0, y: halfH*.74};
+    if(w < 860) return {x:0, y: halfH*.80};
     return {x: halfW*.56, y: halfH*.12};
   }
   function layout(){ renderer.setSize(innerWidth, innerHeight, false); camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix(); camera.position.z = innerWidth < 760 ? 20 : 14; pts.userData.bx = innerWidth < 860 ? 0 : 1.6; }
