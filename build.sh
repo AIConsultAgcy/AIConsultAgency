@@ -15,6 +15,9 @@ cat <<'HEAD'
 <meta name="theme-color" content="#121521">
 <meta name="color-scheme" content="light">
 <meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/brand/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png">
@@ -39,7 +42,7 @@ cat <<'HEAD'
 </head>
 <body style="margin:0">
 HEAD
-cat page.html
+grep -v -e '^<title>' -e '^<link rel="preconnect"' -e '^<link rel="stylesheet" href="https://fonts.googleapis.com' page.html
 cat <<'TAIL'
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
 <script defer src="/_vercel/insights/script.js"></script>
