@@ -501,7 +501,7 @@ footer a:hover{color:var(--fg)}
     var w = innerWidth, aspect = w/innerHeight, halfH = camera.position.z*Math.tan(camera.fov/2*Math.PI/180), halfW = halfH*aspect;
     if(w < 860) return {x:0, y: halfH*.80, s:.85};
     var k = Math.max(0, Math.min(1, (w-860)/520));           /* 860 → 1380: cloud grows and moves right */
-    return {x: halfW*(.62+.1*k), y: halfH*(.22-.1*k), s: .55+.45*k};
+    return {x: halfW*(.66+.08*k), y: halfH*(.24-.12*k), s: .5+.5*k};
   }
   function layout(){ renderer.setSize(innerWidth, innerHeight, false); camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix(); camera.position.z = innerWidth < 860 ? 20 : 14; pts.userData.bx = innerWidth < 860 ? 0 : 1.6; }
   addEventListener('resize', layout); layout();
