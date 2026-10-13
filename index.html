@@ -227,6 +227,18 @@ form .btn[disabled]{opacity:.6;cursor:wait;transform:none}
 @media (max-width:860px){#contact .grid{grid-template-columns:1fr}}
 @media (max-width:520px){.two{grid-template-columns:1fr}}
 
+
+/* newsletter */
+.news{margin-top:8vh;display:grid;grid-template-columns:1fr 1fr;gap:var(--gutter);align-items:center;padding-top:36px;border-top:1px solid var(--line)}
+.news h3{font-size:clamp(24px,2.8vw,40px)}
+.news p{color:var(--fg2);max-width:44ch;margin-top:10px}
+.news form{background:transparent;padding:0;grid-template-columns:1fr auto;align-items:end}
+.news form .field{grid-column:1}
+.news form .btn{grid-column:2;height:46px}
+.news form .ok,.news form .err{grid-column:1/-1}
+.news form.sent .field,.news form.sent .btn{display:none}
+@media (max-width:860px){.news{grid-template-columns:1fr}}
+@media (max-width:520px){.news form{grid-template-columns:1fr}.news form .btn{grid-column:1}}
 .marq{overflow:hidden;white-space:nowrap;border-top:1px solid var(--line);padding:16px 0;margin-top:10vh}
 .marq .track{display:inline-flex;animation:tick 34s linear infinite}
 .marq span{font-size:clamp(18px,2.2vw,30px);font-weight:500;letter-spacing:-.02em;padding:0 22px;color:var(--fg2)}
@@ -353,6 +365,15 @@ footer a:hover{color:var(--fg)}
         <div class="err" role="alert">Your email app should have opened with the details filled in. If it didn't, write to <a href="mailto:hello@fands.io">hello@fands.io</a> and we'll take it from there.</div>
       </form>
     </div>
+    <div class="news r">
+      <div><span class="mono">The Front Desk · every other Tuesday</span><h3 style="margin-top:10px">One task an owner handed off, and what it measured.</h3><p>A short note twice a month. No product news, no AI weather. The one system someone stopped doing by hand, the number it moved, and how to copy it.</p></div>
+      <form id="nf" novalidate aria-label="Subscribe to The Front Desk">
+        <div class="field"><label for="n-email">Email</label><input id="n-email" name="email" type="email" autocomplete="email" inputmode="email" required></div>
+        <button class="btn" type="submit" id="n-btn">Subscribe</button>
+        <div class="ok" role="status">You're on the list. First note arrives on a Tuesday.</div>
+        <div class="err" role="alert">Your email app should have opened with the request filled in. If it didn't, write "Front Desk" to <a href="mailto:hello@fands.io">hello@fands.io</a>.</div>
+      </form>
+    </div>
     <div class="marq" aria-label="Industries we work with"><div class="track"><span>Restaurants</span><span>Bars</span><span>Hotels</span><span>Salons</span><span>Spas</span><span>Boutiques</span><span>Fitness</span><span>Design studios</span><span>Creators</span><span aria-hidden="true">Restaurants</span><span aria-hidden="true">Bars</span><span aria-hidden="true">Hotels</span><span aria-hidden="true">Salons</span><span aria-hidden="true">Spas</span><span aria-hidden="true">Boutiques</span><span aria-hidden="true">Fitness</span><span aria-hidden="true">Design studios</span><span aria-hidden="true">Creators</span></div></div>
   </section>
 </main>
@@ -436,6 +457,17 @@ footer a:hover{color:var(--fg)}
       .then(function(r){ return r.ok ? r.json() : Promise.reject(r.status); })
       .then(function(j){ if(!j.ok) throw 0; f.classList.add('sent'); })
       .catch(function(){ btn.disabled = false; location.href = mailto(); f.classList.add('failed'); });
+  });
+
+  /* newsletter: same hand-off as the lead form */
+  var nf = document.getElementById('nf'), nbtn = document.getElementById('n-btn');
+  nf.addEventListener('submit', function(ev){
+    ev.preventDefault(); nf.classList.remove('failed'); var em = (nf.elements.email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ nf.elements.email.focus(); nf.elements.email.reportValidity && nf.elements.email.reportValidity(); return; }
+    nbtn.disabled = true;
+    fetch('/api/lead', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({name:'Newsletter signup', business:'The Front Desk subscriber', email:em, pain:'Subscribe to The Front Desk', company:''})})
+      .then(function(r){ return r.ok ? r.json() : Promise.reject(r.status); }).then(function(j){ if(!j.ok) throw 0; nf.classList.add('sent'); })
+      .catch(function(){ nbtn.disabled = false; location.href = 'mailto:hello@fands.io?subject=' + encodeURIComponent('Subscribe me to The Front Desk') + '&body=' + encodeURIComponent('Please add ' + em + ' to The Front Desk.'); nf.classList.add('failed'); });
   });
   addEventListener('scroll', measureScroll, {passive:true}); measureScroll();
 
