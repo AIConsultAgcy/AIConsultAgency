@@ -348,7 +348,8 @@ footer a:hover{color:var(--fg)}
     (function frame(now){
       var t = Math.min(1, (now-t0)/D), e = ease(t);
       ctx.clearRect(0,0,W,H);
-      for(var i=0;i<N;i++){ var p = P[i], q = Math.min(1, e*p.k); var x = p.x + (p.gx-p.x)*q, y = p.y + (p.gy-p.y)*q; ctx.fillStyle = q > .97 ? '#ff5a1f' : '#121521'; ctx.globalAlpha = .35 + q*.65; ctx.fillRect(x, y, p.s, p.s); }
+      var tail = Math.max(0, Math.min(1, (t-.84)/.16)); /* stragglers fade in the last 180ms instead of popping */
+      for(var i=0;i<N;i++){ var p = P[i], q = Math.min(1, e*p.k); var x = p.x + (p.gx-p.x)*q, y = p.y + (p.gy-p.y)*q; var arrived = q > .97; ctx.fillStyle = arrived ? '#ff5a1f' : '#121521'; ctx.globalAlpha = (.35 + q*.65) * (arrived ? 1 : 1-tail); ctx.fillRect(x, y, p.s, p.s); }
       ctx.globalAlpha = 1;
       if(t > .78 && !lit){ lit = true; lock.classList.add('on'); }
       if(t < 1) requestAnimationFrame(frame); else { ctx.clearRect(0,0,W,H); setTimeout(finish, 900); }
