@@ -163,8 +163,7 @@ section{padding-left:var(--gutter);padding-right:var(--gutter)}
 #how .c h3{font-size:clamp(22px,1.9vw,30px)}
 #how .c p{color:var(--fg2);font-size:.98em}
 #how .c figure{margin:14px 0 0;aspect-ratio:1;overflow:hidden;border-radius:4px;background:var(--bg2)}
-#how .c img{width:100%;height:100%;object-fit:cover;filter:saturate(.75) contrast(1.05);transition:transform 1s cubic-bezier(.2,.7,.2,1)}
-#how .c:hover img{transform:scale(1.05)}
+#how .c video{width:100%;height:100%;object-fit:cover;filter:saturate(.75) contrast(1.05);display:block}
 @media (max-width:1000px){#how .grid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:560px){#how .grid{grid-template-columns:1fr}}
 
@@ -313,10 +312,10 @@ footer a:hover{color:var(--fg)}
   <section id="how" aria-labelledby="h-how">
     <h2 class="r" id="h-how">Practical. Affordable. Measurable. And down the street.</h2>
     <div class="grid">
-      <div class="c r"><span class="k"><svg viewBox="0 0 100 100" aria-hidden="true"><rect class="s" y="38" width="62" height="62"/><rect class="s" x="38" width="62" height="62"/><rect class="o" x="38" y="38" width="24" height="24"/></svg>Practical</span><h3>The task, not the demo.</h3><p>We start with what eats your week, not the most impressive thing AI can do. If it doesn't change a Tuesday, we don't build it.</p><figure><img src="img/salon-blowdry.jpg" alt="A stylist blow-drying a client's hair" loading="lazy" width="1600" height="1067"></figure></div>
-      <div class="c r"><span class="k"><svg viewBox="0 0 100 100" aria-hidden="true"><rect class="s" y="38" width="62" height="62"/><rect class="s" x="38" width="62" height="62"/><rect class="o" x="38" y="38" width="24" height="24"/></svg>Affordable</span><h3>Priced for twelve people.</h3><p>Priced for a business with twelve people, not twelve hundred. One system at a time, a monthly retainer you can cancel, no enterprise tiers.</p><figure><img src="img/pilates.jpg" alt="A pilates studio in use" loading="lazy" width="1600" height="1067"></figure></div>
-      <div class="c r"><span class="k"><svg viewBox="0 0 100 100" aria-hidden="true"><rect class="s" y="38" width="62" height="62"/><rect class="s" x="38" width="62" height="62"/><rect class="o" x="38" y="38" width="24" height="24"/></svg>Measurable</span><h3>One number per system.</h3><p>Calls answered, hours back, bookings kept. Agreed before we build, reviewed with you monthly.</p><figure><img src="img/spa-shelves.jpg" alt="Product shelves in a spa" loading="lazy" width="1600" height="1067"></figure></div>
-      <div class="c r"><span class="k"><svg viewBox="0 0 100 100" aria-hidden="true"><rect class="s" y="38" width="62" height="62"/><rect class="s" x="38" width="62" height="62"/><rect class="o" x="38" y="38" width="24" height="24"/></svg>Local</span><h3>In person, not a ticket.</h3><p>We're in West Hollywood. We walk your floor before we write a line, and you have a number that rings on a Saturday.</p><figure><img src="img/hotel-desk.jpg" alt="A boutique hotel front desk" loading="lazy" width="1600" height="1067"></figure></div>
+      <div class="c r"><span class="k"><svg viewBox="0 0 100 100" aria-hidden="true"><rect class="s" y="38" width="62" height="62"/><rect class="s" x="38" width="62" height="62"/><rect class="o" x="38" y="38" width="24" height="24"/></svg>Practical</span><h3>The task, not the demo.</h3><p>We start with what eats your week, not the most impressive thing AI can do. If it doesn't change a Tuesday, we don't build it.</p><figure><video muted loop playsinline preload="none" poster="video/practical.jpg" aria-label="A restaurant kitchen during service"><source src="video/practical.mp4" type="video/mp4"></video></figure></div>
+      <div class="c r"><span class="k"><svg viewBox="0 0 100 100" aria-hidden="true"><rect class="s" y="38" width="62" height="62"/><rect class="s" x="38" width="62" height="62"/><rect class="o" x="38" y="38" width="24" height="24"/></svg>Affordable</span><h3>Priced for twelve people.</h3><p>Priced for a business with twelve people, not twelve hundred. One system at a time, a monthly retainer you can cancel, no enterprise tiers.</p><figure><video muted loop playsinline preload="none" poster="video/affordable.jpg" aria-label="A stylist styling a client's hair"><source src="video/affordable.mp4" type="video/mp4"></video></figure></div>
+      <div class="c r"><span class="k"><svg viewBox="0 0 100 100" aria-hidden="true"><rect class="s" y="38" width="62" height="62"/><rect class="s" x="38" width="62" height="62"/><rect class="o" x="38" y="38" width="24" height="24"/></svg>Measurable</span><h3>One number per system.</h3><p>Calls answered, hours back, bookings kept. Agreed before we build, reviewed with you monthly.</p><figure><video muted loop playsinline preload="none" poster="video/measurable.jpg" aria-label="A hand massage at a spa"><source src="video/measurable.mp4" type="video/mp4"></video></figure></div>
+      <div class="c r"><span class="k"><svg viewBox="0 0 100 100" aria-hidden="true"><rect class="s" y="38" width="62" height="62"/><rect class="s" x="38" width="62" height="62"/><rect class="o" x="38" y="38" width="24" height="24"/></svg>Local</span><h3>In person, not a ticket.</h3><p>We're in West Hollywood. We walk your floor before we write a line, and you have a number that rings on a Saturday.</p><figure><video muted loop playsinline preload="none" poster="video/local.jpg" aria-label="A receptionist listening to a guest"><source src="video/local.mp4" type="video/mp4"></video></figure></div>
     </div>
   </section>
 
@@ -478,6 +477,10 @@ footer a:hover{color:var(--fg)}
       .then(function(r){ return r.ok ? r.json() : Promise.reject(r.status); }).then(function(j){ if(!j.ok) throw 0; nf.classList.add('sent'); })
       .catch(function(){ nbtn.disabled = false; location.href = 'mailto:hello@fands.io?subject=' + encodeURIComponent('Subscribe me to The Front Desk') + '&body=' + encodeURIComponent('Please add ' + em + ' to The Front Desk.'); nf.classList.add('failed'); });
   });
+
+  /* principle loops play only while on screen */
+  var vids = document.querySelectorAll('#how video');
+  if(vids.length){ var vio = new IntersectionObserver(function(es){ es.forEach(function(e){ var v = e.target; if(e.isIntersecting){ if(!reduce){ v.play().catch(function(){}); } } else { v.pause(); } }); }, {threshold:.2}); vids.forEach(function(v){ vio.observe(v); }); }
   addEventListener('scroll', measureScroll, {passive:true}); measureScroll();
 
   /* ---------- particles ---------- */
