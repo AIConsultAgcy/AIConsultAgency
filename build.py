@@ -47,7 +47,7 @@ FOOTER = '''<footer class="site-footer">
 
 SCHEMA = {
     "@context": "https://schema.org", "@type": "ProfessionalService", "@id": SITE + "/#org", "name": "Fands",
-    "url": SITE + "/", "logo": SITE + "/brand/icon-512.png", "image": SITE + "/brand/og.png", "email": "hello@fands.io",
+    "url": SITE + "/", "logo": SITE + "/brand/icon-512.png", "image": SITE + "/brand/og-v2.png", "email": "hello@fands.io",
     "slogan": "From friction to flow.",
     "description": "Fands designs, builds and runs AI workflows for consulting and specialist service firms, starting with one handoff, a measured baseline and a named owner.",
     "knowsAbout": ["AI workflow automation", "client intake automation", "project kickoff automation", "process mapping", "AI governance and human review"],
@@ -55,6 +55,16 @@ SCHEMA = {
         {"@type": "Offer", "name": "Workflow Diagnostic", "price": "2500", "priceCurrency": "USD", "description": "Process map, baseline plan, feasibility review and pilot scope in five business days."},
         {"@type": "Offer", "name": "Workflow Pilot", "priceSpecification": {"@type": "PriceSpecification", "minPrice": "12000", "priceCurrency": "USD"}, "description": "One workflow, up to three integrations, testing, training and an outcome review in four to six weeks."},
         {"@type": "Offer", "name": "System Care", "priceSpecification": {"@type": "UnitPriceSpecification", "minPrice": "1500", "priceCurrency": "USD", "unitText": "MONTH"}, "description": "Up to three supported workflows, six service hours and a monthly review."}]}
+
+
+# First-visit intro: two silver squares travel in from opposite corners and lock together, the overlap lights orange,
+# the name rises, the cover lifts. Repeat visits in the same session get a short version; reduced motion gets a fade.
+INTRO = '''<div id="intro" aria-hidden="true">
+  <div class="intro-lock"><span class="intro-mark"><i class="sq a"></i><i class="sq b"></i><i class="ov"></i></span><span class="intro-name"><b>F</b><b>a</b><b>n</b><b>d</b><b>s</b></span></div>
+  <p class="intro-tag">From friction to flow.</p>
+</div>
+<script>(function(){var el=document.getElementById('intro');try{if(sessionStorage.getItem('fands-intro')==='1')el.classList.add('quick');sessionStorage.setItem('fands-intro','1')}catch(e){}el.addEventListener('animationend',function(e){if(e.target===el)el.remove()})})();</script>
+'''
 
 HEAD = '''<!doctype html>
 <html lang="en">
@@ -79,14 +89,15 @@ HEAD = '''<!doctype html>
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{description}">
 <meta property="og:url" content="{url}">
-<meta property="og:image" content="https://fands.io/brand/og.png">
+<meta property="og:image" content="https://fands.io/brand/og-v2.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Fands: From friction to flow. AI systems built around a measurable outcome.">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{title}">
 <meta name="twitter:description" content="{description}">
-<meta name="twitter:image" content="https://fands.io/brand/og.png">
+<meta name="twitter:image" content="https://fands.io/brand/og-v2.png">
 {extra}</head>
 <body>
 '''
@@ -112,7 +123,7 @@ def main():
         if meta.get('schema'):
             extra = '<script type="application/ld+json">' + json.dumps(SCHEMA, separators=(',', ':')) + '</script>\n'
         html = (HEAD.format(title=meta['title'], description=meta['description'], url=SITE + meta['path'], v=v, extra=extra)
-                + HEADER + '\n' + body.strip() + '\n' + FOOTER + '\n'
+                + (INTRO if meta.get('hero') else '') + HEADER + '\n' + body.strip() + '\n' + FOOTER + '\n'
                 + TAIL.format(v=v, sculpture=SCULPTURE.replace('{v}', v) if meta.get('hero') else ''))
         html = re.sub(r'\{\{i:([a-z-]+)(?::(\d+))?(?::([a-z-]+))?\}\}', icon, html)
         out = ROOT / meta['out']

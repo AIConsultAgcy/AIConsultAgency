@@ -37,3 +37,25 @@
 @media(max-width:767px){.footer-word{font-size:27vw}.footer-word>span{margin:.15em 0 0 .2em;font-size:.3em}}
 /* reveal: let descenders through once the type has arrived */
 @keyframes type-arrive{from{clip-path:inset(-20% -5% 35% -5%);transform:translateY(14px)}to{clip-path:inset(-20% -5% -25% -5%);transform:translateY(0)}}
+/* first-visit intro */
+#intro{position:fixed;inset:0;z-index:90;background:var(--night);display:grid;place-items:center;pointer-events:none;clip-path:inset(0 0 0 0);animation:intro-lift .85s cubic-bezier(.76,0,.24,1) 2.05s forwards}
+.intro-lock{display:flex;align-items:center;gap:.2em;font-family:var(--mark);font-weight:600;letter-spacing:-.045em;line-height:1;font-size:clamp(64px,10vw,150px);color:#eef1f3}
+.intro-mark{position:relative;width:.8em;height:.8em;flex:none}
+.intro-mark i{position:absolute;display:block}
+.intro-mark .sq{width:62%;height:62%;background:linear-gradient(135deg,#f6f7f8 0%,#aab3bc 42%,#eceef0 58%,#7f8893 100%);box-shadow:0 .04em .12em #0008}
+.intro-mark .a{left:0;top:38%;animation:intro-a .95s cubic-bezier(.65,0,.25,1) .1s both}
+.intro-mark .b{left:38%;top:0;animation:intro-b .95s cubic-bezier(.65,0,.25,1) .1s both}
+.intro-mark .ov{left:38%;top:38%;width:24%;height:24%;background:var(--accent);box-shadow:0 0 .35em #ff754799;animation:intro-ov .5s cubic-bezier(.34,1.56,.64,1) .95s both}
+.intro-name{display:flex;overflow:hidden;padding-bottom:.08em}
+.intro-name b{font-weight:inherit;display:inline-block;animation:intro-letter .7s cubic-bezier(.16,1,.3,1) both}
+.intro-name b:nth-child(1){animation-delay:1.05s}.intro-name b:nth-child(2){animation-delay:1.1s}.intro-name b:nth-child(3){animation-delay:1.15s}.intro-name b:nth-child(4){animation-delay:1.2s}.intro-name b:nth-child(5){animation-delay:1.25s}
+.intro-tag{position:absolute;bottom:clamp(28px,5vh,48px);left:0;right:0;text-align:center;margin:0;font-size:12px;color:#8d97a2;animation:intro-fade .6s ease 1.35s both}
+#intro.quick{animation-delay:.35s;animation-duration:.6s}
+#intro.quick .intro-mark i,#intro.quick .intro-name b,#intro.quick .intro-tag{animation:none}
+@keyframes intro-a{from{transform:translate(-160%,90%) rotate(-12deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes intro-b{from{transform:translate(160%,-90%) rotate(12deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes intro-ov{from{transform:scale(0);opacity:0}to{transform:none;opacity:1}}
+@keyframes intro-letter{from{transform:translateY(105%)}to{transform:none}}
+@keyframes intro-fade{from{opacity:0}to{opacity:1}}
+@keyframes intro-lift{to{clip-path:inset(0 0 100% 0)}}
+@media(prefers-reduced-motion:reduce){#intro{animation:intro-out .4s ease .6s forwards!important}#intro .intro-mark i,#intro .intro-name b,#intro .intro-tag{animation:none!important}@keyframes intro-out{to{opacity:0}}}
