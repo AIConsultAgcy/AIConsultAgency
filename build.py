@@ -40,7 +40,7 @@ HEADER = '''<a class="skip" href="#main">Skip to content</a>
 </nav>'''.format(mark=MARK)
 
 FOOTER = '''<footer class="site-footer">
-  <div class="footer-top"><p>Useful intelligence.<br>Built into the way you work.</p><div><a href="/insights">Field notes {{{{i:up-right:16}}}}</a><a href="/contact">Start a conversation {{{{i:up-right:16}}}}</a><a href="mailto:hello@fands.io">hello@fands.io {{{{i:up-right:16}}}}</a><a href="/privacy">Privacy {{{{i:up-right:16}}}}</a></div></div>
+  <div class="footer-top"><p>Useful intelligence.<br>Built into the way you work.</p><div><a href="/insights">Field notes {{{{i:up-right:16}}}}</a><a href="/contact">Start a conversation {{{{i:up-right:16}}}}</a><a href="mailto:hello@fands.io">hello@fands.io {{{{i:up-right:16}}}}</a><a href="/privacy">Privacy {{{{i:up-right:16}}}}</a><a href="https://www.linkedin.com/company/fands-ai/" target="_blank" rel="noopener noreferrer">LinkedIn {{{{i:up-right:16}}}}</a><a href="https://www.instagram.com/fands.ai" target="_blank" rel="noopener noreferrer">Instagram {{{{i:up-right:16}}}}</a><a href="https://www.youtube.com/@fands-ai" target="_blank" rel="noopener noreferrer">YouTube {{{{i:up-right:16}}}}</a></div></div>
   <div class="footer-word" aria-hidden="true">Fands<span>{mark}</span></div>
   <div class="footer-bottom"><span>© 2026 Fands</span><span>Built to work. Measured to matter.</span><a href="#main">Back to top ↑</a></div>
 </footer>'''.format(mark=MARK)
@@ -109,6 +109,16 @@ SCULPTURE = '''<script type="importmap">{"imports":{"three":"https://cdn.jsdeliv
 TAIL = '''<script src="/assets/site.js?v={v}"></script>
 {sculpture}<script>window.va=window.va||function(){{(window.vaq=window.vaq||[]).push(arguments)}};</script>
 <script defer src="/_vercel/insights/script.js"></script>
+<!-- Cal floating-popup embed code begins -->
+<script type="text/javascript">
+  (function (C, A, L) {{ let p = function (a, ar) {{ a.q.push(ar); }}; let d = C.document; C.Cal = C.Cal || function () {{ let cal = C.Cal; let ar = arguments; if (!cal.loaded) {{ cal.ns = {{}}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; }} if (ar[0] === L) {{ const api = function () {{ p(api, arguments); }}; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){{cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);}} else p(cal, ar); return;}} p(cal, ar); }}; }})(window, "https://app.cal.com/embed/embed.js", "init");
+Cal("init", "intro-call", {{origin:"https://app.cal.com"}});
+Cal.config = Cal.config || {{}};
+Cal.config.forwardQueryParams = true;
+Cal.ns["intro-call"]("floatingButton", {{"calLink":"fands/intro-call","config":{{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}},"buttonText":"Book a Free Call","buttonTextColor":"#000000","buttonColor":"#FF7547"}});
+Cal.ns["intro-call"]("ui", {{"hideEventTypeDetails":false,"layout":"month_view"}});
+</script>
+<!-- Cal floating-popup embed code ends -->
 </body>
 </html>
 '''
@@ -117,7 +127,7 @@ def main():
     import hashlib
     v = hashlib.sha1(b''.join((ROOT / 'assets' / f).read_bytes() for f in ('site.css', 'site.js', 'sculpture.js'))).hexdigest()[:8]
     for src in sorted((ROOT / 'src').glob('*.html')):
-        first, body = src.read_text().split('\n', 1)
+        first, body = src.read_text(encoding='utf-8').split('\n', 1)
         meta = json.loads(first)
         extra = ''
         if meta.get('schema'):
@@ -128,7 +138,7 @@ def main():
         html = re.sub(r'\{\{i:([a-z-]+)(?::(\d+))?(?::([a-z-]+))?\}\}', icon, html)
         out = ROOT / meta['out']
         out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(html)
+        out.write_text(html, encoding='utf-8')
         print(f'built {meta["out"]} ({len(html):,} bytes)')
 
 if __name__ == '__main__':
