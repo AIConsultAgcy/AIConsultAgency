@@ -1,6 +1,5 @@
-// Lead capture for fands.io. Receives the workflow-review and Field Notes forms, validates them, and forwards by email.
-// Transport: Web3Forms (WEB3FORMS_KEY env var). Without a key the function answers 503 and the page
-// falls back to a prefilled email to hello@fands.io, so nothing is lost either way.
+// Lead capture for fands.io. Receives the workflow-review and Field Notes forms, validates them,
+// and forwards them to the configured Google Apps Script Web App.
 const MAX = { name: 120, company: 200, email: 254, interest: 40, workflow: 2000, source: 120 };
 const INTEREST = { diagnostic: 'Workflow diagnostic', pilot: 'Workflow pilot', care: 'Ongoing system care', unsure: 'Help me find the right starting point' };
 
@@ -21,15 +20,23 @@ module.exports = async (req, res) => {
   };
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.email) || body.consent !== 'yes') return send(res, 400, { ok: false, error: 'fields' });
   if (!newsletter && (!lead.name || !lead.company || lead.workflow.length < 10)) return send(res, 400, { ok: false, error: 'fields' });
-  const key = process.env.WEB3FORMS_KEY;
-  if (!key) return send(res, 503, { ok: false, error: 'transport' });
-  const payload = newsletter
-    ? { access_key: key, subject: 'Field Notes signup: ' + lead.email, from_name: 'fands.io', replyto: lead.email, email: lead.email, message: 'Subscribe to Fands Field Notes (consent given).', page: 'https://fands.io' + lead.source }
-    : { access_key: key, subject: 'Workflow review: ' + lead.company, from_name: 'fands.io', replyto: lead.email, name: lead.name, company: lead.company, email: lead.email, starting_point: lead.interest, message: lead.workflow, page: 'https://fands.io' + lead.source };
+  const endpoint = process.env.GOOGLE_APPS_SCRIPT_URL;
+  if (!endpoint) return send(res, 503, { ok: false, error: 'transport' });
+  const payload = {
+    kind: newsletter ? 'newsletter' : 'inquiry',
+    form: {
+      name: lead.name,
+      company: lead.company,
+      email: lead.email,
+      interest: lead.interest,
+      workflow: newsletter ? 'Field Notes subscription request.' : lead.workflow,
+      source: lead.source,
+    },
+  };
   try {
-    const r = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) });
+    const r = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload), redirect: 'follow' });
     const j = await r.json().catch(() => ({}));
-    if (!r.ok || !j.success) return send(res, 502, { ok: false, error: 'upstream' });
+    if (!r.ok || j.ok !== true) return send(res, 502, { ok: false, error: 'upstream' });
     return send(res, 200, { ok: true });
   } catch (e) { return send(res, 502, { ok: false, error: 'upstream' }); }
 };
