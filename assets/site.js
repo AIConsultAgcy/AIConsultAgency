@@ -3,6 +3,10 @@
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var track = function (event, params) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(Object.assign({ event: event }, params || {}));
+  };
   var ICON = {
     arrowRight: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>',
     check: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>',
@@ -12,6 +16,18 @@
     reset: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>'
   };
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  /* analytics: funnel events are sent to GTM; GA4 tags are configured in the container */
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a[href]');
+    if (!link) return;
+    var href = link.href || '', text = (link.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 120);
+    var isOutbound = link.origin && link.origin !== location.origin;
+    var isCal = /cal\.com/i.test(href) || /book a free call/i.test(text);
+    if (isCal) track('cal_open', { link_text: text, link_url: href });
+    else if (isOutbound) track('outbound_click', { link_text: text, link_url: href });
+    else if (link.matches('.button, .inline-link, .closing-link, .header-contact, .text-link')) track('cta_click', { link_text: text, link_url: href });
+  }, { passive: true });
 
   /* menu: the plus opens a panel; Escape closes it and returns focus */
   var toggle = $('.menu-toggle'), panel = $('#site-menu');
@@ -97,6 +113,9 @@
   var sel = $('#interest'); if (sel && interest && /^(diagnostic|pilot|care)$/.test(interest)) sel.value = interest;
   $$('form[data-lead]').forEach(function (f) {
     var newsletter = f.dataset.lead === 'newsletter', btn = $('button', f), ok = $('.feedback', f), err = $('.feedback.error', f);
+    var formName = newsletter ? 'newsletter' : 'workflow_inquiry';
+    var started = false;
+    f.addEventListener('focusin', function () { if (!started) { started = true; track('form_start', { form_name: formName }); } });
     f.addEventListener('submit', function (e) {
       e.preventDefault();
       if (!f.checkValidity()) { f.reportValidity(); return; }
@@ -110,10 +129,11 @@
         .then(function (res) { return res.ok ? res.json() : Promise.reject(res.status); })
         .then(function (j) {
           if (!j.ok) throw 0;
+          track('generate_lead', { form_name: formName, lead_type: newsletter ? 'newsletter' : 'workflow_review' });
           ok.textContent = newsletter ? 'You’re on the list. The first note arrives on a Tuesday.' : 'Got it. We’ll reply within two business days.';
           f.reset(); btn.disabled = false; btn.textContent = label;
         })
-        .catch(function () { btn.disabled = false; btn.textContent = label; err.hidden = false; location.href = mail; });
+        .catch(function () { track('form_error', { form_name: formName }); btn.disabled = false; btn.textContent = label; err.hidden = false; location.href = mail; });
     });
   });
 })();
