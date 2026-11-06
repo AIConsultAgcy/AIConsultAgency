@@ -69,6 +69,7 @@ INTRO = '''<div id="intro" aria-hidden="true">
 HEAD = '''<!doctype html>
 <html lang="en">
 <head>
+<script src="https://cdn.userway.org/widget.js" data-account="OTeuoB7JqP"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({{'gtm.start': new Date().getTime(), event: 'gtm.js'}});
