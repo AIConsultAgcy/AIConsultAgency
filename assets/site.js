@@ -29,6 +29,9 @@
     else if (link.matches('.button, .inline-link, .closing-link, .header-contact, .text-link')) track('cta_click', { link_text: text, link_url: href });
   }, { passive: true });
 
+  /* booking links open the Cal popup in place; without Cal they fall through to /contact */
+  document.addEventListener('click', function (e) { if (e.target.closest('a[data-cal-link]') && window.Cal && window.Cal.loaded) e.preventDefault(); });
+
   /* menu: the plus opens a panel; Escape closes it and returns focus */
   var toggle = $('.menu-toggle'), panel = $('#site-menu');
   if (toggle && panel) {
@@ -56,13 +59,34 @@
     films.forEach(function (v) { fo.observe(v); });
   }
 
+  /* services: five practices, one panel at a time; without script every panel shows */
+  var svc = $('.svc');
+  if (svc) {
+    var st = $$('[role=tab]', svc), sp = $$('.svc-panel', svc);
+    var pick = function (n, focus) {
+      st.forEach(function (b, i) { b.setAttribute('aria-selected', String(i === n)); b.tabIndex = i === n ? 0 : -1; });
+      sp.forEach(function (el, i) { el.hidden = i !== n; });
+      if (focus) st[n].focus();
+    };
+    svc.classList.add('is-tabbed');
+    st.forEach(function (b, i) {
+      b.addEventListener('click', function () { pick(i); track('service_tab', { practice: b.textContent.trim() }); });
+      b.addEventListener('keydown', function (e) {
+        var n = i;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') n = (i + 1) % st.length; else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') n = (i + st.length - 1) % st.length; else if (e.key === 'Home') n = 0; else if (e.key === 'End') n = st.length - 1; else return;
+        e.preventDefault(); pick(n, true);
+      });
+    });
+    pick(0);
+  }
+
   /* workflow demo: synthetic inputs, a draft, a human approval */
   var lab = $('.workflow-lab');
   if (lab) {
     var examples = [
-      { label: 'Client intake', title: 'An email becomes a useful brief.', input: '“We need a customer research sprint. Six interviews, findings by the 28th. Can you send a kickoff plan?”', fields: [['Service', 'Customer research'], ['Scope', '6 interviews + findings'], ['Due date', '28th — month to confirm']], output: 'Draft intake brief', review: 'Confirm the month and agree the scope before creating a project.', metric: 'Minutes spent preparing each brief' },
-      { label: 'Project kickoff', title: 'An approved scope becomes a ready team.', input: 'Approved scope: discovery workshop, research synthesis, and a recommendations session. Project owner: Operations.', fields: [['Workstreams', 'Discovery / Research / Recommendations'], ['Owner', 'Operations'], ['Next step', 'Confirm dates and team availability']], output: 'Draft kickoff pack', review: 'A project owner reviews responsibilities and dates before tasks are created.', metric: 'Time from approved scope to kickoff' },
-      { label: 'Delivery updates', title: 'Scattered progress becomes a clear update.', input: 'Workshop completed. Three interviews remaining. Analysis waiting for the client data export.', fields: [['Completed', 'Discovery workshop'], ['In progress', '3 remaining interviews'], ['Blocked', 'Client data export']], output: 'Draft status update', review: 'An account lead checks the update and source context before sending.', metric: 'Time spent preparing and checking updates' }
+      { label: 'After-hours call', title: 'A call after closing becomes a booking.', input: 'Phone call, 7:42 pm, after closing: “Do you have anything Thursday afternoon? It’s for a cleaning.”', fields: [['Caller needs', 'Cleaning, Thursday afternoon'], ['Offered', 'Thursday 2:30 pm, accepted'], ['Next step', 'Text confirmation + CRM record']], output: 'Booking drafted', review: 'Requests outside your booking rules go to a named person with the full transcript.', metric: 'After-hours calls answered and booked' },
+      { label: 'New lead', title: 'A weekend inquiry gets a reply in minutes.', input: 'Web form, Saturday 9:14 am: “Looking for a quote on a kitchen remodel, about 200 square feet. Budget around $40K.”', fields: [['Lead', 'Kitchen remodel, 200 sq ft, ~$40K'], ['Reply', 'Text + email with two call times'], ['Pipeline', 'New lead, quote stage, follow-up set']], output: 'Draft first reply', review: 'The owner approves the first replies until the tone is right.', metric: 'Minutes from inquiry to first reply' },
+      { label: 'Invoice inbox', title: 'An inbox of invoices becomes clean books.', input: 'Email with PDF attached: “Invoice 4471 for October supplies, net 30. Reference PO 2291.”', fields: [['Vendor', 'Matched to an existing supplier'], ['Amount', '$1,840.00, due in 30 days'], ['Check', 'PO 2291 found, quantities agree']], output: 'Draft bill entry', review: 'Finance approves before anything posts. Mismatches are flagged for a person.', metric: 'Minutes of handling per invoice' }
     ];
     var tabs = $$('[role=tab]', lab), body = $('#workflow-example', lab), choice = 0, stage = 0;
     var draw = function () {

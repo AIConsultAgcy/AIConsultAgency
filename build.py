@@ -31,11 +31,11 @@ MARK = ('<svg viewBox="0 0 100 100" aria-hidden="true"><rect class="s" y="38" wi
 HEADER = '''<a class="skip" href="#main">Skip to content</a>
 <header class="site-header">
   <a href="/" aria-label="Fands, home" class="brand-logo"><span class="wm">{mark}Fands</span></a>
-  <nav class="desktop-nav" aria-label="Main navigation"><a href="/#workflows">Systems</a><a href="/#approach">Approach</a><a href="/#services">Engagements</a><a href="/insights">Field notes</a></nav>
+  <nav class="desktop-nav" aria-label="Main navigation"><a href="/#services">Services</a><a href="/#demo">See it work</a><a href="/#approach">How to start</a><a href="/insights">Field notes</a></nav>
   <div class="header-actions"><a class="header-contact" href="/contact">Let’s talk {{{{i:up-right:16}}}}</a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open navigation"><span class="ico-plus">{{{{i:plus:19}}}}</span><span class="ico-x" hidden>{{{{i:x:19}}}}</span></button></div>
 </header>
 <nav id="site-menu" class="menu-panel" aria-label="Expanded navigation" hidden>
-  <a href="/#workflows">Systems {{{{i:up-right:28}}}}</a><a href="/#approach">Approach {{{{i:up-right:28}}}}</a><a href="/#services">Engagements {{{{i:up-right:28}}}}</a><a href="/insights">Field notes {{{{i:up-right:28}}}}</a><a href="/contact">Start a conversation {{{{i:up-right:28}}}}</a>
+  <a href="/#services">Services {{{{i:up-right:28}}}}</a><a href="/#demo">See it work {{{{i:up-right:28}}}}</a><a href="/#approach">How to start {{{{i:up-right:28}}}}</a><a href="/insights">Field notes {{{{i:up-right:28}}}}</a><a href="/contact">Start a conversation {{{{i:up-right:28}}}}</a>
   <p>Useful intelligence.<br>Built into the way you work.</p>
 </nav>'''.format(mark=MARK)
 
@@ -49,12 +49,9 @@ SCHEMA = {
     "@context": "https://schema.org", "@type": "ProfessionalService", "@id": SITE + "/#org", "name": "Fands",
     "url": SITE + "/", "logo": SITE + "/brand/icon-512.png", "image": SITE + "/brand/og-v2.png", "email": "hello@fands.io",
     "slogan": "From friction to flow.",
-    "description": "Fands designs, builds and runs AI workflows for consulting and specialist service firms, starting with one handoff, a measured baseline and a named owner.",
-    "knowsAbout": ["AI workflow automation", "client intake automation", "project kickoff automation", "process mapping", "AI governance and human review"],
-    "makesOffer": [
-        {"@type": "Offer", "name": "Workflow Diagnostic", "price": "2500", "priceCurrency": "USD", "description": "Process map, baseline plan, feasibility review and pilot scope in five business days."},
-        {"@type": "Offer", "name": "Workflow Pilot", "priceSpecification": {"@type": "PriceSpecification", "minPrice": "12000", "priceCurrency": "USD"}, "description": "One workflow, up to three integrations, testing, training and an outcome review in four to six weeks."},
-        {"@type": "Offer", "name": "System Care", "priceSpecification": {"@type": "UnitPriceSpecification", "minPrice": "1500", "priceCurrency": "USD", "unitText": "MONTH"}, "description": "Up to three supported workflows, six service hours and a monthly review."}]}
+    "description": "Fands is an AI media and systems agency. It builds and runs the systems that answer calls, follow up on leads, run back-office work and get a business found in search and AI answers.",
+    "knowsAbout": ["AI readiness audits", "business process automation", "lead follow-up automation", "AI receptionist", "AI search visibility", "AI content", "web development"],
+    "makesOffer": [{"@type": "Offer", "name": "AI Readiness Audit & Roadmap"}, {"@type": "Offer", "name": "Managed AI Retainer"}, {"@type": "Offer", "name": "Business Process Automation"}, {"@type": "Offer", "name": "Lead-to-Revenue Automation"}, {"@type": "Offer", "name": "Knowledge Assistant & Analytics"}, {"@type": "Offer", "name": "AI Training & Enablement"}, {"@type": "Offer", "name": "AI Receptionist"}, {"@type": "Offer", "name": "Custom AI Agents & Apps"}, {"@type": "Offer", "name": "AI Content Engine"}, {"@type": "Offer", "name": "AI Search Visibility & Local SEO"}, {"@type": "Offer", "name": "Paid Media Management"}, {"@type": "Offer", "name": "Branding & Design"}, {"@type": "Offer", "name": "Web & App Development"}, {"@type": "Offer", "name": "Website & E-commerce Automation"}]}
 
 
 # First-visit intro: two silver squares travel in from opposite corners and lock together, the overlap lights orange,
