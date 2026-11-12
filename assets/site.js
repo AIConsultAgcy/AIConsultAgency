@@ -21,13 +21,13 @@
   document.addEventListener('click', function (e) {
     var link = e.target.closest('a[href]');
     if (!link) return;
-    var href = link.href || '', text = (link.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 120);
+    var href = link.href || '', text = (link.getAttribute('data-track') || link.getAttribute('aria-label') || link.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 120);
     if (/^(mailto|tel):/i.test(href)) return; // email clicks are reported as email_click below
     var isOutbound = link.origin && link.origin !== location.origin;
     var isCal = link.hasAttribute('data-cal-link') || /cal\.com/i.test(href) || /book a (free )?call/i.test(text);
     if (isCal) track('cal_open', { link_text: text, link_url: href, page_section: (link.closest('section,footer,header') || {}).className || '' });
     else if (isOutbound) track('outbound_click', { link_text: text, link_url: href });
-    else if (link.matches('.button, .arrow-link, .text-link, .closing-link, .header-contact, .hub-card, .case-card, .related a, .leaks a, .lab-service')) track('cta_click', { link_text: text, link_url: href });
+    else if (link.matches('.button, .arrow-link, .text-link, .closing-link, .header-contact, .hub-card, .case-card, .related a, .leaks a, .lab-service, .link-btn')) track('cta_click', { link_text: text, link_url: href });
   }, { passive: true });
 
   /* booking links open the Cal popup in place; without Cal they fall through to /contact */
@@ -177,6 +177,19 @@
     };
     addEventListener('scroll', lift, { passive: true }); addEventListener('resize', lift); lift();
   }
+
+  /* share button: opens the device's own share sheet; where there is none (most desktops), copies the link instead */
+  $$('[data-share]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var data = { title: 'FANDS — AI Systems & Media Agency', text: 'FANDS: AI Systems & Media Agency. From Friction to Flow.', url: location.href.split('#')[0] };
+      track('cta_click', { link_text: 'Share links page', link_url: data.url });
+      if (navigator.share) { navigator.share(data).catch(function () {}); return; }
+      var toast = $('.links-toast');
+      var done = function (msg) { if (!toast) return; toast.textContent = msg; toast.hidden = false; clearTimeout(b._t); b._t = setTimeout(function () { toast.hidden = true; }, 2200); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(data.url).then(function () { done('Link copied'); }, function () { done(data.url); });
+      else done(data.url);
+    });
+  });
 
   /* legal switcher: on narrow screens it scrolls sideways, so bring the current document into view */
   var ln = $('.legal-nav'), cur = ln && $('[aria-current]', ln);

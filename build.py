@@ -17,6 +17,9 @@ ICONS = {
     'instagram': '<rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>',
     'youtube': '<path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/>',
     'calendar': '<rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/>',
+    'globe': '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
+    'mail': '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
+    'share': '<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="m16 6-4-4-4 4"/><path d="M12 2v13"/>',
     'menu':'<path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>',
     'chevron': '<path d="m6 9 6 6 6-6"/>',
     'pause': '<rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/>',
@@ -209,8 +212,11 @@ def main():
         body = body.replace('{{crumbs}}', crumbs_html(crumbs) if crumbs else '').replace('{{legal-nav}}', legal_nav(meta['path']))
         html = (HEAD.format(title=meta['title'], description=meta['description'], url=SITE + meta['path'], v=v, extra=extra,
                             robots='noindex,follow' if noindex else 'index,follow,max-image-preview:large', og_type=meta.get('og_type', 'website'))
-                + (INTRO if meta.get('hero') else '') + HEADER + '\n' + body.strip() + '\n' + FOOTER + '\n'
+                + (INTRO if meta.get('hero') else '') + ('' if meta.get('bare') else HEADER) + '\n' + body.strip() + '\n'
+                + ('' if meta.get('bare') else FOOTER) + '\n'
                 + TAIL.format(v=v, sculpture=SCULPTURE.replace('{v}', v) if meta.get('hero') else ''))
+        if meta.get('bare'):  # bare pages (the links page): no site header, footer or floating booking button
+            html = re.sub(r'<a class="book-fab".*?</a>\n', '', html, flags=re.S)
         html = html.replace('{{closing}}', CLOSING).replace('{{cal}}', CAL)
         html = re.sub(r'\{\{i:([a-z-]+)(?::(\d+))?(?::([a-z-]+))?\}\}', icon, html)
         out = ROOT / meta['out']

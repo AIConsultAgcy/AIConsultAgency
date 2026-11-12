@@ -1,26 +1,31 @@
 {"out": "insights.html", "path": "/insights", "priority": 0.6, "title": "Field Notes: Practical AI for Small Business | Fands", "description": "Practical notes on finding, building and measuring useful AI workflows in a small or mid-size business. One useful idea every two weeks.", "type": "CollectionPage", "crumbs": [["Field Notes", "/insights"]]}
 <main id="main">
   <section class="page-head">{{crumbs}}<p class="eyebrow">FANDS FIELD NOTES</p><h1>Less noise.<br><em>More useful work.</em></h1><p>Practical ideas for the people who keep a service business moving.</p></section>
-  <section class="post-list wrap" aria-label="Latest field notes">
-    <article class="post-card">
-      <a class="post-cover" href="/insights/first-workflow" tabindex="-1" aria-hidden="true"><img src="/img/insights/first-workflow-cover.svg" alt="" width="1600" height="1000" loading="lazy" decoding="async"></a>
-      <div class="post-body">
-        <div class="post-meta"><span class="tag">Field Guide 001</span><span class="tag outline">7 min read</span><span class="tag outline">October 2026</span></div>
-        <h2><a href="/insights/first-workflow">Your first AI workflow should be boring.</a></h2>
-        <p>The best first AI project is the handoff your team already knows too well. A practical scorecard for choosing it, measuring the baseline and deciding whether it earned the next step.</p>
-        <ul class="post-points"><li>Score five candidate workflows from 0 to 2</li><li>Measure the work before you change it</li><li>Test the inconvenient cases first</li></ul>
-        <a class="arrow-link" href="/insights/first-workflow">Read the guide {{i:right:15}}</a>
-      </div>
-    </article>
-    <p class="more-soon">New field notes every two weeks. Join the list below to get the next one.</p>
+
+  <section class="post-list wrap" aria-labelledby="latest-title">
+    <div class="section-head"><h2 id="latest-title">Latest<br><span>field notes.</span></h2><p>Workflow breakdowns, measurement methods and lessons from building AI systems for small and mid-size businesses.</p></div>
+    <div class="post-grid">
+      <article class="post-card">
+        <a class="post-cover" href="/insights/first-workflow" tabindex="-1" aria-hidden="true"><img src="/img/insights/first-workflow-cover.svg" alt="" width="1600" height="1000" loading="lazy" decoding="async"></a>
+        <div class="post-body">
+          <div class="post-meta"><span class="tag">Field Guide 001</span><span class="tag outline">7 min read</span><span class="tag outline">Oct 2026</span></div>
+          <h2><a href="/insights/first-workflow">Your first AI workflow should be boring.</a></h2>
+          <p>A practical scorecard for choosing your first AI project, measuring the baseline and deciding whether it earned the next step.</p>
+          <a class="arrow-link" href="/insights/first-workflow">Read the guide {{i:right:15}}</a>
+        </div>
+      </article>
+      <div class="post-card soon"><span>Next note</span><p>New field notes arrive every two weeks. Join the list to get the next one first.</p><a class="arrow-link" href="#field-notes-signup">Join Field Notes {{i:down:15}}</a></div>
+    </div>
   </section>
-  <section class="newsletter"><div class="form-panel"><p class="eyebrow">A NOTE WORTH OPENING</p><h2>One useful idea. Every two weeks.</h2><p>Workflow breakdowns, measurement methods, and lessons from building. No inflated AI predictions.</p>
+
+  <section class="newsletter wrap" id="field-notes-signup" aria-labelledby="signup-title"><div class="form-panel">
+    <div><p class="eyebrow">A NOTE WORTH OPENING</p><h2 id="signup-title">One useful idea. Every two weeks.</h2><p>Workflow breakdowns, measurement methods, and lessons from building. No inflated AI predictions.</p></div>
     <form data-lead="newsletter" novalidate>
       <div class="honeypot" aria-hidden="true"><label for="n-website">Leave this empty</label><input id="n-website" name="website" tabindex="-1" autocomplete="off"></div>
       <p class="req-note"><span class="req" aria-hidden="true">*</span> Required</p>
-      <div class="field"><label for="newsletter-email">Work email <span class="req" aria-hidden="true">*</span></label><input id="newsletter-email" name="email" type="email" required maxlength="254" autocomplete="email"></div>
+      <div class="field float"><input id="newsletter-email" name="email" type="email" required aria-required="true" maxlength="254" autocomplete="email" inputmode="email" placeholder="you@company.com"><label for="newsletter-email">Work email <span class="req" aria-hidden="true">*</span></label></div>
       <label class="checkbox"><input name="consent" type="checkbox" required aria-required="true" value="yes"><span><span class="req" aria-hidden="true">*</span> Send me Fands Field Notes. I can unsubscribe at any time. See our <a href="/privacy"><u>privacy notice</u></a>.</span></label>
-      <button class="button" type="submit">Join the Field Notes list {{i:up-right:18}}</button>
+      <button class="button orange" type="submit">Join the Field Notes list {{i:up-right:18}}</button>
       <div class="form-notice" aria-live="polite"></div>
     </form>
   </div></section>
