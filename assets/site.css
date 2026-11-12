@@ -250,6 +250,39 @@
 @media(max-width:767px){.consent{left:12px;right:12px;bottom:12px;width:auto;padding:18px}}
 
 
+/* required and optional field markers */
+.req{color:#c9431b;font-weight:700;margin-left:1px}
+.opt{color:#6b7780;font-weight:400}
+.req-note{font-size:12px;color:#5d666e;margin:0 0 16px}
+.field input:user-invalid,.field textarea:user-invalid,.field select:user-invalid{border-color:#c9431b;box-shadow:0 0 0 1px #c9431b}
+
+/* floating labels: the label sits inside the field and moves up once the field is focused or filled */
+.field.float{position:relative;margin-bottom:14px}
+.field.float input,.field.float textarea,.field.float select{padding:24px 14px 8px;min-height:58px;font-size:15px}
+.field.float textarea{padding-top:28px;min-height:150px}
+.field.float select{appearance:none;-webkit-appearance:none;padding-right:40px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2358616a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.field.float label{position:absolute;left:15px;right:15px;top:29px;transform:translateY(-50%);margin:0;font-size:15px;color:#5d6a74;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:top .18s ease,font-size .18s ease,color .18s ease,transform .18s ease}
+.field.float input::placeholder,.field.float textarea::placeholder{opacity:0;transition:opacity .18s}
+.field.float input:focus::placeholder,.field.float textarea:focus::placeholder{opacity:1}
+.field.float input:focus+label,.field.float input:not(:placeholder-shown)+label,.field.float input:autofill+label,
+.field.float textarea:focus+label,.field.float textarea:not(:placeholder-shown)+label,
+.field.float.is-select label{top:8px;transform:none;font-size:11px;line-height:1.25;font-weight:600;letter-spacing:.02em;color:#46535d}
+.field.float input:focus+label,.field.float textarea:focus+label,.field.float select:focus+label{color:#b53a14}
+.field.float input:focus,.field.float textarea:focus,.field.float select:focus{border-color:#101319;outline:none;box-shadow:0 0 0 1px #101319}
+.field.float input:user-invalid+label,.field.float textarea:user-invalid+label{color:#c9431b}
+.field-row .field.float{margin-bottom:14px}
+.field.float textarea+label{top:18px;transform:none;white-space:normal;line-height:1.35}
+.field.float textarea:focus+label,.field.float textarea:not(:placeholder-shown)+label{top:8px;white-space:nowrap;line-height:1.25}
+.field.float textarea:focus,.field.float textarea:not(:placeholder-shown){padding-top:30px}
+@media(max-width:767px){.field-row{gap:0}}
+
+/* touch devices: iOS Safari zooms into any field whose text is under 16px, so form text is 16px on phones and tablets.
+   Pinch-zoom stays available (no maximum-scale in the viewport tag), which keeps the site accessible. */
+@media (pointer:coarse),(max-width:1024px){
+  input,select,textarea,.field input,.field textarea,.field select,.field.float input,.field.float textarea,.field.float select{font-size:16px}
+  .field.float label{font-size:16px}
+}
+
 /* form notices: clear success and failure states */
 .form-notice{display:none}
 .form-notice.success,.form-notice.error{display:flex;gap:12px;align-items:flex-start;border-radius:12px;padding:16px 18px;margin-top:20px;animation:result-in .35s ease-out}

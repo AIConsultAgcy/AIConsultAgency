@@ -5,8 +5,9 @@
   <section class="newsletter"><div class="form-panel"><p class="eyebrow">A NOTE WORTH OPENING</p><h2>One useful idea. Every two weeks.</h2><p>Workflow breakdowns, measurement methods, and lessons from building. No inflated AI predictions.</p>
     <form data-lead="newsletter" novalidate>
       <div class="honeypot" aria-hidden="true"><label for="n-website">Leave this empty</label><input id="n-website" name="website" tabindex="-1" autocomplete="off"></div>
-      <div class="field"><label for="newsletter-email">Work email</label><input id="newsletter-email" name="email" type="email" required maxlength="254" autocomplete="email"></div>
-      <label class="checkbox"><input name="consent" type="checkbox" required value="yes"><span>Send me Fands Field Notes. I can unsubscribe at any time. See our <a href="/privacy"><u>privacy notice</u></a>.</span></label>
+      <p class="req-note"><span class="req" aria-hidden="true">*</span> Required</p>
+      <div class="field"><label for="newsletter-email">Work email <span class="req" aria-hidden="true">*</span></label><input id="newsletter-email" name="email" type="email" required maxlength="254" autocomplete="email"></div>
+      <label class="checkbox"><input name="consent" type="checkbox" required aria-required="true" value="yes"><span><span class="req" aria-hidden="true">*</span> Send me Fands Field Notes. I can unsubscribe at any time. See our <a href="/privacy"><u>privacy notice</u></a>.</span></label>
       <button class="button" type="submit">Join the Field Notes list ↗</button>
       <div class="form-notice" aria-live="polite"></div>
     </form>

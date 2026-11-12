@@ -3,21 +3,36 @@
   <section class="page-head">{{crumbs}}<p class="eyebrow">ONE CONVERSATION. A CLEARER NEXT STEP.</p><h1>Start with the<br><em>sticky part.</em></h1><p>Tell us where the work gets stuck. We’ll use the conversation to understand the process, assess fit, and identify a sensible first step.</p></section>
   <section class="contact-grid">
     <aside>
-      <h3>A good fit looks like:</h3><p>A consulting or specialist service firm with 20–100 people, a recurring operational handoff, and someone who owns the process.</p>
-      <h3>What we’ll look at</h3><p>Volume. Handling time. Quality. The systems involved. Where a person needs to stay in control.</p>
-      <h3>No need for a perfect brief.</h3><p>A description of the problem is enough to begin. There is no commitment to a paid engagement.</p>
+      <h3>A good fit looks like:</h3><p>A small or mid-size US business that loses time or customers to missed calls, slow replies to leads, manual admin or a quiet marketing pipeline, and an owner or manager ready to fix one of them first.</p>
+      <h3>Who we work with</h3><p>Home services, med spas and wellness, dental and health clinics, real estate, professional services, and local retail and e-commerce.</p>
+      <h3>What happens next</h3><p>We read your message and reply within two business days. On a free 30-minute call we ask what the problem costs you before we talk about us, then tell you honestly whether AI is the right fix.</p>
+      <h3>No need for a perfect brief.</h3><p>A few sentences about the problem are enough to begin. There is no commitment to a paid engagement.</p>
       <p class="fine">We reply within two business days. Prefer email? Write to <a href="mailto:hello@fands.io">hello@fands.io</a>.</p>
     </aside>
     <div class="form-panel">
       <form data-lead="inquiry" novalidate>
         <div class="honeypot" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
-        <div class="field-row"><div class="field"><label for="name">Your name</label><input id="name" name="name" required maxlength="100" autocomplete="name"></div><div class="field"><label for="company">Company</label><input id="company" name="company" required maxlength="150" autocomplete="organization"></div></div>
-        <div class="field"><label for="email">Work email</label><input id="email" name="email" type="email" required maxlength="254" autocomplete="email"></div>
-        <div class="field"><label for="interest">Where would you like to start?</label><select id="interest" name="interest"><option value="diagnostic">Workflow diagnostic</option><option value="pilot">Workflow pilot</option><option value="care">Ongoing system care</option><option value="unsure">Help me find the right starting point</option></select></div>
-        <div class="field"><label for="workflow">Which handoff is slowing your team down?</label><textarea id="workflow" name="workflow" required minlength="10" maxlength="2000" placeholder="For example: moving a signed client into our project system takes three people and a lot of chasing."></textarea></div>
-        <p class="fine">Please leave out client names, credentials, and confidential information.</p>
-        <label class="checkbox"><input name="consent" type="checkbox" required value="yes"><span>I agree that Fands may use these details to respond to my inquiry. See our <a href="/privacy"><u>privacy notice</u></a>.</span></label>
-        <button class="button" type="submit">Request a workflow review ↗</button>
+        <p class="req-note"><span class="req" aria-hidden="true">*</span> Required</p>
+        <div class="field-row">
+          <div class="field float"><input id="name" name="name" required aria-required="true" maxlength="100" autocomplete="name" placeholder=" "><label for="name">Your name <span class="req" aria-hidden="true">*</span></label></div>
+          <div class="field float"><input id="company" name="company" maxlength="150" autocomplete="organization" placeholder=" "><label for="company">Company <span class="opt">(optional)</span></label></div>
+        </div>
+        <div class="field-row">
+          <div class="field float"><input id="email" name="email" type="email" required aria-required="true" maxlength="254" autocomplete="email" inputmode="email" placeholder="you@company.com"><label for="email">Work email <span class="req" aria-hidden="true">*</span></label></div>
+          <div class="field float"><input id="phone" name="phone" type="tel" maxlength="30" autocomplete="tel" inputmode="tel" pattern="[\d\s+\(\)\.\-]{7,30}" title="Digits, spaces and + ( ) . - only" placeholder="(555) 123-4567"><label for="phone">Phone <span class="opt">(optional)</span></label></div>
+        </div>
+        <div class="field float is-select"><select id="interest" name="interest">
+          <option value="unsure">Not sure yet — help me choose</option>
+          <option value="strategy">Strategy &amp; Entry — AI audit and ongoing support</option>
+          <option value="operations">AI Operations — automation and lead follow-up</option>
+          <option value="assistants">AI Assistants — AI receptionist and custom agents</option>
+          <option value="growth">Media &amp; Growth — content, AI search and ads</option>
+          <option value="development">Digital Development — websites and apps</option>
+        </select><label for="interest">Area you’re interested in</label></div>
+        <div class="field float"><textarea id="workflow" name="workflow" maxlength="2000" placeholder="For example: we miss calls while we’re on job sites, and quote requests wait until the evening for a reply."></textarea><label for="workflow">Where is your business losing time or customers? <span class="opt">(optional)</span></label></div>
+        <p class="fine">Please don’t include passwords, payment details, or customers’ personal or health information.</p>
+        <label class="checkbox"><input name="consent" type="checkbox" required aria-required="true" value="yes"><span><span class="req" aria-hidden="true">*</span> I agree that Fands may use these details to respond to my inquiry, including by phone if I gave a number. See our <a href="/privacy"><u>privacy notice</u></a>.</span></label>
+        <button class="button orange" type="submit">Send my request {{i:up-right:18}}</button>
         <div class="form-notice" aria-live="polite"></div>
       </form>
     </div>

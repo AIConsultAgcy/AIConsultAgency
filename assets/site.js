@@ -187,12 +187,12 @@
 
   /* forms: post to /api/lead; if the hand-off is unavailable, open a prefilled email so nothing is lost */
   var interest = new URLSearchParams(location.search).get('interest');
-  var sel = $('#interest'); if (sel && interest && /^(diagnostic|pilot|care)$/.test(interest)) sel.value = interest;
+  var sel = $('#interest'); if (sel && interest && $$('option', sel).some(function (o) { return o.value === interest; })) sel.value = interest;
   // Three forms share one flow. Success and failure each show a clear notice; on failure the visitor gets a prefilled
   // email to send instead, so nothing is lost. Spam: a hidden honeypot field plus the time taken to fill the form.
   var FORMS = {
     inquiry: { name: 'workflow_inquiry', lead: 'workflow_review', ok: ['Request received.', 'Thanks — we’ll reply within two business days. Want to talk sooner? <a href="https://cal.com/fands/intro-call" data-cal-namespace="intro-call" data-cal-link="fands/intro-call">Book a free call</a>.'],
-      mail: function (d) { return ['Workflow review: ' + (d.company || ''), 'Name: ' + d.name + '\nCompany: ' + d.company + '\nEmail: ' + d.email + '\nStarting point: ' + d.interest + '\n\nThe handoff slowing us down:\n' + d.workflow]; } },
+      mail: function (d) { var opt = $('#interest option:checked'); return ['Inquiry from ' + (d.company || 'the website'), 'Name: ' + d.name + '\nCompany: ' + d.company + '\nEmail: ' + d.email + (d.phone ? '\nPhone: ' + d.phone : '') + '\nService: ' + (opt ? opt.textContent : d.interest) + '\n\nWhere we are losing time or customers:\n' + d.workflow]; } },
     newsletter: { name: 'newsletter', lead: 'newsletter', ok: ['You’re on the list.', 'The first Field Note arrives on a Tuesday. You can unsubscribe from any email.'],
       mail: function (d) { return ['Field Notes: please add me', 'Please add ' + d.email + ' to Fands Field Notes.']; } },
     privacy: { name: 'privacy_request', lead: 'privacy_request', ok: ['Request received.', 'We’ll confirm within 10 business days and respond within 45 days. We may email you to verify your identity.'],
