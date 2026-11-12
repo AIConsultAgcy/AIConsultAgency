@@ -83,42 +83,127 @@
   /* workflow demo: synthetic inputs, a draft, a human approval */
   var lab = $('.workflow-lab');
   if (lab) {
+    // Each example: what arrives, the steps the system takes, the draft it produces, who approves, and a before/after.
     var examples = [
-      { label: 'After-hours call', title: 'A call after closing becomes a booking.', input: 'Phone call, 7:42 pm, after closing: “Do you have anything Thursday afternoon? It’s for a cleaning.”', fields: [['Caller needs', 'Cleaning, Thursday afternoon'], ['Offered', 'Thursday 2:30 pm, accepted'], ['Next step', 'Text confirmation + CRM record']], output: 'Booking drafted', review: 'Requests outside your booking rules go to a named person with the full transcript.', metric: 'After-hours calls answered and booked' },
-      { label: 'New lead', title: 'A weekend inquiry gets a reply in minutes.', input: 'Web form, Saturday 9:14 am: “Looking for a quote on a kitchen remodel, about 200 square feet. Budget around $40K.”', fields: [['Lead', 'Kitchen remodel, 200 sq ft, ~$40K'], ['Reply', 'Text + email with two call times'], ['Pipeline', 'New lead, quote stage, follow-up set']], output: 'Draft first reply', review: 'The owner approves the first replies until the tone is right.', metric: 'Minutes from inquiry to first reply' },
-      { label: 'Invoice inbox', title: 'An inbox of invoices becomes clean books.', input: 'Email with PDF attached: “Invoice 4471 for October supplies, net 30. Reference PO 2291.”', fields: [['Vendor', 'Matched to an existing supplier'], ['Amount', '$1,840.00, due in 30 days'], ['Check', 'PO 2291 found, quantities agree']], output: 'Draft bill entry', review: 'Finance approves before anything posts. Mismatches are flagged for a person.', metric: 'Minutes of handling per invoice' }
+      { title: 'A call after closing becomes a booking.', desc: 'The AI receptionist answers, checks the calendar and books. Your team sees a finished booking in the morning.', source: 'Phone call · 7:42 pm', input: '“Hi, do you have anything Thursday afternoon? It’s for a cleaning.”',
+        steps: ['Call answered and transcribed', 'Request understood: cleaning, Thursday pm', 'Calendar checked against booking rules', 'Confirmation text drafted'],
+        fields: [['Caller needs', 'Cleaning, Thursday afternoon'], ['Offered', 'Thursday 2:30 pm, accepted'], ['Next step', 'Text confirmation + CRM record']], output: 'Booking drafted', review: 'Requests outside your booking rules go to a named person with the full transcript.',
+        before: 'Voicemail until 9 am the next day', after: 'Booked during the call', metric: 'After-hours calls answered and booked', service: ['AI Receptionist', '/services/ai-assistants#ai-receptionist'] },
+      { title: 'A weekend inquiry gets a reply in minutes.', desc: 'Lead-to-revenue automation replies right away, files the lead and schedules the follow-up.', source: 'Web form · Saturday 9:14 am', input: '“Looking for a quote on a kitchen remodel, about 200 square feet. Budget around $40K.”',
+        steps: ['Inquiry captured from the website', 'Project, size and budget extracted', 'Lead created in the CRM pipeline', 'Personal first reply drafted'],
+        fields: [['Lead', 'Kitchen remodel, 200 sq ft, ~$40K'], ['Reply', 'Text + email with two call times'], ['Pipeline', 'New lead, quote stage, follow-up set']], output: 'Draft first reply', review: 'The owner approves the first replies until the tone is right.',
+        before: 'Reply on Monday, if remembered', after: 'Reply in under 5 minutes', metric: 'Minutes from inquiry to first reply', service: ['Lead-to-Revenue Automation', '/services/ai-operations#lead-to-revenue-automation'] },
+      { title: 'An inbox of invoices becomes clean books.', desc: 'Business process automation reads each invoice, matches it and drafts the entry for review.', source: 'Email with PDF attached', input: '“Invoice 4471 for October supplies, net 30. Reference PO 2291.”',
+        steps: ['PDF read and fields extracted', 'Vendor matched to existing supplier', 'Purchase order 2291 checked', 'Bill entry drafted, not posted'],
+        fields: [['Vendor', 'Matched to an existing supplier'], ['Amount', '$1,840.00, due in 30 days'], ['Check', 'PO 2291 found, quantities agree']], output: 'Draft bill entry', review: 'Finance approves before anything posts. Mismatches are flagged for a person.',
+        before: 'Typed in by hand, one by one', after: 'Checked and approved in one click', metric: 'Minutes of handling per invoice', service: ['Business Process Automation', '/services/ai-operations#business-process-automation'] },
+      { title: 'One note becomes a week of content.', desc: 'The AI content engine turns a short brief into posts, an email and ads in your brand voice.', source: 'Owner note · Monday', input: '“We’re running a spring facial promo: 20% off through April. Let’s push it this week.”',
+        steps: ['Brief read against the brand voice guide', 'Week planned across channels', 'Posts, email and ads drafted', 'Calendar queued for approval'],
+        fields: [['Social', '3 posts + 1 short video script'], ['Email', 'Promo email to past clients'], ['Ads', '2 Meta ad variants']], output: 'Content week drafted', review: 'The owner approves the calendar before anything is published.',
+        before: 'One post, if there’s time', after: 'A full week queued in one approval', metric: 'Pieces published on schedule', service: ['AI Content Engine', '/services/media-growth#ai-content-engine'] },
+      { title: 'A buyer asks AI who to hire.', desc: 'AI search visibility checks how assistants answer today and drafts the fixes that help you get cited.', source: 'Question to an AI assistant', input: '“Who is the best HVAC repair company near Pasadena?”',
+        steps: ['AI answers checked across assistants', 'Competitors that get cited identified', 'Missing signals found on your profile', 'Visibility fixes drafted'],
+        fields: [['Today', 'Two competitors cited, you are not'], ['Gaps', 'Incomplete Google profile, no service FAQ'], ['Fixes', 'Profile update, schema, 3 answer pages']], output: 'Visibility plan drafted', review: 'You approve every page and profile change before it goes live.',
+        before: 'Not mentioned in AI answers', after: 'Fixes shipped, mentions tracked monthly', metric: 'Monthly AI citations for your business', service: ['AI Search Visibility', '/services/media-growth#ai-search-visibility'] }
     ];
-    var tabs = $$('[role=tab]', lab), body = $('#workflow-example', lab), choice = 0, stage = 0;
+    // stage: 0 ready, 1 processing, 2 awaiting review, 3 approved
+    var tabs = $$('[role=tab]', lab), body = $('#workflow-example', lab), choice = 0, stage = 0, timer = 0, run = 0;
+    var stepsHtml = function (x, done) {
+      return '<ol class="machine-steps">' + x.steps.map(function (s, i) {
+        var st = i < done ? 'done' : i === done ? 'active' : '';
+        return '<li class="' + st + '"><i>' + (i < done ? ICON.checkSm : '') + '</i>' + esc(s) + '</li>';
+      }).join('') + '</ol>';
+    };
     var draw = function () {
       var x = examples[choice];
       tabs.forEach(function (t, i) { t.setAttribute('aria-selected', String(i === choice)); t.tabIndex = i === choice ? 0 : -1; });
       body.setAttribute('aria-labelledby', 'workflow-tab-' + choice);
       $('.lab-copy h3', body).textContent = x.title;
+      $('.lab-desc', body).textContent = x.desc;
       $('.lab-metric strong', body).textContent = x.metric;
-      $('.machine-status', body).textContent = stage === 0 ? 'Ready to process' : stage === 1 ? 'Ready for review' : 'Approved in this demo';
+      var sl = $('.lab-service', body); sl.href = x.service[1]; $('span', sl).textContent = x.service[0];
+      $('.machine-status', body).textContent = ['Ready to process', 'Processing…', 'Ready for review', 'Approved in this demo'][stage];
       $('.source-note', body).classList.toggle('processed', stage > 0);
+      $('.source-note span', body).textContent = x.source;
       $('.source-note p', body).textContent = x.input;
       var slot = $('.machine-slot', body);
       if (stage === 0) {
         slot.innerHTML = '<div class="machine-idle">' + ICON.layers + '<p>A structured draft starts here.</p><button type="button" class="button ink" data-go="1">Run the example ' + ICON.arrowRight + '</button></div>';
+      } else if (stage === 1) {
+        slot.innerHTML = '<div class="machine-result">' + stepsHtml(x, 0) + '</div>';
       } else {
-        slot.innerHTML = '<div class="machine-result" aria-live="polite"><div class="result-title"><strong>' + esc(x.output) + '</strong>' + (stage === 2 ? '<span class="approved">' + ICON.checkSm + 'Approved</span>' : '<span>Awaiting review</span>') + '</div><dl>' +
+        slot.innerHTML = '<div class="machine-result"><div class="result-title"><strong>' + esc(x.output) + '</strong>' + (stage === 3 ? '<span class="approved">' + ICON.checkSm + 'Approved</span>' : '<span>Awaiting review</span>') + '</div>' + stepsHtml(x, x.steps.length) + '<dl>' +
           x.fields.map(function (f) { return '<div><dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1]) + '</dd></div>'; }).join('') +
           '</dl><p class="review-note">' + ICON.shield + esc(x.review) + '</p>' +
-          (stage === 1 ? '<button type="button" class="button ink" data-go="2">Approve this demo ' + ICON.check + '</button>' : '<button type="button" class="reset-button" data-go="0">Reset example ' + ICON.reset + '</button>') + '</div>';
+          (stage === 2 ? '<button type="button" class="button ink" data-go="3">Approve this demo ' + ICON.check + '</button>'
+            : '<div class="compare"><div><span>Without the system</span><strong>' + esc(x.before) + '</strong></div><div class="on"><span>With the system</span><strong>' + esc(x.after) + '</strong></div></div><button type="button" class="reset-button" data-go="0">Reset example ' + ICON.reset + '</button>') + '</div>';
       }
+      $('.machine-live', body).textContent = stage === 2 ? x.output + ', awaiting review.' : stage === 3 ? 'Approved.' : '';
+    };
+    // processing: tick the steps one by one, then show the draft. Reduced motion skips straight to the draft.
+    var process = function () {
+      var x = examples[choice], my = ++run, i = 0;
+      if (reduce) { stage = 2; draw(); return; }
+      var tick = function () {
+        if (my !== run) return;
+        i++;
+        if (i > x.steps.length) { stage = 2; draw(); var b = $('.machine-slot button', body); if (b) b.focus(); return; }
+        $('.machine-slot', body).innerHTML = '<div class="machine-result">' + stepsHtml(x, i) + '</div>';
+        timer = setTimeout(tick, 520);
+      };
+      timer = setTimeout(tick, 420);
+    };
+    var go = function (n) {
+      clearTimeout(timer); run++;
+      stage = n; draw();
+      if (n === 1) { process(); track('demo_run', { scenario: tabs[choice].textContent.trim() }); }
+      else { var nb = $('.machine-slot button', body); if (nb) nb.focus(); }
     };
     lab.addEventListener('click', function (e) {
-      var go = e.target.closest('[data-go]'); if (go) { stage = +go.dataset.go; draw(); var nb = $('.machine-slot button', body); if (nb) nb.focus(); return; }
-      var t = e.target.closest('[role=tab]'); if (t) { choice = tabs.indexOf(t); stage = 0; draw(); }
+      var g = e.target.closest('[data-go]'); if (g) { go(+g.dataset.go); return; }
+      var t = e.target.closest('[role=tab]'); if (t) { choice = tabs.indexOf(t); go(0); }
     });
     lab.addEventListener('keydown', function (e) {
       var t = e.target.closest('[role=tab]'); if (!t) return;
       var i = tabs.indexOf(t), n = i;
       if (e.key === 'ArrowRight') n = (i + 1) % tabs.length; else if (e.key === 'ArrowLeft') n = (i + tabs.length - 1) % tabs.length; else if (e.key === 'Home') n = 0; else if (e.key === 'End') n = tabs.length - 1; else return;
-      e.preventDefault(); choice = n; stage = 0; draw(); tabs[n].focus();
+      e.preventDefault(); choice = n; go(0); tabs[n].focus(); tabs[n].scrollIntoView({ block: 'nearest', inline: 'nearest' });
     });
     draw();
+  }
+
+  /* floating booking button: lift it above the footer's last row so "Back to top" and legal links stay clear */
+  var fab = $('.book-fab'), fb = $('.footer-bottom');
+  if (fab && fb) {
+    var lift = function () {
+      var r = fb.getBoundingClientRect(), overlap = innerHeight - r.top;
+      fab.style.transform = overlap > 0 ? 'translateY(' + (-Math.min(overlap, r.height + 12)) + 'px)' : '';
+    };
+    addEventListener('scroll', lift, { passive: true }); addEventListener('resize', lift); lift();
+  }
+
+  /* legal switcher: on narrow screens it scrolls sideways, so bring the current document into view */
+  var ln = $('.legal-nav'), cur = ln && $('[aria-current]', ln);
+  if (cur && ln.scrollWidth > ln.clientWidth) ln.scrollLeft = cur.offsetLeft - (ln.clientWidth - cur.offsetWidth) / 2;
+
+  /* privacy choices: analytics opt-out saved in this browser; a GPC signal always wins */
+  var choice = $('[data-privacy-choice]');
+  if (choice) {
+    var sw = $('.switch', choice), status = $('.status', choice), gpc = !!navigator.globalPrivacyControl;
+    var getOff = function () { try { return localStorage.getItem('fands-optout') === '1'; } catch (e) { return false; } };
+    var paint = function () {
+      var off = gpc || getOff();
+      sw.setAttribute('aria-checked', String(!off)); $('span', sw).textContent = off ? 'Off' : 'On';
+      sw.disabled = gpc;
+      status.innerHTML = gpc ? 'Analytics is <b>off</b>: your browser sends a Global Privacy Control signal.' : off ? 'Analytics is <b>off</b> on this browser. You have opted out of sale and sharing.' : 'Analytics is on.';
+    };
+    sw.addEventListener('click', function () {
+      var off = !getOff();
+      try { if (off) localStorage.setItem('fands-optout', '1'); else localStorage.removeItem('fands-optout'); } catch (e) {}
+      if (typeof window.gtag === 'function') window.gtag('consent', 'update', { analytics_storage: off ? 'denied' : 'granted' });
+      paint();
+    });
+    paint();
   }
 
   /* estimator: volume × minutes ÷ 60 × assumed reduction */

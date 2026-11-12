@@ -13,6 +13,11 @@ ICONS = {
     'down': '<path d="M12 5v14"/><path d="m19 12-7 7-7-7"/>',
     'plus': '<path d="M5 12h14"/><path d="M12 5v14"/>',
     'x': '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+    'linkedin': '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/>',
+    'instagram': '<rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>',
+    'youtube': '<path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/>',
+    'calendar': '<rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/>',
+    'menu':'<path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>',
     'chevron': '<path d="m6 9 6 6 6-6"/>',
     'pause': '<rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/>',
     'play': '<polygon points="6 3 20 12 6 21 6 3"/>',
@@ -31,26 +36,32 @@ MARK = ('<svg viewBox="0 0 100 100" aria-hidden="true"><rect class="s" y="38" wi
 HEADER = '''<a class="skip" href="#main">Skip to content</a>
 <header class="site-header">
   <a href="/" aria-label="Fands, home" class="brand-logo"><span class="wm">{mark}Fands</span></a>
-  <nav class="desktop-nav" aria-label="Main navigation"><a href="/#services">Services</a><a href="/#demo">See it work</a><a href="/#approach">How to start</a><a href="/insights">Field notes</a></nav>
-  <div class="header-actions"><a class="header-contact" href="/contact">Let’s talk {{{{i:up-right:16}}}}</a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open navigation"><span class="ico-plus">{{{{i:plus:19}}}}</span><span class="ico-x" hidden>{{{{i:x:19}}}}</span></button></div>
+  <nav class="desktop-nav" aria-label="Main navigation"><a href="/services">Services</a><a href="/how-we-work">How we work</a><a href="/case-studies">Case studies</a><a href="/about">About</a><a href="/insights">Field notes</a><a href="/contact">Contact</a></nav>
+  <div class="header-actions"><a class="header-contact" href="/contact">Let’s talk {{{{i:up-right:16}}}}</a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open navigation"><span class="ico-plus">{{{{i:menu:19}}}}</span><span class="ico-x" hidden>{{{{i:x:19}}}}</span></button></div>
 </header>
 <nav id="site-menu" class="menu-panel" aria-label="Expanded navigation" hidden>
-  <a href="/#services">Services {{{{i:up-right:28}}}}</a><a href="/#demo">See it work {{{{i:up-right:28}}}}</a><a href="/#approach">How to start {{{{i:up-right:28}}}}</a><a href="/insights">Field notes {{{{i:up-right:28}}}}</a><a href="/contact">Start a conversation {{{{i:up-right:28}}}}</a>
+  <a href="/services">Services {{{{i:up-right:28}}}}</a><a href="/how-we-work">How we work {{{{i:up-right:28}}}}</a><a href="/case-studies">Case studies {{{{i:up-right:28}}}}</a><a href="/about">About {{{{i:up-right:28}}}}</a><a href="/insights">Field notes {{{{i:up-right:28}}}}</a><a href="/contact">Contact {{{{i:up-right:28}}}}</a>
   <p>Useful intelligence.<br>Built into the way you work.</p>
 </nav>'''.format(mark=MARK)
 
 FOOTER = '''<footer class="site-footer">
-  <div class="footer-top"><p>Useful intelligence.<br>Built into the way you work.</p><div><a href="/insights">Field notes {{{{i:up-right:16}}}}</a><a href="/contact">Start a conversation {{{{i:up-right:16}}}}</a><a href="mailto:hello@fands.io">hello@fands.io {{{{i:up-right:16}}}}</a><a href="/privacy">Privacy {{{{i:up-right:16}}}}</a><a href="https://www.linkedin.com/company/fands-ai/" target="_blank" rel="noopener noreferrer">LinkedIn {{{{i:up-right:16}}}}</a><a href="https://www.instagram.com/fands.ai" target="_blank" rel="noopener noreferrer">Instagram {{{{i:up-right:16}}}}</a><a href="https://www.youtube.com/@fands-ai" target="_blank" rel="noopener noreferrer">YouTube {{{{i:up-right:16}}}}</a></div></div>
+  <div class="footer-top"><p>Useful intelligence.<br>Built into the way you work.</p>
+    <nav class="footer-nav" aria-label="Footer">
+      <div><p class="fh">Explore</p><a href="/services">Services</a><a href="/how-we-work">How we work</a><a href="/case-studies">Case studies</a><a href="/insights">Field notes</a></div>
+      <div><p class="fh">Company</p><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy &amp; legal</a></div>
+      <div><p class="fh">Get in touch</p><a href="mailto:hello@fands.io">hello@fands.io</a><a href="https://cal.com/fands/intro-call" {{{{cal}}}}>Book a free call {{{{i:up-right:14}}}}</a>
+        <div class="socials"><a href="https://www.linkedin.com/company/fands-ai/" target="_blank" rel="noopener noreferrer" aria-label="Fands on LinkedIn">{{{{i:linkedin:18}}}}</a><a href="https://www.instagram.com/fands.ai" target="_blank" rel="noopener noreferrer" aria-label="Fands on Instagram">{{{{i:instagram:18}}}}</a><a href="https://www.youtube.com/@fands-ai" target="_blank" rel="noopener noreferrer" aria-label="Fands on YouTube">{{{{i:youtube:18}}}}</a></div></div>
+    </nav></div>
   <div class="footer-word" aria-hidden="true">Fands<span>{mark}</span></div>
-  <div class="footer-bottom"><span>© 2026 Fands</span><span>Built to work. Measured to matter.</span><a href="#main">Back to top ↑</a></div>
+  <div class="footer-bottom"><span>© 2026 Fands · <em class="footer-slogan">From friction to flow.</em></span><nav class="footer-legal" aria-label="Legal"><a href="/privacy">Privacy Policy</a><a href="/terms">Terms</a><a href="/cookies">Cookies</a><a href="/privacy-choices">Your Privacy Choices</a></nav><a href="#main">Back to top ↑</a></div>
 </footer>'''.format(mark=MARK)
 
 SCHEMA = {
     "@context": "https://schema.org", "@type": "ProfessionalService", "@id": SITE + "/#org", "name": "Fands",
     "url": SITE + "/", "logo": SITE + "/brand/icon-512.png", "image": SITE + "/brand/og-v2.png", "email": "hello@fands.io",
     "slogan": "From friction to flow.",
-    "description": "Fands is an AI media and systems agency. It builds and runs the systems that answer calls, follow up on leads, run back-office work and get a business found in search and AI answers.",
-    "knowsAbout": ["AI readiness audits", "business process automation", "lead follow-up automation", "AI receptionist", "AI search visibility", "AI content", "web development"],
+    "description": "Fands is an AI implementation agency for small and mid-size businesses in the United States. It builds and runs the systems that answer calls, follow up on leads, run back-office work and get a business found in search and AI answers.",
+    "areaServed": {"@type": "Country", "name": "United States"},    "knowsAbout": ["AI readiness audits", "business process automation", "lead follow-up automation", "AI receptionist", "AI search visibility", "AI content", "web development"],
     "makesOffer": [{"@type": "Offer", "name": "AI Readiness Audit & Roadmap"}, {"@type": "Offer", "name": "Managed AI Retainer"}, {"@type": "Offer", "name": "Business Process Automation"}, {"@type": "Offer", "name": "Lead-to-Revenue Automation"}, {"@type": "Offer", "name": "Knowledge Assistant & Analytics"}, {"@type": "Offer", "name": "AI Training & Enablement"}, {"@type": "Offer", "name": "AI Receptionist"}, {"@type": "Offer", "name": "Custom AI Agents & Apps"}, {"@type": "Offer", "name": "AI Content Engine"}, {"@type": "Offer", "name": "AI Search Visibility & Local SEO"}, {"@type": "Offer", "name": "Paid Media Management"}, {"@type": "Offer", "name": "Branding & Design"}, {"@type": "Offer", "name": "Web & App Development"}, {"@type": "Offer", "name": "Website & E-commerce Automation"}]}
 
 
@@ -69,6 +80,11 @@ HEAD = '''<!doctype html>
 <script src="https://cdn.userway.org/widget.js" data-account="OTeuoB7JqP"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  // Google Consent Mode defaults, set before GTM loads. No advertising storage is used. Analytics is turned off when the
+  // visitor opted out on /privacy-choices or their browser sends a Global Privacy Control signal.
+  (function(){{var off=!!navigator.globalPrivacyControl;try{{if(localStorage.getItem('fands-optout')==='1')off=true}}catch(e){{}}
+  gtag('consent','default',{{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:off?'denied':'granted'}});}})();
   window.dataLayer.push({{'gtm.start': new Date().getTime(), event: 'gtm.js'}});
 </script>
 <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-N3C2TK2J"></script>
@@ -110,7 +126,8 @@ SCULPTURE = '''<script type="importmap">{"imports":{"three":"https://cdn.jsdeliv
 <script type="module" src="/assets/sculpture.js?v={v}"></script>
 '''
 
-TAIL = '''<script src="/assets/site.js?v={v}"></script>
+TAIL = '''<a class="book-fab" href="/contact" {{{{cal}}}} aria-label="Book a free call">{{{{i:calendar:18}}}}<span class="long">Book a Free Call</span><span class="short">Book a call</span></a>
+<script src="/assets/site.js?v={v}"></script>
 {sculpture}<script>window.va=window.va||function(){{(window.vaq=window.vaq||[]).push(arguments)}};</script>
 <script defer src="/_vercel/insights/script.js"></script>
 <!-- Cal floating-popup embed code begins -->
@@ -119,7 +136,6 @@ TAIL = '''<script src="/assets/site.js?v={v}"></script>
 Cal("init", "intro-call", {{origin:"https://app.cal.com"}});
 Cal.config = Cal.config || {{}};
 Cal.config.forwardQueryParams = true;
-Cal.ns["intro-call"]("floatingButton", {{"calLink":"fands/intro-call","config":{{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}},"buttonText":"Book a Free Call","buttonTextColor":"#000000","buttonColor":"#FF7547"}});
 Cal.ns["intro-call"]("ui", {{"hideEventTypeDetails":false,"layout":"month_view"}});
 </script>
 <!-- Cal floating-popup embed code ends -->
@@ -127,23 +143,74 @@ Cal.ns["intro-call"]("ui", {{"hideEventTypeDetails":false,"layout":"month_view"}
 </html>
 '''
 
+# {{cal}} expands to the attributes that open the Cal.com booking popup in place (the href stays /contact as a fallback).
+CAL = '''data-cal-namespace="intro-call" data-cal-link="fands/intro-call" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}\''''
+
+# {{closing}} is the shared final call to action used at the end of most pages.
+CLOSING = '''<section class="closing" aria-labelledby="closing-title">
+    <div class="closing-top"><span>Start with one thing.</span><span>Make it count.</span></div>
+    <a href="/contact" class="closing-link" {{cal}}><h2 id="closing-title">What’s your<br>next <em>move?</em></h2><span class="closing-arrow">{{i:up-right:80}}</span></a>
+    <div class="closing-bottom"><p>Thirty minutes, free. Tell us where the work slows down.</p><a href="/contact" {{cal}}>Book a Free Call {{i:right:18}}</a></div>
+  </section>'''
+
+
+# {{legal-nav}}: one switcher shared by every legal document; each document has its own URL.
+LEGAL = [('Privacy Policy', '/privacy'), ('Terms of Service', '/terms'), ('Cookie Policy', '/cookies'),
+         ('AI & Client Data', '/ai-data-policy'), ('Accessibility', '/accessibility'), ('Your Privacy Choices', '/privacy-choices')]
+
+
+def legal_nav(current):
+    links = ''.join(f'<a href="{p}"' + (' aria-current="page"' if p == current else '') + f'>{n}</a>' for n, p in LEGAL)
+    return f'<nav class="legal-nav" aria-label="Legal documents"><p class="fh">Legal documents</p>{links}</nav>'
+
+
+def crumbs_html(crumbs):
+    """Visible breadcrumb trail for the page head. crumbs = [["Services", "/services"], ["AI Operations", "/services/ai-operations"]]."""
+    items = ['<li><a href="/">Home</a></li>']
+    for i, (name, path) in enumerate(crumbs):
+        last = i == len(crumbs) - 1
+        items.append(f'<li><a href="{path}" aria-current="page">{name}</a></li>' if last else f'<li><a href="{path}">{name}</a></li>')
+    return '<nav class="crumbs" aria-label="Breadcrumb"><ol>' + ''.join(items) + '</ol></nav>'
+
+
+def crumbs_schema(crumbs):
+    trail = [["Home", "/"]] + crumbs
+    return {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": i + 1, "name": n, "item": SITE + p} for i, (n, p) in enumerate(trail)]}
+
+
+def ld(obj):
+    return '<script type="application/ld+json">' + json.dumps(obj, separators=(',', ':'), ensure_ascii=False) + '</script>\n'
+
+
 def main():
-    import hashlib
+    import hashlib, datetime
     v = hashlib.sha1(b''.join((ROOT / 'assets' / f).read_bytes() for f in ('site.css', 'site.js', 'sculpture.js'))).hexdigest()[:8]
+    pages = []
     for src in sorted((ROOT / 'src').glob('*.html')):
         first, body = src.read_text(encoding='utf-8').split('\n', 1)
         meta = json.loads(first)
-        extra = ''
-        if meta.get('schema'):
-            extra = '<script type="application/ld+json">' + json.dumps(SCHEMA, separators=(',', ':')) + '</script>\n'
+        extra = ld(SCHEMA) if meta.get('schema') else ''
+        crumbs = meta.get('crumbs')
+        if crumbs:
+            extra += ld(crumbs_schema(crumbs))
+        body = body.replace('{{crumbs}}', crumbs_html(crumbs) if crumbs else '').replace('{{legal-nav}}', legal_nav(meta['path']))
         html = (HEAD.format(title=meta['title'], description=meta['description'], url=SITE + meta['path'], v=v, extra=extra)
                 + (INTRO if meta.get('hero') else '') + HEADER + '\n' + body.strip() + '\n' + FOOTER + '\n'
                 + TAIL.format(v=v, sculpture=SCULPTURE.replace('{v}', v) if meta.get('hero') else ''))
+        html = html.replace('{{closing}}', CLOSING).replace('{{cal}}', CAL)
         html = re.sub(r'\{\{i:([a-z-]+)(?::(\d+))?(?::([a-z-]+))?\}\}', icon, html)
         out = ROOT / meta['out']
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(html, encoding='utf-8')
+        pages.append(meta)
         print(f'built {meta["out"]} ({len(html):,} bytes)')
+    # sitemap: every built page, most important first
+    today = datetime.date.today().isoformat()
+    pages.sort(key=lambda m: -float(m.get('priority', 0.5)))
+    rows = ''.join(f'  <url><loc>{SITE}{m["path"]}</loc><lastmod>{today}</lastmod><priority>{float(m.get("priority", 0.5)):.1f}</priority></url>\n' for m in pages)
+    (ROOT / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + rows + '</urlset>\n', encoding='utf-8')
+    print(f'built sitemap.xml ({len(pages)} urls)')
 
 if __name__ == '__main__':
     main()
