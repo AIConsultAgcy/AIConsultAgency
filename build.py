@@ -104,7 +104,7 @@ HEAD = '''<!doctype html>
 <link rel="stylesheet" href="/assets/site.css?v={v}">
 <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/brand/favicon.ico" sizes="32x32">
-<link rel="apple-touch-icon" href="/brand/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/brand/apple-touch-icon.png?v=2">
 <link rel="manifest" href="/site.webmanifest">
 <meta property="og:type" content="{og_type}">
 <meta property="og:site_name" content="Fands">

@@ -181,8 +181,12 @@
   /* share button: opens the device's own share sheet; where there is none (most desktops), copies the link instead */
   $$('[data-share]').forEach(function (b) {
     b.addEventListener('click', function () {
-      var data = { title: 'FANDS — AI Systems & Media Agency', text: 'FANDS: AI Systems & Media Agency. From Friction to Flow.', url: location.href.split('#')[0] };
-      track('cta_click', { link_text: 'Share links page', link_url: data.url });
+      var url = location.origin + location.pathname; // clean address: no utm or other query tags
+      // iPhone/iPad build a rich preview (site icon, title) only when the share holds the bare link; extra title/text
+      // turns it into a plain text share with Safari's generic compass icon. Other systems get a title as well.
+      var apple = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      var data = apple ? { url: url } : { title: 'FANDS — AI Systems & Media Agency', url: url };
+      track('cta_click', { link_text: 'Share links page', link_url: url });
       if (navigator.share) { navigator.share(data).catch(function () {}); return; }
       var toast = $('.links-toast');
       var done = function (msg) { if (!toast) return; toast.textContent = msg; toast.hidden = false; clearTimeout(b._t); b._t = setTimeout(function () { toast.hidden = true; }, 2200); };
