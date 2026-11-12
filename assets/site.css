@@ -252,7 +252,7 @@ main>:has(+ .closing){padding-bottom:130px}
 .link-btn.video .link-go{color:#ff8293}
 .link-btn.video:hover{background:linear-gradient(115deg,#ff003344,#ffffff14 58%,#ff75472b);border-color:#ff526d99;box-shadow:0 14px 38px #ff00332b,inset 0 0 34px #ff00331a}
 .link-btn.video:hover:before{opacity:1}
-.link-btn.video:hover .link-ico{background:#ff0033;color:#fff;transform:scale(1.06)}
+.link-btn.video:hover .link-ico{background:#ff0033;color:#fff;transform:rotate(-6deg)}
 @keyframes book-flow{50%{background-position:100% 0}}
 @keyframes book-shine{0%{left:-60%}55%,100%{left:130%}}
 @keyframes book-pulse{0%{box-shadow:0 0 0 0 #ff754766}70%{box-shadow:0 0 0 14px #ff754700}100%{box-shadow:0 0 0 0 #ff754700}}
