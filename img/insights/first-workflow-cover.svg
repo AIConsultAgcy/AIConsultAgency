@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-labelledby="t d">
+  <title id="t">Field Guide 001: Your first AI workflow should be boring</title>
+  <desc id="d">A scorecard rating five candidate workflows on frequency, input readiness, reviewability, risk and ownership; the highest-scoring row is highlighted in orange.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d1219"/><stop offset="1" stop-color="#080b10"/></linearGradient>
+    <linearGradient id="hot" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff7547"/><stop offset="1" stop-color="#ff9a73"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity=".035" stroke-width="1"/></pattern>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <rect width="1600" height="1000" fill="url(#grid)"/>
+
+  <!-- brand mark -->
+  <g transform="translate(96 92)">
+    <rect y="24" width="40" height="40" fill="#e0e6eb"/><rect x="24" width="40" height="40" fill="#e0e6eb"/><rect x="24" y="24" width="16" height="16" fill="#ff7547"/>
+    <text x="88" y="50" font-family="Manrope, Arial, sans-serif" font-size="26" font-weight="600" letter-spacing="3" fill="#8793a0">FIELD GUIDE 001</text>
+  </g>
+
+  <!-- scorecard -->
+  <g font-family="Manrope, Arial, sans-serif">
+    <text x="96" y="262" font-size="22" font-weight="600" letter-spacing="3" fill="#5f6b77">CANDIDATE WORKFLOW</text>
+    <text x="1040" y="262" font-size="22" font-weight="600" letter-spacing="3" fill="#5f6b77">SCORE</text>
+    <line x1="96" y1="290" x2="1504" y2="290" stroke="#2a313b" stroke-width="2"/>
+
+    <!-- row 1 -->
+    <text x="96" y="372" font-size="40" fill="#c9d1d9">Rebrand the whole company with AI</text>
+    <g fill="#2a313b"><circle cx="1060" cy="358" r="14"/><circle cx="1104" cy="358" r="14"/><circle cx="1148" cy="358" r="14"/><circle cx="1192" cy="358" r="14"/><circle cx="1236" cy="358" r="14"/></g>
+    <g fill="#6c7884"><circle cx="1060" cy="358" r="14"/><circle cx="1104" cy="358" r="14"/></g>
+    <text x="1504" y="372" font-size="40" font-weight="600" fill="#6c7884" text-anchor="end">3/10</text>
+    <line x1="96" y1="420" x2="1504" y2="420" stroke="#1d232b" stroke-width="2"/>
+
+    <!-- row 2: the winner -->
+    <rect x="72" y="438" width="1456" height="120" rx="22" fill="#ff7547" fill-opacity=".1" stroke="#ff7547" stroke-opacity=".55" stroke-width="2"/>
+    <text x="96" y="512" font-size="40" font-weight="600" fill="#ffffff">Signed client → project kickoff pack</text>
+    <g fill="url(#hot)"><circle cx="1060" cy="498" r="14"/><circle cx="1104" cy="498" r="14"/><circle cx="1148" cy="498" r="14"/><circle cx="1192" cy="498" r="14"/><circle cx="1236" cy="498" r="14"/></g>
+    <text x="1504" y="512" font-size="40" font-weight="700" fill="#ff8f66" text-anchor="end">9/10</text>
+    <line x1="96" y1="576" x2="1504" y2="576" stroke="#1d232b" stroke-width="2"/>
+
+    <!-- row 3 -->
+    <text x="96" y="652" font-size="40" fill="#c9d1d9">Answer every customer email on its own</text>
+    <g fill="#2a313b"><circle cx="1060" cy="638" r="14"/><circle cx="1104" cy="638" r="14"/><circle cx="1148" cy="638" r="14"/><circle cx="1192" cy="638" r="14"/><circle cx="1236" cy="638" r="14"/></g>
+    <g fill="#6c7884"><circle cx="1060" cy="638" r="14"/><circle cx="1104" cy="638" r="14"/><circle cx="1148" cy="638" r="14"/></g>
+    <text x="1504" y="652" font-size="40" font-weight="600" fill="#6c7884" text-anchor="end">5/10</text>
+    <line x1="96" y1="700" x2="1504" y2="700" stroke="#1d232b" stroke-width="2"/>
+
+    <!-- row 4 -->
+    <text x="96" y="776" font-size="40" fill="#c9d1d9">Check intake forms are complete</text>
+    <g fill="#2a313b"><circle cx="1060" cy="762" r="14"/><circle cx="1104" cy="762" r="14"/><circle cx="1148" cy="762" r="14"/><circle cx="1192" cy="762" r="14"/><circle cx="1236" cy="762" r="14"/></g>
+    <g fill="#9aa7b4"><circle cx="1060" cy="762" r="14"/><circle cx="1104" cy="762" r="14"/><circle cx="1148" cy="762" r="14"/><circle cx="1192" cy="762" r="14"/></g>
+    <text x="1504" y="776" font-size="40" font-weight="600" fill="#9aa7b4" text-anchor="end">8/10</text>
+    <line x1="96" y1="824" x2="1504" y2="824" stroke="#1d232b" stroke-width="2"/>
+
+    <text x="96" y="904" font-size="24" letter-spacing="2" fill="#5f6b77">FREQUENCY · INPUTS · REVIEWABILITY · RISK · OWNERSHIP</text>
+  </g>
+</svg>

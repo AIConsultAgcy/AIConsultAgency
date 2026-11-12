@@ -147,6 +147,45 @@
 .chips li{font-size:12px;line-height:1.3;color:#46535d;border:1px solid #c4ccd0;border-radius:100px;padding:6px 12px}
 
 
+/* closing CTA: it overlaps the section above by its corner radius, so the rounded corners show that section's
+   background instead of a strip of page colour. The section above gets the same amount of extra bottom space. */
+.closing{position:relative;z-index:1;margin-top:-32px}
+main>:has(+ .closing){padding-bottom:130px}
+@media(max-width:767px){.closing{margin-top:-23px}main>:has(+ .closing){padding-bottom:88px}}
+
+/* page heads: no single orphan word on its own line */
+.page-head h1{text-wrap:balance}
+
+/* home services on phones: each practice collapses to its header plus a "show services" button */
+.pillar-toggle{display:none}
+@media(max-width:767px){
+  .pillar-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:16px;background:none;border:1px solid #b9c1c6;border-radius:100px;padding:11px 18px;min-height:46px;font-size:14px;font-weight:600;color:#111820}
+  .pillar-toggle svg{transition:transform .25s}
+  .pillar.open .pillar-toggle svg{transform:rotate(180deg)}
+  .pillar.can-collapse:not(.open) .svc-list{display:none}
+  .pillar.can-collapse{padding-bottom:24px}
+}
+
+/* field notes: post card with a cover */
+.post-list{padding-top:70px;padding-bottom:70px}
+.post-card{display:grid;grid-template-columns:1.05fr 1fr;gap:0;background:#e6e9e9;border-radius:22px;overflow:hidden;max-width:1200px;transition:transform .25s,box-shadow .25s}
+.post-card:hover{transform:translateY(-4px);box-shadow:0 22px 50px #29333d14}
+.post-cover{display:block;aspect-ratio:16/10;background:var(--night);overflow:hidden}
+.post-cover img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.22,1,.36,1)}
+.post-card:hover .post-cover img{transform:scale(1.03)}
+.post-body{display:flex;flex-direction:column;padding:36px 38px 32px}
+.post-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.post-body h2{font-size:clamp(30px,3vw,44px);line-height:1.08;margin:0 0 16px;letter-spacing:-.04em}
+.post-body h2 a:hover{color:#3a4550}
+.post-body>p{font-size:15px;max-width:520px;margin-bottom:22px}
+.post-points{list-style:none;padding:0;margin:0 0 26px;display:grid;gap:8px}
+.post-points li{font-size:14px;color:#26313a;padding-left:22px;position:relative}
+.post-points li:before{content:'';position:absolute;left:0;top:8px;width:8px;height:8px;background:var(--accent)}
+.post-body .arrow-link{margin-top:auto;align-self:flex-start}
+.post-list .more-soon{font-size:13px;color:#5d666e;margin:22px 0 0}
+@media(max-width:900px){.post-card{grid-template-columns:1fr}.post-body{padding:26px 22px 24px}}
+@media(max-width:767px){.post-list{padding-top:40px;padding-bottom:50px}.post-body h2{font-size:30px}}
+
 /* agency beliefs (home teaser) and the about page */
 .beliefs{list-style:none;margin:0 0 26px;padding:0}
 .beliefs li{font-size:15px;line-height:1.55;color:#a6b0bb;padding:14px 0 14px 26px;border-top:1px solid #2c333d;position:relative}
@@ -180,7 +219,7 @@
 .lab-flow span{font-size:11px;color:#a23c17;font-weight:600}
 .lab-tabs{overflow-x:auto;scrollbar-width:none}.lab-tabs::-webkit-scrollbar{display:none}
 .lab-tabs button{white-space:nowrap;flex-shrink:0;font-size:14px}
-.lab-body{min-height:600px;padding:50px 5% 45px;gap:6%}
+.lab-body{min-height:600px;padding:50px 5% 45px;gap:24px 6%}
 .lab-copy>.lab-desc{font-size:16px;max-width:400px}
 .lab-metric{margin-top:36px}
 .lab-service{margin-top:22px}
@@ -213,8 +252,11 @@
 @media(max-width:1100px){.lab-flow{grid-template-columns:1fr 1fr}.lab-tabs{padding:8px 16px;gap:6px}.lab-tabs button{gap:12px;font-size:13px;padding:20px 8px 18px}}
 @media(max-width:767px){
 .lab-flow{padding:0 2vw;gap:8px;margin-bottom:18px}.lab-flow li{font-size:12px;gap:8px;padding-top:9px}
-.lab-tabs{justify-content:flex-start;gap:4px}.lab-tabs button{font-size:12px;padding:14px 8px}
-.lab-body{padding:25px 18px}.lab-copy>.lab-desc{font-size:14px}
+.lab-tabs{flex-wrap:wrap;overflow:visible;gap:8px;padding:14px}
+.lab-tabs button{flex:1 1 calc(50% - 8px);justify-content:space-between;gap:8px;font-size:13px;padding:10px 14px;min-height:44px;border:1px solid #c9d0d4;border-radius:100px;white-space:nowrap}
+.lab-tabs button:last-child{flex-basis:100%}
+.lab-tabs button[aria-selected=true]{background:#111820;border-color:#111820;color:#fff}
+.lab-body{padding:25px 18px;min-height:0;gap:24px}.lab-copy>.lab-desc{font-size:14px}
 .source-note p{font-size:13px}.machine-steps li{font-size:12px}
 .machine-result dl>div{grid-template-columns:75px 1fr;font-size:12px}
 .compare{grid-template-columns:1fr}

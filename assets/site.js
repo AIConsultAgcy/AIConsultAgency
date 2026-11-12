@@ -60,6 +60,22 @@
     films.forEach(function (v) { fo.observe(v); });
   }
 
+  /* home services on phones: each practice starts collapsed with a "Show N services" button.
+     The list stays in the page for search engines; CSS hides it only on small screens. */
+  $$('.services .pillar').forEach(function (p, i) {
+    var list = $('.svc-list', p), head = $('header', p); if (!list || !head) return;
+    var n = $$('article', list).length, id = 'pillar-list-' + i;
+    list.id = id; p.classList.add('can-collapse');
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'pillar-toggle'; b.setAttribute('aria-controls', id); b.setAttribute('aria-expanded', 'false');
+    var label = function (open) { return (open ? 'Hide services' : 'Show ' + n + ' service' + (n > 1 ? 's' : '')) + ' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>'; };
+    b.innerHTML = label(false);
+    b.addEventListener('click', function () { var open = !p.classList.contains('open'); p.classList.toggle('open', open); b.setAttribute('aria-expanded', String(open)); b.innerHTML = label(open); });
+    head.appendChild(b);
+    // a link to one of this practice's services (#svc-...) opens it
+    if (location.hash && list.querySelector(location.hash.replace(/[^#\w-]/g, ''))) b.click();
+  });
+
   /* workflow demo: synthetic inputs, a draft, a human approval */
   var lab = $('.workflow-lab');
   if (lab) {
