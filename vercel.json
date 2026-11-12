@@ -1,6 +1,12 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/pitch",
+      "destination": "/pitch/index.html"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
