@@ -192,6 +192,35 @@
     });
   });
 
+  /* light reveal for home cards: they rise in once, a short stagger within each group; without script everything shows */
+  if (!reduce && 'IntersectionObserver' in window) {
+    var rise = $$('.leaks a, #services .pillar, #results .case-card, .vertical');
+    if (rise.length) {
+      document.documentElement.classList.add('js-rise');
+      var rio = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          var el = e.target, sibs = $$('[data-rise]', el.parentNode), i = Math.max(0, sibs.indexOf(el));
+          el.style.transitionDelay = (i * 90) + 'ms'; el.classList.add('in'); rio.unobserve(el);
+          // once it has arrived, hand the element back to its own (faster) hover transitions
+          setTimeout(function () { el.style.transitionDelay = ''; el.removeAttribute('data-rise'); }, 900 + i * 90);
+        });
+      }, { threshold: .12, rootMargin: '0px 0px -6% 0px' });
+      rise.forEach(function (el) { el.setAttribute('data-rise', ''); rio.observe(el); });
+    }
+  }
+
+  /* measurement chain: when it scrolls into view the four steps light up in order once, then settle */
+  var chain = $('[data-chain]');
+  if (chain && 'IntersectionObserver' in window && !reduce) {
+    var cs = $$('.chain-step', chain), co = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting) return; co.disconnect();
+      cs.forEach(function (s, i) { setTimeout(function () { s.classList.add('lit'); }, 350 + i * 560); });
+      setTimeout(function () { cs.forEach(function (s) { s.classList.remove('lit'); }); }, 350 + cs.length * 560 + 1100);
+    }, { threshold: .35 });
+    co.observe(chain);
+  }
+
   /* share button: opens the device's own share sheet; where there is none (most desktops), copies the link instead */
   $$('[data-share]').forEach(function (b) {
     b.addEventListener('click', function () {

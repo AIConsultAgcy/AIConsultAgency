@@ -566,6 +566,137 @@ h1,h2,h3{overflow-wrap:break-word}
 .hub-card b svg{transition:transform .2s}.hub-card:hover b svg{color:#c9431b;transform:translateX(3px)}
 
 
+/* hub card icon: a rounded tile in the top-right corner; it lights up in the brand orange on hover */
+.hub-card{position:relative}
+.hub-ico{position:absolute;right:22px;top:22px;display:grid;place-items:center;width:54px;height:54px;border-radius:16px;background:#fff;color:#101319;box-shadow:inset 0 0 0 1px #d2d8db;transition:background .3s,color .3s,transform .35s cubic-bezier(.22,1,.36,1),box-shadow .3s}
+.hub-ico svg{width:26px;height:26px;stroke-width:1.7}
+.hub-card:hover .hub-ico{background:var(--accent);color:#101319;box-shadow:none;transform:rotate(-6deg) scale(1.05)}
+@media(max-width:767px){.hub-ico{right:18px;top:18px;width:46px;height:46px;border-radius:14px}.hub-ico svg{width:22px;height:22px}.hub-grid .hub-card h2{margin-top:46px}}
+
+/* the entry card is the accent: dark like the hero, with a warm glow, an orange icon tile and a pulsing "start here" dot */
+.hub-card.feature{background-color:var(--night);background-image:radial-gradient(ellipse 70% 60% at 100% 0%,#ff754745,transparent 70%),radial-gradient(ellipse 60% 40% at 0% 100%,#ff75470f,transparent 70%);box-shadow:inset 0 0 0 1px #ffffff12,0 24px 50px #08090f33}
+.hub-card.feature:hover{background-color:#0c1118;transform:translateY(-6px)}
+.hub-card.feature>span{color:#ff9a73;font-weight:600;letter-spacing:.04em}
+.hub-card.feature>span:before{content:'';display:inline-block;width:7px;height:7px;margin-right:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 #ff754780;animation:book-pulse 2.4s ease-out infinite;vertical-align:1px}
+.hub-card.feature h2{color:#fff}
+.hub-card.feature>p{color:#aeb8c2}
+.hub-card.feature li{color:#e2e8ed;border-top-color:#2b333e}
+.hub-card.feature b{color:#fff;border-top-color:#3a4350}
+.hub-card.feature:hover b svg{color:var(--accent)}
+.hub-card.feature .hub-ico{background:var(--accent);color:#101319;box-shadow:0 10px 26px #ff75473d}
+.hub-card.feature:hover .hub-ico{background:#fff;color:#101319}
+@media(prefers-reduced-motion:reduce){.hub-card.feature>span:before{animation:none}}
+
+/* case study accent card: the same dark, glowing treatment as the featured service card */
+.case-card.feature{background-color:var(--night);background-image:radial-gradient(ellipse 70% 55% at 100% 0%,#ff754745,transparent 70%),radial-gradient(ellipse 60% 40% at 0% 100%,#ff75470f,transparent 70%);box-shadow:inset 0 0 0 1px #ffffff12,0 24px 50px #08090f33}
+.case-card.feature:hover{background-color:#0c1118;transform:translateY(-6px)}
+.case-card.feature .tag{background:var(--accent);color:#101319}
+.case-card.feature .tag.outline{background:none;box-shadow:inset 0 0 0 1px #3d4550;color:#aeb8c2}
+.case-card.feature h3{color:#fff}
+.case-card.feature>p{color:#aeb8c2}
+.case-card.feature .kpis div{border-top-color:#2b333e}
+.case-card.feature .kpis strong{color:#fff}
+.case-card.feature .kpis span{color:#8f9ba7}
+.case-card.feature b{color:#fff;border-top-color:#3a4350}
+.case-card.feature:hover b svg{color:var(--accent)}
+
+/* measurement chain: four steps joined by a line; hover lights steps 1..n, scrolling into view sweeps 1 to 4 once */
+.chain{--ico:52px;--pad:24px;--gap:16px;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap)}
+.chain-step{position:relative;background:#f1f2f1;border-radius:18px;padding:var(--pad);box-shadow:inset 0 0 0 1px #d6dcdf;transition:background .3s,box-shadow .3s}
+.chain-step:hover{background:#fff;box-shadow:inset 0 0 0 1px #c3ccd1,0 18px 40px #29333d14}
+.chain-ico{position:relative;z-index:3;display:grid;place-items:center;width:var(--ico);height:var(--ico);border-radius:50%;background:#fff;color:#101319;box-shadow:inset 0 0 0 1px #cfd6da;transition:background .35s,box-shadow .35s,transform .45s cubic-bezier(.22,1,.36,1)}
+.chain-ico svg{width:24px;height:24px;stroke-width:1.7}
+.chain-num{position:absolute;right:var(--pad);top:var(--pad);font-size:12px;font-weight:600;letter-spacing:.06em;color:#7a858d}
+.chain-step h3{font-size:23px;margin:26px 0 10px;letter-spacing:-.03em}
+.chain-step p{font-size:14px;line-height:1.6;margin:0}
+.chain-line{position:absolute;z-index:2;left:calc(var(--pad) + var(--ico));top:calc(var(--pad) + var(--ico)/2 - 1px);width:calc(100% + var(--gap) - var(--ico));height:2px;border-radius:2px;background:#c9d0d4}
+.chain-line:after{content:'';position:absolute;inset:0;border-radius:2px;background:var(--accent);transform:scale(var(--p,0),1);transform-origin:left;transition:transform .55s cubic-bezier(.22,1,.36,1)}
+.chain-step.lit .chain-ico{background:var(--accent);box-shadow:0 10px 24px #ff754745;transform:scale(1.07)}
+.chain-step.lit .chain-line{--p:1}
+.chain:has(.chain-step:nth-child(1):hover) .chain-step:nth-child(-n+1) .chain-ico,
+.chain:has(.chain-step:nth-child(2):hover) .chain-step:nth-child(-n+2) .chain-ico,
+.chain:has(.chain-step:nth-child(3):hover) .chain-step:nth-child(-n+3) .chain-ico,
+.chain:has(.chain-step:nth-child(4):hover) .chain-step:nth-child(-n+4) .chain-ico{background:var(--accent);box-shadow:0 10px 24px #ff754745;transform:scale(1.07)}
+.chain:has(.chain-step:nth-child(2):hover) .chain-step:nth-child(-n+1) .chain-line,
+.chain:has(.chain-step:nth-child(3):hover) .chain-step:nth-child(-n+2) .chain-line,
+.chain:has(.chain-step:nth-child(4):hover) .chain-step:nth-child(-n+3) .chain-line{--p:1}
+@media(max-width:1100px){
+.chain{grid-template-columns:1fr}
+.chain-step{display:grid;grid-template-columns:var(--ico) 1fr;column-gap:18px;align-items:start}
+.chain-ico{grid-row:1/3}
+.chain-step h3{margin:4px 0 6px;font-size:21px}
+.chain-num{top:calc(var(--pad) + 4px)}
+.chain-line{left:calc(var(--pad) + var(--ico)/2 - 1px);top:calc(var(--pad) + var(--ico));width:2px;height:calc(100% + var(--gap) - var(--ico))}
+.chain-line:after{transform:scale(1,var(--p,0));transform-origin:top}
+}
+@media(prefers-reduced-motion:reduce){.chain-ico,.chain-line:after{transition:none}}
+
+/* ===== home page polish: pain cards, services, results, industries, about + film ===== */
+/* shared: the round-square icon tile, pinned top-right on cards, orange on hover */
+.leaks a,.vertical{position:relative}
+.leaks a:hover .hub-ico,.vertical:hover .hub-ico{background:var(--accent);color:#101319;box-shadow:none;transform:rotate(-6deg) scale(1.05)}
+
+/* pain cards: the first one (the main service) is dark; the others are light with an icon */
+.leaks a.feature{background-color:var(--night);background-image:radial-gradient(ellipse 70% 55% at 100% 0%,#ff754745,transparent 70%),radial-gradient(ellipse 60% 40% at 0% 100%,#ff75470f,transparent 70%);box-shadow:inset 0 0 0 1px #ffffff12,0 24px 50px #08090f33;color:#eef1f2}
+.leaks a.feature:hover{background-color:#0c1118;transform:translateY(-6px)}
+.leaks a.feature>span{color:#ff9a73;font-weight:600}
+.leaks a.feature h3{color:#fff}
+.leaks a.feature p{color:#aeb8c2}
+.leaks a.feature b{color:#fff;border-top-color:#3a4350}
+.leaks a.feature:hover b svg{color:var(--accent)}
+.leaks a.feature .hub-ico,.vertical.feature .hub-ico{background:var(--accent);color:#101319;box-shadow:0 10px 26px #ff75473d}
+.leaks a.feature:hover .hub-ico,.vertical.feature:hover .hub-ico{background:#fff}
+.leaks a .hub-ico{right:20px;top:20px}
+@media(max-width:767px){.leaks a .hub-ico{right:16px;top:16px}.leaks a h3{margin-top:40px}}
+
+/* services: each practice gets an icon; the entry practice is a dark panel */
+.pillar-ico{display:grid;place-items:center;width:52px;height:52px;margin-bottom:18px;border-radius:16px;background:#fff;color:#101319;box-shadow:inset 0 0 0 1px #d2d8db;transition:background .3s,color .3s,transform .35s cubic-bezier(.22,1,.36,1),box-shadow .3s}
+.pillar-ico svg{width:24px;height:24px;stroke-width:1.7}
+.pillar:hover .pillar-ico{background:var(--accent);box-shadow:none;transform:rotate(-6deg) scale(1.05)}
+.pillar.feature{background-color:var(--night);background-image:radial-gradient(ellipse 55% 45% at 100% 0%,#ff754740,transparent 70%),radial-gradient(ellipse 45% 35% at 0% 100%,#ff75470f,transparent 70%);border-top:0;border-radius:24px;padding:40px 36px;margin-bottom:34px;box-shadow:inset 0 0 0 1px #ffffff12,0 24px 60px #08090f26}
+.pillar.feature .pillar-ico{background:var(--accent);box-shadow:0 10px 26px #ff75473d}
+.pillar.feature>header>span{color:#8f9ba7}
+.pillar.feature>header h3,.pillar.feature>header h3 a{color:#fff}
+.pillar.feature>header p{color:#aeb8c2}
+.pillar.feature .svc-list article{border-top-color:#2b333e}
+.pillar.feature .svc-list h4,.pillar.feature .svc-list h4 a{color:#fff}
+.pillar.feature .svc-list p{color:#aeb8c2}
+.pillar.feature .svc-list li{color:#c9d1d9;border-color:#3a4350}
+.pillar.feature .tag{background:#222832;color:#c3cbd3}
+.pillar.feature .tag.hot{background:var(--accent);color:#101319}
+.pillar.feature .svc-list article:target{background:#141b25;box-shadow:-18px 0 0 #141b25,18px 0 0 #141b25}
+.pillar.feature .pillar-toggle{border-color:#3a4350;color:#fff}
+@media(max-width:767px){.pillar.feature{padding:26px 20px 14px;border-radius:20px;margin-bottom:22px}.pillar-ico{width:46px;height:46px;margin-bottom:14px}}
+
+/* industries: six cards with icons instead of a plain list; one is the accent */
+.verticals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.vertical{display:flex;flex-direction:column;min-height:260px;padding:26px 24px 22px;background:#f1f2f1;border-radius:18px;box-shadow:inset 0 0 0 1px #d6dcdf;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .3s,background .3s}
+.vertical:hover{transform:translateY(-4px);background:#fff;box-shadow:inset 0 0 0 1px #c3ccd1,0 18px 40px #29333d14}
+.vertical h3{margin:62px 0 10px;padding-right:8px}
+.vertical p{margin:0 0 16px}
+.vertical .first{margin-top:auto;padding-top:14px;border-top:1px solid #d2d8db}
+.vertical.feature{background-color:var(--night);background-image:radial-gradient(ellipse 70% 55% at 100% 0%,#ff754745,transparent 70%),radial-gradient(ellipse 60% 40% at 0% 100%,#ff75470f,transparent 70%);box-shadow:inset 0 0 0 1px #ffffff12,0 24px 50px #08090f33}
+.vertical.feature:hover{background-color:#0c1118;transform:translateY(-6px)}
+.vertical.feature h3{color:#fff}
+.vertical.feature p{color:#aeb8c2}
+.vertical.feature .first{color:#e2e8ed;border-top-color:#2b333e}
+.vertical.feature .first b{color:#ff9a73}
+@media(max-width:1100px){.verticals{grid-template-columns:repeat(2,minmax(0,1fr))}.vertical{min-height:0}}
+@media(max-width:767px){.verticals{grid-template-columns:1fr;gap:12px}.vertical{padding:22px 20px 18px}.vertical h3{margin-top:52px}}
+
+/* about + film: the heading spans the top, then the film and the text sit side by side so neither column is empty */
+.about-teaser.has-film{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);grid-template-areas:"head head" "film text";gap:44px 6%;align-items:center}
+.about-teaser.has-film h2{grid-area:head;margin:0}
+.about-teaser.has-film .film-side{grid-area:film;margin-top:0}
+.about-teaser.has-film .about-text{grid-area:text}
+.about-teaser.has-film .quote{font-size:clamp(24px,2.2vw,34px);margin-bottom:22px}
+@media(max-width:1100px){.about-teaser.has-film{grid-template-columns:1fr;grid-template-areas:"head" "text" "film";gap:26px}}
+
+/* light reveal: cards rise into place once as they scroll in (transform and opacity only) */
+.js-rise [data-rise]:not(.in){opacity:0;transform:translateY(20px)}
+.js-rise [data-rise]{transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1),background .25s,box-shadow .3s}
+@media(prefers-reduced-motion:reduce){.js-rise [data-rise]:not(.in){opacity:1;transform:none}}
+
 /* practice page: one block per service */
 .svc-block{display:grid;grid-template-columns:.8fr 1.2fr;gap:7%;padding:55px 0;border-top:1px solid #101319;scroll-margin-top:30px}
 .svc-block:first-child{border-top:0;padding-top:10px}
@@ -648,12 +779,12 @@ h1,h2,h3{overflow-wrap:break-word}
 
 
 /* verticals */
-.verticals{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #101319}
-.vertical{padding:30px 28px 30px 0;border-bottom:1px solid #c4ccd0}
-.vertical:not(:nth-child(3n+1)){padding-left:28px;border-left:1px solid #c4ccd0}
-.vertical h3{font-size:24px;margin:0 0 10px;letter-spacing:-.03em}
-.vertical p{font-size:14px;margin:0 0 14px}
-.vertical .first{font-size:12px;color:#26313a;margin:0}.vertical .first b{color:#a23c17;font-weight:600}
+
+
+
+.vertical h3{font-size:24px;letter-spacing:-.03em}
+.vertical p{font-size:14px}
+.vertical .first{font-size:12px;color:#26313a}.vertical .first b{color:#a23c17;font-weight:600}
 
 
 /* about teaser on home */
@@ -670,9 +801,9 @@ h1,h2,h3{overflow-wrap:break-word}
 .journey>li{grid-template-columns:60px 1fr;gap:20px 4%}.journey .metric-card{grid-column:2}
 .cards-4{grid-template-columns:1fr 1fr}
 .case-grid{grid-template-columns:1fr 1fr}
-.verticals{grid-template-columns:1fr 1fr}
-.vertical,.vertical:not(:nth-child(3n+1)){padding:26px 22px 26px 0;border-left:0}
-.vertical:nth-child(2n){padding-left:22px;border-left:1px solid #c4ccd0}
+
+
+
 .about-teaser{grid-template-columns:1fr;gap:30px}
 .facts{grid-template-columns:1fr 1fr}
 }
@@ -697,8 +828,8 @@ h1,h2,h3{overflow-wrap:break-word}
 .card h3{margin-top:18px}
 .case-grid{grid-template-columns:1fr}
 .case-card{min-height:0}
-.verticals{grid-template-columns:1fr}
-.vertical,.vertical:not(:nth-child(3n+1)),.vertical:nth-child(2n){padding:22px 0;border-left:0}
+
+
 .faq h2 br{display:block}.faq h2 span{margin-left:0}
 .page-head h1{font-size:clamp(38px,11.5vw,55px);overflow-wrap:break-word}
 .kpi-table{font-size:12px}.kpi-table th,.kpi-table td{padding:11px 5px}
