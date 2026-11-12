@@ -96,9 +96,18 @@
       "has": [
         {
           "type": "host",
-          "value": "pitch.fands.io"
+          "value": "(?<sub>pitch|seimur|faris)\\.fands\\.io"
         }
       ],
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/(seimur|faris)",
       "headers": [
         {
           "key": "X-Robots-Tag",
