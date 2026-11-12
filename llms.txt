@@ -1,12 +1,12 @@
 # Fands
 
-> Fands is an AI implementation agency for small and mid-size businesses in the United States. It builds and runs the systems that answer calls, follow up on leads, run back-office work and get a business found in search and AI answers.
+> Fands is an AI implementation agency for small and mid-size businesses in the United States. It automates workflows, builds AI into the tools a business already uses, and produces content that keeps the brand in front of customers.
 
 Fands sells implementation, not software. Clients start with a free 30-minute call, then a paid AI Readiness Audit, then fixed-price builds and a Managed AI Retainer with a monthly results review. Contact: hello@fands.io. Book a call: https://cal.com/fands/intro-call
 
 ## Services
 
-- [AI Services for Small Businesses](https://fands.io/services): Five AI practices: strategy and audit, business process automation, AI receptionist, AI content and search visibility, web development.
+- [AI Services for Small Businesses](https://fands.io/services): Five AI practices: strategy and audit, workflow automation and AI integrations, AI content and search visibility, AI assistants, web development.
 - [AI Receptionist & Custom AI Agents](https://fands.io/services/ai-assistants): A 24/7 AI receptionist for calls, texts and chat that books appointments and hands off to a human, plus custom AI agents and apps.
 - [Business Process & Lead Automation](https://fands.io/services/ai-operations): Automate invoicing, onboarding and lead follow-up with n8n, Make and Zapier, add a knowledge assistant and train your team on AI.
 - [Website, E-commerce & App Development](https://fands.io/services/digital-development): Websites, online stores and web apps for small businesses, with AI chat, order automation and Shopify, Wix and WordPress integrations.
@@ -21,7 +21,7 @@ Fands sells implementation, not software. Clients start with a free 30-minute ca
 
 ## Case studies
 
-- [AI Case Studies for Small Businesses](https://fands.io/case-studies): Example AI engagements: an AI receptionist, lead follow-up automation and invoice automation, with the metrics we track on every project.
+- [AI Case Studies for Small Businesses](https://fands.io/case-studies): Example AI engagements: invoice automation, lead follow-up automation and an AI receptionist, with the metrics we track on every project.
 - [Invoice Automation for an Accounting Firm](https://fands.io/case-studies/accounting-firm-invoice-automation): Example engagement: AI reads invoices, matches vendors and purchase orders and drafts bill entries for human approval at an accounting firm.
 - [Lead Follow-Up Automation for a Contractor](https://fands.io/case-studies/home-services-lead-follow-up): Example engagement: speed-to-lead replies, missed-call text-back and automatic follow-up for a home services remodeling contractor.
 - [AI Receptionist for a Med Spa: Case Study](https://fands.io/case-studies/med-spa-ai-receptionist): Example engagement: an AI receptionist answers med spa calls 24/7, books appointments and hands medical questions to the front desk.

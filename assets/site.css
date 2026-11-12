@@ -207,6 +207,61 @@ main>:has(+ .closing){padding-bottom:130px}
 .links-glow{position:absolute;left:50%;top:-180px;width:620px;height:620px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle,#ff754738 0%,#ff75470f 40%,transparent 70%);filter:blur(10px);pointer-events:none;animation:links-breathe 7s ease-in-out infinite}
 @keyframes links-breathe{50%{transform:translateX(-50%) scale(1.12);opacity:.75}}
 .links-wrap{position:relative;z-index:1;width:100%;max-width:480px;display:flex;flex-direction:column;align-items:center}
+/* the whole document is dark on this page, so iOS never shows the light site background below the content,
+   behind Safari's floating toolbar or when the page is pulled past its edges */
+html:has(.links-page),body:has(.links-page){background:var(--night)}
+html:has(.links-page){color-scheme:dark}
+.links-page{min-height:100lvh}
+@supports not (height:100lvh){.links-page{min-height:100vh}}
+
+/* company film: a cover that loads the YouTube player only after a click */
+.film-player{position:relative;width:100%;aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:var(--night);box-shadow:0 30px 70px #10131929}
+.film-player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.film-cover{position:absolute;inset:0;display:block;width:100%;height:100%;padding:0;border:0;background:var(--night);cursor:pointer;color:#fff}
+.film-cover img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.22,1,.36,1),filter .4s}
+.film-cover:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,#080b10b3 100%);pointer-events:none}
+.film-cover:hover img{transform:scale(1.03);filter:brightness(1.08)}
+.film-play{position:absolute;left:50%;top:50%;z-index:1;display:grid;place-items:center;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;background:var(--accent);color:#101319;box-shadow:0 0 0 0 #ff754780;animation:book-pulse 2.6s ease-out 1s infinite;transition:transform .3s cubic-bezier(.22,1,.36,1)}
+.film-play svg{width:30px;height:30px;margin-left:4px}
+.film-cover:hover .film-play{transform:scale(1.08)}
+.film-meta{position:absolute;left:24px;bottom:20px;z-index:1;display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left}
+.film-meta b{font-size:16px;font-weight:600}
+.film-meta small{font-size:12px;color:#c3cbd3}
+.film-caption{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:13px;color:#5d666e}
+.film-caption a{text-decoration:underline;text-underline-offset:3px}
+.dark .film-caption{color:#8793a0}
+
+/* the film sits under a section heading: the About teaser on home, "Why Fands exists" on /about */
+.film-side{margin-top:36px}
+.about-teaser:has(.film-side){align-items:start}
+.story-side h2{margin-bottom:0}
+/* phones and tablets: heading, then the story text, then the film */
+@media(max-width:1100px){.story-side{display:contents}.story-side h2{order:1}.story .text{order:2}.story .film-side{order:3;margin-top:4px}}
+@media(max-width:767px){.film-player{border-radius:16px}.film-play{width:64px;height:64px;margin:-32px 0 0 -32px}.film-play svg{width:24px;height:24px}.film-meta{left:16px;bottom:12px}.film-meta b{font-size:14px}.film-side{margin-top:24px}}
+
+/* personal pages (/seimur, /faris): round photo with the FANDS mark as a badge, a short bio */
+.links-photo{position:relative;display:block;width:112px;height:112px;margin:0 auto 20px;animation:links-rise .7s cubic-bezier(.16,1,.3,1) both}
+.links-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 22%;border-radius:50%;box-shadow:0 0 0 3px var(--night),0 0 0 5px #ff754799,0 18px 50px #0009}
+.photo-badge{position:absolute;right:-2px;bottom:2px;display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:#0d1118;box-shadow:0 0 0 3px var(--night),0 0 0 4px #ffffff1f}
+.photo-badge svg{width:18px;height:18px}
+.photo-badge .s{fill:#eef1f3}.photo-badge .o{fill:var(--accent)}
+.links-head.person h1{font-family:var(--display);font-weight:600;letter-spacing:-.02em;font-size:30px}
+.links-head .links-bio{max-width:360px;margin:12px auto 0;font-size:14px;line-height:1.55;color:#98a4b0;animation:links-rise .7s .18s cubic-bezier(.16,1,.3,1) both}
+.links-follow{margin:30px 0 0;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6f7b87}
+.links-follow+.links-social{margin-top:12px}
+.contact-ico.wa:hover{background:#25d366;border-color:#25d366;color:#fff}
+.contact-ico.tg:hover{background:#229ed9;border-color:#229ed9;color:#fff}
+.link-btn.save .link-ico{background:#ffffff14}
+.link-btn.save:hover .link-go{transform:translateY(3px)}
+@media(min-width:768px){.links-head.person h1{font-size:34px}}
+
+/* contact icons: a centred row under the tagline (email now; phone, WhatsApp and others later) */
+.links-contact{display:flex;gap:10px;justify-content:center;margin-top:18px}
+.contact-ico{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid #ffffff1f;background:#ffffff0d;color:#dfe5ea;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .25s,border-color .25s,color .25s,transform .25s cubic-bezier(.22,1,.36,1);animation:links-rise .6s .05s cubic-bezier(.16,1,.3,1) both}
+.contact-ico svg{width:18px;height:18px}
+.contact-ico:hover{background:var(--accent);border-color:var(--accent);color:#101319;transform:translateY(-2px)}
+
+@media(max-width:380px){.links-share span{display:none}.links-share{width:44px;padding:0;justify-content:center}}
 .links-share{align-self:flex-end;display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 16px;border-radius:100px;border:1px solid #ffffff1f;background:#ffffff0d;color:#dfe5ea;font-size:13px;font-weight:600;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .2s,border-color .2s,transform .2s}
 .links-share:hover{background:#ffffff1a;border-color:#ffffff40;transform:translateY(-1px)}
 .links-share svg{width:17px;height:17px}

@@ -20,6 +20,10 @@ ICONS = {
     'globe': '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
     'mail': '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
     'share': '<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="m16 6-4-4-4 4"/><path d="M12 2v13"/>',
+    'phone': '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
+    'whatsapp': '<path d="M3 21l1.65-4.8A8.5 8.5 0 1 1 7.8 19.35z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8a4 4 0 0 1-2.3-2.3l.8-1-1-2z"/>',
+    'telegram': '<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+    'user-plus': '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/>',
     'menu':'<path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>',
     'chevron': '<path d="m6 9 6 6 6-6"/>',
     'pause': '<rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/>',
@@ -63,8 +67,8 @@ SCHEMA = {
     "@context": "https://schema.org", "@type": "ProfessionalService", "@id": SITE + "/#org", "name": "Fands",
     "url": SITE + "/", "logo": SITE + "/brand/icon-512.png", "image": SITE + "/brand/og-v2.png", "email": "hello@fands.io",
     "slogan": "From friction to flow.",
-    "description": "Fands is an AI implementation agency for small and mid-size businesses in the United States. It builds and runs the systems that answer calls, follow up on leads, run back-office work and get a business found in search and AI answers.",
-    "areaServed": {"@type": "Country", "name": "United States"},    "knowsAbout": ["AI readiness audits", "business process automation", "lead follow-up automation", "AI receptionist", "AI search visibility", "AI content", "web development"],
+    "description": "Fands is an AI implementation agency for small and mid-size businesses in the United States. It automates workflows, builds AI into the tools a business already uses, and produces content that keeps the brand in front of customers.",
+    "areaServed": {"@type": "Country", "name": "United States"},    "knowsAbout": ["workflow automation", "business process automation", "AI integrations", "AI content generation", "lead follow-up automation", "AI search visibility", "AI readiness audits", "AI assistants", "web development"],
     "makesOffer": [{"@type": "Offer", "name": "AI Readiness Audit & Roadmap"}, {"@type": "Offer", "name": "Managed AI Retainer"}, {"@type": "Offer", "name": "Business Process Automation"}, {"@type": "Offer", "name": "Lead-to-Revenue Automation"}, {"@type": "Offer", "name": "Knowledge Assistant & Analytics"}, {"@type": "Offer", "name": "AI Training & Enablement"}, {"@type": "Offer", "name": "AI Receptionist"}, {"@type": "Offer", "name": "Custom AI Agents & Apps"}, {"@type": "Offer", "name": "AI Content Engine"}, {"@type": "Offer", "name": "AI Search Visibility & Local SEO"}, {"@type": "Offer", "name": "Paid Media Management"}, {"@type": "Offer", "name": "Branding & Design"}, {"@type": "Offer", "name": "Web & App Development"}, {"@type": "Offer", "name": "Website & E-commerce Automation"}]}
 
 
@@ -168,6 +172,21 @@ def legal_nav(current):
     return f'<nav class="legal-nav" aria-label="Legal documents"><p class="fh">Legal documents</p>{links}</nav>'
 
 
+# {{film}}: the company film player (cover image, play button; YouTube loads on click) and its VideoObject data.
+FILM_ID = 'qrYEmKPt6mQ'
+FILM = ('<div class="film-player" data-yt="' + FILM_ID + '" data-title="FANDS film: Your next lead shouldn’t wait until Monday">'
+        '<button type="button" class="film-cover" aria-label="Play the FANDS film, 56 seconds">'
+        '<img src="https://i.ytimg.com/vi/' + FILM_ID + '/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" decoding="async">'
+        '<span class="film-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></span>'
+        '<span class="film-meta"><b>Watch the film</b><small>0:56 · sound on</small></span></button></div>'
+        '<p class="film-caption"><span>Our story in 56 seconds.</span><a href="https://www.youtube.com/watch?v=' + FILM_ID + '" target="_blank" rel="noopener">Watch on YouTube</a></p>')
+FILM_LD = {"@context": "https://schema.org", "@type": "VideoObject", "name": "Your Next Lead Shouldn’t Wait Until Monday | Fands",
+           "description": "FANDS, the AI systems and media agency, in 56 seconds: media earns the attention, systems earn the revenue.",
+           "thumbnailUrl": ["https://i.ytimg.com/vi/" + FILM_ID + "/maxresdefault.jpg"], "uploadDate": "2026-11-11T18:29:04-08:00",
+           "duration": "PT56S", "contentUrl": "https://www.youtube.com/watch?v=" + FILM_ID, "embedUrl": "https://www.youtube.com/embed/" + FILM_ID,
+           "publisher": {"@id": "https://fands.io/#org"}}
+
+
 def crumbs_html(crumbs):
     """Visible breadcrumb trail for the page head. crumbs = [["Services", "/services"], ["AI Operations", "/services/ai-operations"]]."""
     items = ['<li><a href="/">Home</a></li>']
@@ -185,6 +204,34 @@ def crumbs_schema(crumbs):
 
 def ld(obj):
     return '<script type="application/ld+json">' + json.dumps(obj, separators=(',', ':'), ensure_ascii=False) + '</script>\n'
+
+
+# Personal contact cards: one vCard per person, saved by the "Save contact" button on their links page.
+# The photo is embedded (base64), so the card shows a face once it is added to the phone's contacts.
+PEOPLE = {
+    'seimur': {'first': 'Seimur', 'last': 'Ibragimov', 'title': 'Co-founder', 'email': 'seimur@fands.io', 'phone': '+17862604988',
+               'url': 'https://seimur.fands.io', 'linkedin': 'https://www.linkedin.com/in/seimur-ibragimov/', 'telegram': 'https://t.me/seimur_ibr',
+               'whatsapp': 'https://wa.me/17862604988'},
+    'faris': {'first': 'Faris', 'last': 'Batayneh', 'title': 'Co-founder', 'email': 'faris@fands.io', 'phone': '',
+              'url': 'https://faris.fands.io', 'linkedin': 'https://www.linkedin.com/in/farisba/'},
+}
+
+
+def vcard(slug, p):
+    import base64
+    def fold(line):  # vCard lines longer than 75 octets continue on the next line, indented by one space
+        out = [line[:75]]; rest = line[75:]
+        while rest: out.append(' ' + rest[:74]); rest = rest[74:]
+        return '\r\n'.join(out)
+    photo = base64.b64encode((ROOT / 'img' / 'links' / f'{slug}-vcard.jpg').read_bytes()).decode()
+    lines = ['BEGIN:VCARD', 'VERSION:3.0', f"N:{p['last']};{p['first']};;;", f"FN:{p['first']} {p['last']}", 'ORG:FANDS', f"TITLE:{p['title']}",
+             f"EMAIL;TYPE=INTERNET,WORK,PREF:{p['email']}"]
+    if p.get('phone'): lines.append(f"TEL;TYPE=CELL,VOICE,PREF:{p['phone']}")
+    lines += [f"URL:{p['url']}", 'URL:https://fands.io']
+    for k in ('linkedin', 'telegram', 'whatsapp'):
+        if p.get(k): lines.append(f"X-SOCIALPROFILE;TYPE={k}:{p[k]}")
+    lines += ['NOTE:FANDS · AI Systems & Media Agency. From Friction to Flow.', f'PHOTO;ENCODING=b;TYPE=JPEG:{photo}', 'END:VCARD']
+    return '\r\n'.join(fold(l) for l in lines) + '\r\n'
 
 
 def main():
@@ -210,7 +257,10 @@ def main():
         if crumbs:
             extra += ld(crumbs_schema(crumbs))
         body = body.replace('{{crumbs}}', crumbs_html(crumbs) if crumbs else '').replace('{{legal-nav}}', legal_nav(meta['path']))
-        html = (HEAD.format(title=meta['title'], description=meta['description'], url=SITE + meta['path'], v=v, extra=extra,
+        if '{{film}}' in body:  # pages that show the company film also describe it for search engines
+            extra += ld(FILM_LD)
+            body = body.replace('{{film}}', FILM)
+        html = (HEAD.format(title=meta['title'], description=meta['description'], url=meta.get('canonical', SITE + meta['path']), v=v, extra=extra,
                             robots='noindex,follow' if noindex else 'index,follow,max-image-preview:large', og_type=meta.get('og_type', 'website'))
                 + (INTRO if meta.get('hero') else '') + ('' if meta.get('bare') else HEADER) + '\n' + body.strip() + '\n'
                 + ('' if meta.get('bare') else FOOTER) + '\n'
@@ -224,6 +274,11 @@ def main():
         out.write_text(html, encoding='utf-8')
         pages.append(meta)
         print(f'built {meta["out"]} ({len(html):,} bytes)')
+    # contact cards for the personal links pages
+    (ROOT / 'contact').mkdir(exist_ok=True)
+    for slug, p in PEOPLE.items():
+        (ROOT / 'contact' / f'{slug}.vcf').write_bytes(vcard(slug, p).encode('utf-8'))
+    print(f'built contact cards ({len(PEOPLE)})')
     # sitemap: every indexable page, most important first; lastmod is the date its source file last changed
     pages = [m for m in pages if not m.get('noindex')]
     pages.sort(key=lambda m: (-float(m.get('priority', 0.5)), m['path']))

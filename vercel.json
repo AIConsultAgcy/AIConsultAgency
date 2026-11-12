@@ -3,6 +3,46 @@
   "trailingSlash": false,
   "rewrites": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "links.fands.io"
+        }
+      ],
+      "destination": "/links"
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "seimur.fands.io"
+        }
+      ],
+      "destination": "/seimur"
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "faris.fands.io"
+        }
+      ],
+      "destination": "/faris"
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "pitch.fands.io"
+        }
+      ],
+      "destination": "/pitch/index.html"
+    },
+    {
       "source": "/pitch",
       "destination": "/pitch/index.html"
     }
@@ -64,6 +104,93 @@
           "value": "public, max-age=31536000, immutable"
         }
       ]
+    },
+    {
+      "source": "/contact/(.*)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/vcard; charset=utf-8"
+        },
+        {
+          "key": "Content-Disposition",
+          "value": "inline"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/pitch(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "pitch.fands.io"
+        }
+      ],
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/:path((?!assets/|brand/|img/|video/|contact/|pitch/|api/|_vercel/|favicon|site\\.webmanifest|robots\\.txt).+)",
+      "has": [
+        {
+          "type": "host",
+          "value": "links.fands.io"
+        }
+      ],
+      "destination": "https://fands.io/:path",
+      "permanent": false
+    },
+    {
+      "source": "/:path((?!assets/|brand/|img/|video/|contact/|pitch/|api/|_vercel/|favicon|site\\.webmanifest|robots\\.txt).+)",
+      "has": [
+        {
+          "type": "host",
+          "value": "seimur.fands.io"
+        }
+      ],
+      "destination": "https://fands.io/:path",
+      "permanent": false
+    },
+    {
+      "source": "/:path((?!assets/|brand/|img/|video/|contact/|pitch/|api/|_vercel/|favicon|site\\.webmanifest|robots\\.txt).+)",
+      "has": [
+        {
+          "type": "host",
+          "value": "faris.fands.io"
+        }
+      ],
+      "destination": "https://fands.io/:path",
+      "permanent": false
+    },
+    {
+      "source": "/:path((?!assets/|brand/|img/|video/|contact/|pitch/|api/|_vercel/|favicon|site\\.webmanifest|robots\\.txt).+)",
+      "has": [
+        {
+          "type": "host",
+          "value": "pitch.fands.io"
+        }
+      ],
+      "destination": "https://fands.io/:path",
+      "permanent": false
     }
   ]
 }

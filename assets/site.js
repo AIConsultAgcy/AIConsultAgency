@@ -81,18 +81,14 @@
   if (lab) {
     // Each example: what arrives, the steps the system takes, the draft it produces, who approves, and a before/after.
     var examples = [
-      { title: 'A call after closing becomes a booking.', desc: 'The AI receptionist answers, checks the calendar and books. Your team sees a finished booking in the morning.', source: 'Phone call · 7:42 pm', input: '“Hi, do you have anything Thursday afternoon? It’s for a cleaning.”',
-        steps: ['Call answered and transcribed', 'Request understood: cleaning, Thursday pm', 'Calendar checked against booking rules', 'Confirmation text drafted'],
-        fields: [['Caller needs', 'Cleaning, Thursday afternoon'], ['Offered', 'Thursday 2:30 pm, accepted'], ['Next step', 'Text confirmation + CRM record']], output: 'Booking drafted', review: 'Requests outside your booking rules go to a named person with the full transcript.',
-        before: 'Voicemail until 9 am the next day', after: 'Booked during the call', metric: 'After-hours calls answered and booked', service: ['AI Receptionist', '/services/ai-assistants#ai-receptionist'] },
-      { title: 'A weekend inquiry gets a reply in minutes.', desc: 'Lead-to-revenue automation replies right away, files the lead and schedules the follow-up.', source: 'Web form · Saturday 9:14 am', input: '“Looking for a quote on a kitchen remodel, about 200 square feet. Budget around $40K.”',
-        steps: ['Inquiry captured from the website', 'Project, size and budget extracted', 'Lead created in the CRM pipeline', 'Personal first reply drafted'],
-        fields: [['Lead', 'Kitchen remodel, 200 sq ft, ~$40K'], ['Reply', 'Text + email with two call times'], ['Pipeline', 'New lead, quote stage, follow-up set']], output: 'Draft first reply', review: 'The owner approves the first replies until the tone is right.',
-        before: 'Reply on Monday, if remembered', after: 'Reply in under 5 minutes', metric: 'Minutes from inquiry to first reply', service: ['Lead-to-Revenue Automation', '/services/ai-operations#lead-to-revenue-automation'] },
       { title: 'An inbox of invoices becomes clean books.', desc: 'Business process automation reads each invoice, matches it and drafts the entry for review.', source: 'Email with PDF attached', input: '“Invoice 4471 for October supplies, net 30. Reference PO 2291.”',
         steps: ['PDF read and fields extracted', 'Vendor matched to existing supplier', 'Purchase order 2291 checked', 'Bill entry drafted, not posted'],
         fields: [['Vendor', 'Matched to an existing supplier'], ['Amount', '$1,840.00, due in 30 days'], ['Check', 'PO 2291 found, quantities agree']], output: 'Draft bill entry', review: 'Finance approves before anything posts. Mismatches are flagged for a person.',
         before: 'Typed in by hand, one by one', after: 'Checked and approved in one click', metric: 'Minutes of handling per invoice', service: ['Business Process Automation', '/services/ai-operations#business-process-automation'] },
+      { title: 'A weekend inquiry gets a reply in minutes.', desc: 'Lead-to-revenue automation replies right away, files the lead and schedules the follow-up.', source: 'Web form · Saturday 9:14 am', input: '“Looking for a quote on a kitchen remodel, about 200 square feet. Budget around $40K.”',
+        steps: ['Inquiry captured from the website', 'Project, size and budget extracted', 'Lead created in the CRM pipeline', 'Personal first reply drafted'],
+        fields: [['Lead', 'Kitchen remodel, 200 sq ft, ~$40K'], ['Reply', 'Text + email with two call times'], ['Pipeline', 'New lead, quote stage, follow-up set']], output: 'Draft first reply', review: 'The owner approves the first replies until the tone is right.',
+        before: 'Reply on Monday, if remembered', after: 'Reply in under 5 minutes', metric: 'Minutes from inquiry to first reply', service: ['Lead-to-Revenue Automation', '/services/ai-operations#lead-to-revenue-automation'] },
       { title: 'One note becomes a week of content.', desc: 'The AI content engine turns a short brief into posts, an email and ads in your brand voice.', source: 'Owner note · Monday', input: '“We’re running a spring facial promo: 20% off through April. Let’s push it this week.”',
         steps: ['Brief read against the brand voice guide', 'Week planned across channels', 'Posts, email and ads drafted', 'Calendar queued for approval'],
         fields: [['Social', '3 posts + 1 short video script'], ['Email', 'Promo email to past clients'], ['Ads', '2 Meta ad variants']], output: 'Content week drafted', review: 'The owner approves the calendar before anything is published.',
@@ -100,7 +96,11 @@
       { title: 'A buyer asks AI who to hire.', desc: 'AI search visibility checks how assistants answer today and drafts the fixes that help you get cited.', source: 'Question to an AI assistant', input: '“Who is the best HVAC repair company near Pasadena?”',
         steps: ['AI answers checked across assistants', 'Competitors that get cited identified', 'Missing signals found on your profile', 'Visibility fixes drafted'],
         fields: [['Today', 'Two competitors cited, you are not'], ['Gaps', 'Incomplete Google profile, no service FAQ'], ['Fixes', 'Profile update, schema, 3 answer pages']], output: 'Visibility plan drafted', review: 'You approve every page and profile change before it goes live.',
-        before: 'Not mentioned in AI answers', after: 'Fixes shipped, mentions tracked monthly', metric: 'Monthly AI citations for your business', service: ['AI Search Visibility', '/services/media-growth#ai-search-visibility'] }
+        before: 'Not mentioned in AI answers', after: 'Fixes shipped, mentions tracked monthly', metric: 'Monthly AI citations for your business', service: ['AI Search Visibility', '/services/media-growth#ai-search-visibility'] },
+      { title: 'A call after closing becomes a booking.', desc: 'The AI receptionist answers, checks the calendar and books. Your team sees a finished booking in the morning.', source: 'Phone call · 7:42 pm', input: '“Hi, do you have anything Thursday afternoon? It’s for a cleaning.”',
+        steps: ['Call answered and transcribed', 'Request understood: cleaning, Thursday pm', 'Calendar checked against booking rules', 'Confirmation text drafted'],
+        fields: [['Caller needs', 'Cleaning, Thursday afternoon'], ['Offered', 'Thursday 2:30 pm, accepted'], ['Next step', 'Text confirmation + CRM record']], output: 'Booking drafted', review: 'Requests outside your booking rules go to a named person with the full transcript.',
+        before: 'Voicemail until 9 am the next day', after: 'Booked during the call', metric: 'After-hours calls answered and booked', service: ['AI Receptionist', '/services/ai-assistants#ai-receptionist'] }
     ];
     // stage: 0 ready, 1 processing, 2 awaiting review, 3 approved
     var tabs = $$('[role=tab]', lab), body = $('#workflow-example', lab), choice = 0, stage = 0, timer = 0, run = 0;
@@ -177,6 +177,20 @@
     };
     addEventListener('scroll', lift, { passive: true }); addEventListener('resize', lift); lift();
   }
+
+  /* company film: swap the cover for the YouTube player on click (privacy-enhanced domain, autoplay once chosen) */
+  $$('.film-player[data-yt]').forEach(function (box) {
+    var btn = $('.film-cover', box); if (!btn) return;
+    btn.addEventListener('click', function () {
+      var id = box.getAttribute('data-yt'), f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1&modestbranding=1';
+      f.title = box.getAttribute('data-title') || 'FANDS film';
+      f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      f.setAttribute('allowfullscreen', ''); f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+      box.replaceChild(f, btn);
+      track('video_play', { video_title: f.title, page_section: (box.closest('section') || {}).id || location.pathname });
+    });
+  });
 
   /* share button: opens the device's own share sheet; where there is none (most desktops), copies the link instead */
   $$('[data-share]').forEach(function (b) {
