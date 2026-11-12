@@ -8,6 +8,13 @@ ROOT = pathlib.Path(__file__).resolve().parent
 SITE = 'https://fands.io'
 
 ICONS = {
+    'shield-check': '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+    'key-round': '<path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/>',
+    'users': '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+    'circle-dollar-sign': '<circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/>',
+    'check': '<path d="M20 6 9 17l-5-5"/>',
+    'x': '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+    'play': '<path d="M7 4.5v15l12.5-7.5z" fill="currentColor"/>',
     'up-right': '<path d="M7 7h10v10"/><path d="M7 17 17 7"/>',
     'right': '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
     'down': '<path d="M12 5v14"/><path d="m19 12-7 7-7-7"/>',
@@ -206,6 +213,56 @@ FILM_LD = {"@context": "https://schema.org", "@type": "VideoObject", "name": "Yo
            "publisher": {"@id": "https://fands.io/#org"}}
 
 
+# Video and field-note feeds. VIDEOS lists published YouTube videos, newest first; the feeds show up to three.
+VIDEOS = [
+    {'id': FILM_ID, 'title': 'Your next lead shouldn’t wait until Monday', 'meta': '0:56', 'desc': 'The FANDS film: media earns the attention, systems earn the revenue.'},
+]
+YT_CHANNEL = 'https://www.youtube.com/@fands-ai'
+
+
+def video_card(v, tag='h3'):
+    return ('<a class="post-card vid-card" href="https://www.youtube.com/watch?v=' + v['id'] + '" target="_blank" rel="noopener noreferrer" data-track="Video: ' + v['title'] + '">'
+            '<span class="post-cover"><img src="https://i.ytimg.com/vi/' + v['id'] + '/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" decoding="async">'
+            '<span class="vid-play">{{i:play:22}}</span></span>'
+            '<span class="post-body"><span class="post-meta"><span class="tag">Video</span><span class="tag outline">' + v['meta'] + '</span></span>'
+            '<' + tag + '>' + v['title'] + '</' + tag + '><p>' + v['desc'] + '</p>'
+            '<span class="arrow-link">Watch on YouTube {{i:up-right:15}}</span></span></a>')
+
+
+SOON_VIDEO = ('<a class="post-card soon" href="' + YT_CHANNEL + '" target="_blank" rel="noopener noreferrer" data-track="YouTube channel"><span>On YouTube</span>'
+              '<p>More walkthroughs and workflow demos land on the channel. Subscribe to catch the next one.</p><span class="arrow-link">Open the channel {{i:up-right:15}}</span></a>')
+
+FOLLOW = (
+    '<div class="follow">'
+    '<a class="follow-card" href="https://www.linkedin.com/company/fands-ai/" target="_blank" rel="noopener noreferrer" data-track="Follow: LinkedIn"><i class="follow-ico">{{i:linkedin:24}}</i><span><b>LinkedIn</b><small>Company updates and new field notes</small></span>{{i:up-right:18}}</a>'
+    '<a class="follow-card" href="https://www.instagram.com/fands.ai" target="_blank" rel="noopener noreferrer" data-track="Follow: Instagram"><i class="follow-ico">{{i:instagram:24}}</i><span><b>Instagram</b><small>Behind the scenes and short clips</small></span>{{i:up-right:18}}</a>'
+    '<a class="follow-card" href="' + YT_CHANNEL + '" target="_blank" rel="noopener noreferrer" data-track="Follow: YouTube"><i class="follow-ico">{{i:youtube:24}}</i><span><b>YouTube</b><small>Workflow demos and walkthroughs</small></span>{{i:up-right:18}}</a>'
+    '</div>')
+
+NOTE_FIRST = ('<article class="post-card"><a class="post-cover" href="/insights/first-workflow" tabindex="-1" aria-hidden="true"><img src="/img/insights/first-workflow-cover.svg" alt="" width="1600" height="1000" loading="lazy" decoding="async"></a>'
+              '<div class="post-body"><div class="post-meta"><span class="tag">Field Guide 001</span><span class="tag outline">7 min read</span></div>'
+              '<h3><a href="/insights/first-workflow">Your first AI workflow should be boring.</a></h3>'
+              '<p>A practical scorecard for choosing your first AI project, measuring the baseline and deciding whether it earned the next step.</p>'
+              '<a class="arrow-link" href="/insights/first-workflow">Read the guide {{i:right:15}}</a></div></article>')
+
+
+def video_thumb(v):
+    return ('<a class="vid-thumb" href="https://www.youtube.com/watch?v=' + v['id'] + '" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube: ' + v['title'] + '" data-track="Video: ' + v['title'] + '">'
+            '<img src="https://i.ytimg.com/vi/' + v['id'] + '/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" decoding="async">'
+            '<span class="vid-play">{{i:play:20}}</span><span class="vid-len">' + v['meta'] + '</span></a>')
+
+
+def videos_html():
+    tiles = ''.join(video_thumb(v) for v in VIDEOS[:3])
+    return ('<div class="vid-strip">' + tiles + '</div>'
+            '<a class="arrow-link vid-all" href="' + YT_CHANNEL + '" target="_blank" rel="noopener noreferrer" data-track="YouTube channel">All videos on YouTube {{i:up-right:15}}</a>')
+
+
+def notes_feed_html():
+    return '<div class="post-grid">' + NOTE_FIRST + (
+        '<a class="post-card soon" href="/insights#field-notes-signup"><span>Next note</span><p>New field notes arrive every two weeks. Join the list to get the next one first.</p><span class="arrow-link">Join Field Notes {{i:down:15}}</span></a>') + '</div>'
+
+
 def crumbs_html(crumbs):
     """Visible breadcrumb trail for the page head. crumbs = [["Services", "/services"], ["AI Operations", "/services/ai-operations"]]."""
     items = ['<li><a href="/">Home</a></li>']
@@ -231,7 +288,7 @@ PEOPLE = {
     'seimur': {'first': 'Seimur', 'last': 'Ibragimov', 'title': 'Co-founder', 'email': 'seimur@fands.io', 'phone': '+17862604988',
                'url': 'https://seimur.fands.io', 'linkedin': 'https://www.linkedin.com/in/seimur-ibragimov/', 'telegram': 'https://t.me/seimur_ibr',
                'whatsapp': 'https://wa.me/17862604988'},
-    'faris': {'first': 'Faris', 'last': 'Batayneh', 'title': 'Co-founder', 'email': 'faris@fands.io', 'phone': '',
+    'faris': {'first': 'Faris', 'last': 'Batayneh', 'title': 'Co-founder', 'email': 'faris@fands.io', 'phone': '+16178004983', 'whatsapp': 'https://wa.me/16178004983',
               'url': 'https://faris.fands.io', 'linkedin': 'https://www.linkedin.com/in/farisba/'},
 }
 
@@ -286,7 +343,8 @@ def main():
                 + TAIL.format(v=v, sculpture=SCULPTURE.replace('{v}', v) if meta.get('hero') else ''))
         if meta.get('bare'):  # bare pages (the links page): no site header, footer or floating booking button
             html = re.sub(r'<a class="book-fab".*?</a>\n', '', html, flags=re.S)
-        html = html.replace('{{closing}}', CLOSING).replace('{{cal}}', CAL)
+        html = (html.replace('{{closing}}', CLOSING).replace('{{cal}}', CAL).replace('{{videos}}', videos_html())
+                .replace('{{follow}}', FOLLOW).replace('{{notes-feed}}', notes_feed_html()))
         html = re.sub(r'\{\{i:([a-z-]+)(?::(\d+))?(?::([a-z-]+))?\}\}', icon, html)
         out = ROOT / meta['out']
         out.parent.mkdir(parents=True, exist_ok=True)
