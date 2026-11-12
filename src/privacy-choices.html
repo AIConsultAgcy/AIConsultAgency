@@ -1,4 +1,4 @@
-{"out": "privacy-choices.html", "path": "/privacy-choices", "priority": 0.3, "title": "Your Privacy Choices — Fands", "description": "Opt out of analytics and the sale or sharing of personal information on fands.io, and how Fands honors Global Privacy Control.", "crumbs": [["Your Privacy Choices", "/privacy-choices"]]}
+{"out": "privacy-choices.html", "path": "/privacy-choices", "priority": 0.3, "title": "Your Privacy Choices & Data Requests | Fands", "description": "Opt out of analytics and the sale or sharing of personal information, and request access to, correction or deletion of your data at Fands.", "crumbs": [["Your Privacy Choices", "/privacy-choices"]], "type": "WebPage"}
 <main id="main">
   <section class="page-head">
     {{crumbs}}
@@ -20,8 +20,21 @@
       <h2 id="gpc">Global Privacy Control</h2>
       <p>If your browser or an extension sends a Global Privacy Control (GPC) signal, we treat it as a valid request to opt out of sale and sharing and switch analytics off automatically, without you needing to do anything here.</p>
 
-      <h2 id="other-requests">Other requests</h2>
-      <p>To access, correct or delete personal information, or to opt out across every channel, including email, write to <a href="mailto:hello@fands.io?subject=Privacy%20request">hello@fands.io</a> with the subject “Privacy request”. Details are in section 9 of our <a href="/privacy#california">Privacy Policy</a>.</p>
+      <h2 id="data-request">Request access, correction or deletion</h2>
+      <p>Use this form to see the personal information we hold about you, correct it or have it deleted. We confirm within 10 business days and respond within 45 days. To protect your data, we may email you to verify your identity before acting. You can also write to <a href="mailto:hello@fands.io?subject=Privacy%20request">hello@fands.io</a> with the subject “Privacy request”.</p>
+      <div class="form-panel request-form">
+        <form data-lead="privacy" novalidate>
+          <div class="honeypot" aria-hidden="true"><label for="p-website">Leave this empty</label><input id="p-website" name="website" tabindex="-1" autocomplete="off"></div>
+          <div class="field"><label for="p-request">What would you like us to do?</label><select id="p-request" name="request" required><option value="Delete my personal information">Delete my personal information</option><option value="Tell me what personal information you hold">Tell me what personal information you hold</option><option value="Correct my personal information">Correct my personal information</option><option value="Stop sale or sharing and all marketing">Stop sale or sharing and all marketing</option></select></div>
+          <div class="field-row"><div class="field"><label for="p-name">Full name</label><input id="p-name" name="name" required maxlength="120" autocomplete="name"></div><div class="field"><label for="p-email">Email you used with us</label><input id="p-email" name="email" type="email" required maxlength="254" autocomplete="email"></div></div>
+          <div class="field"><label for="p-state">State of residence</label><input id="p-state" name="state" maxlength="40" autocomplete="address-level1" placeholder="For example: California"></div>
+          <div class="field"><label for="p-details">Details (optional)</label><textarea id="p-details" name="details" maxlength="2000" placeholder="Anything that helps us find your information, or what needs correcting."></textarea></div>
+          <label class="checkbox"><input name="consent" type="checkbox" required value="yes"><span>I confirm I am the person named above, or authorized to act for them, and agree that Fands may use these details to handle this request. See our <a href="/privacy"><u>Privacy Policy</u></a>.</span></label>
+          <button class="button" type="submit">Send privacy request ↗</button>
+          <div class="form-notice" aria-live="polite"></div>
+        </form>
+      </div>
+      <p>Prefer to stay off every channel, including email? Say so in the form and we will remove you from all lists. Details of your rights are in section 9 of our <a href="/privacy#california">Privacy Policy</a>.</p>
     </article>
   </div>
 </main>

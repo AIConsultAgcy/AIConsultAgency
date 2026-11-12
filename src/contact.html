@@ -1,6 +1,6 @@
-{"out": "contact.html", "path": "/contact", "priority": 0.8, "title": "Find your first workflow — Fands", "description": "Describe the handoff slowing your team down. Start with a workflow review from Fands."}
+{"out": "contact.html", "path": "/contact", "priority": 0.8, "title": "Contact Fands: Book a Free AI Consultation | Fands", "description": "Tell us where the work gets stuck. Request a workflow review or book a free 30-minute call with Fands. We reply within two business days.", "type": "ContactPage", "crumbs": [["Contact", "/contact"]]}
 <main id="main">
-  <section class="page-head"><p class="eyebrow">ONE CONVERSATION. A CLEARER NEXT STEP.</p><h1>Start with the<br><em>sticky part.</em></h1><p>Tell us where the work gets stuck. We’ll use the conversation to understand the process, assess fit, and identify a sensible first step.</p></section>
+  <section class="page-head">{{crumbs}}<p class="eyebrow">ONE CONVERSATION. A CLEARER NEXT STEP.</p><h1>Start with the<br><em>sticky part.</em></h1><p>Tell us where the work gets stuck. We’ll use the conversation to understand the process, assess fit, and identify a sensible first step.</p></section>
   <section class="contact-grid">
     <aside>
       <h3>A good fit looks like:</h3><p>A consulting or specialist service firm with 20–100 people, a recurring operational handoff, and someone who owns the process.</p>
@@ -18,8 +18,7 @@
         <p class="fine">Please leave out client names, credentials, and confidential information.</p>
         <label class="checkbox"><input name="consent" type="checkbox" required value="yes"><span>I agree that Fands may use these details to respond to my inquiry. See our <a href="/privacy"><u>privacy notice</u></a>.</span></label>
         <button class="button" type="submit">Request a workflow review ↗</button>
-        <p class="feedback" role="status" aria-live="polite"></p>
-        <p class="feedback error" role="alert" hidden>Your email app should have opened with the details filled in. If it didn’t, write to <a href="mailto:hello@fands.io">hello@fands.io</a>.</p>
+        <div class="form-notice" aria-live="polite"></div>
       </form>
     </div>
   </section>

@@ -77,13 +77,13 @@ INTRO = '''<div id="intro" aria-hidden="true">
 HEAD = '''<!doctype html>
 <html lang="en">
 <head>
-<script src="https://cdn.userway.org/widget.js" data-account="OTeuoB7JqP"></script>
+<script defer src="https://cdn.userway.org/widget.js" data-account="OTeuoB7JqP"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){{dataLayer.push(arguments);}}
   // Google Consent Mode defaults, set before GTM loads. No advertising storage is used. Analytics is turned off when the
-  // visitor opted out on /privacy-choices or their browser sends a Global Privacy Control signal.
-  (function(){{var off=!!navigator.globalPrivacyControl;try{{if(localStorage.getItem('fands-optout')==='1')off=true}}catch(e){{}}
+  // visitor declined in the cookie banner or on /privacy-choices, or their browser sends a Global Privacy Control signal.
+  (function(){{var off=!!navigator.globalPrivacyControl;try{{if(localStorage.getItem('fands-consent')==='denied'||localStorage.getItem('fands-optout')==='1')off=true}}catch(e){{}}
   gtag('consent','default',{{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:off?'denied':'granted'}});}})();
   window.dataLayer.push({{'gtm.start': new Date().getTime(), event: 'gtm.js'}});
 </script>
@@ -94,7 +94,7 @@ HEAD = '''<!doctype html>
 <meta name="description" content="{description}">
 <link rel="canonical" href="{url}">
 <meta name="theme-color" content="#080b10">
-<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="robots" content="{robots}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Instrument+Sans:wght@600&display=swap">
@@ -103,7 +103,7 @@ HEAD = '''<!doctype html>
 <link rel="icon" href="/brand/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta property="og:type" content="website">
+<meta property="og:type" content="{og_type}">
 <meta property="og:site_name" content="Fands">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{description}">
@@ -126,17 +126,18 @@ SCULPTURE = '''<script type="importmap">{"imports":{"three":"https://cdn.jsdeliv
 <script type="module" src="/assets/sculpture.js?v={v}"></script>
 '''
 
-TAIL = '''<a class="book-fab" href="/contact" {{{{cal}}}} aria-label="Book a free call">{{{{i:calendar:18}}}}<span class="long">Book a Free Call</span><span class="short">Book a call</span></a>
+TAIL = '''<div class="consent" role="region" aria-label="Cookie consent" hidden><p><strong>Cookies on fands.io</strong>We use analytics cookies to understand how the site is used. No advertising cookies. <a href="/cookies">Cookie Policy</a></p><div class="consent-actions"><button type="button" class="button ghost-dark" data-consent="denied">Decline</button><button type="button" class="button orange" data-consent="granted">Accept</button></div></div>
+<a class="book-fab" href="/contact" {{{{cal}}}} aria-label="Book a free call">{{{{i:calendar:18}}}}<span class="long">Book a Free Call</span><span class="short">Book a call</span></a>
 <script src="/assets/site.js?v={v}"></script>
 {sculpture}<script>window.va=window.va||function(){{(window.vaq=window.vaq||[]).push(arguments)}};</script>
 <script defer src="/_vercel/insights/script.js"></script>
 <!-- Cal floating-popup embed code begins -->
 <script type="text/javascript">
   (function (C, A, L) {{ let p = function (a, ar) {{ a.q.push(ar); }}; let d = C.document; C.Cal = C.Cal || function () {{ let cal = C.Cal; let ar = arguments; if (!cal.loaded) {{ cal.ns = {{}}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; }} if (ar[0] === L) {{ const api = function () {{ p(api, arguments); }}; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){{cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);}} else p(cal, ar); return;}} p(cal, ar); }}; }})(window, "https://app.cal.com/embed/embed.js", "init");
-Cal("init", "intro-call", {{origin:"https://app.cal.com"}});
-Cal.config = Cal.config || {{}};
-Cal.config.forwardQueryParams = true;
-Cal.ns["intro-call"]("ui", {{"hideEventTypeDetails":false,"layout":"month_view"}});
+(function () {{ var boot = function () {{ Cal("init", "intro-call", {{origin:"https://app.cal.com"}}); Cal.config = Cal.config || {{}}; Cal.config.forwardQueryParams = true;
+  Cal.ns["intro-call"]("ui", {{"hideEventTypeDetails":false,"layout":"month_view"}}); }};
+  var go = function () {{ ('requestIdleCallback' in window) ? requestIdleCallback(boot, {{timeout: 2500}}) : setTimeout(boot, 1200); }};
+  if (document.readyState === 'complete') go(); else addEventListener('load', go); }})();
 </script>
 <!-- Cal floating-popup embed code ends -->
 </body>
@@ -190,12 +191,24 @@ def main():
     for src in sorted((ROOT / 'src').glob('*.html')):
         first, body = src.read_text(encoding='utf-8').split('\n', 1)
         meta = json.loads(first)
-        extra = ld(SCHEMA) if meta.get('schema') else ''
+        meta['src'] = src
+        noindex = meta.get('noindex')
+        # structured data on every page: who publishes it (Organization), what it is (WebPage type), where it sits (breadcrumbs)
+        extra = ''
+        if not noindex:
+            extra = ld(SCHEMA)
+            if meta['path'] == '/':
+                extra += ld({"@context": "https://schema.org", "@type": "WebSite", "@id": SITE + "/#website", "name": "Fands", "url": SITE + "/", "publisher": {"@id": SITE + "/#org"}, "inLanguage": "en-US"})
+            extra += ld({"@context": "https://schema.org", "@type": meta.get('type', 'WebPage'), "@id": SITE + meta['path'] + "#webpage", "url": SITE + meta['path'],
+                         "name": meta['title'], "description": meta['description'], "isPartOf": {"@id": SITE + "/#website"}, "publisher": {"@id": SITE + "/#org"}, "inLanguage": "en-US"})
+        if meta.get('hero'):
+            extra += '<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>\n'
         crumbs = meta.get('crumbs')
         if crumbs:
             extra += ld(crumbs_schema(crumbs))
         body = body.replace('{{crumbs}}', crumbs_html(crumbs) if crumbs else '').replace('{{legal-nav}}', legal_nav(meta['path']))
-        html = (HEAD.format(title=meta['title'], description=meta['description'], url=SITE + meta['path'], v=v, extra=extra)
+        html = (HEAD.format(title=meta['title'], description=meta['description'], url=SITE + meta['path'], v=v, extra=extra,
+                            robots='noindex,follow' if noindex else 'index,follow,max-image-preview:large', og_type=meta.get('og_type', 'website'))
                 + (INTRO if meta.get('hero') else '') + HEADER + '\n' + body.strip() + '\n' + FOOTER + '\n'
                 + TAIL.format(v=v, sculpture=SCULPTURE.replace('{v}', v) if meta.get('hero') else ''))
         html = html.replace('{{closing}}', CLOSING).replace('{{cal}}', CAL)
@@ -205,12 +218,28 @@ def main():
         out.write_text(html, encoding='utf-8')
         pages.append(meta)
         print(f'built {meta["out"]} ({len(html):,} bytes)')
-    # sitemap: every built page, most important first
-    today = datetime.date.today().isoformat()
-    pages.sort(key=lambda m: -float(m.get('priority', 0.5)))
-    rows = ''.join(f'  <url><loc>{SITE}{m["path"]}</loc><lastmod>{today}</lastmod><priority>{float(m.get("priority", 0.5)):.1f}</priority></url>\n' for m in pages)
+    # sitemap: every indexable page, most important first; lastmod is the date its source file last changed
+    pages = [m for m in pages if not m.get('noindex')]
+    pages.sort(key=lambda m: (-float(m.get('priority', 0.5)), m['path']))
+    def lastmod(m):
+        return datetime.date.fromtimestamp(m['src'].stat().st_mtime).isoformat()
+    rows = ''.join(f'  <url><loc>{SITE}{m["path"]}</loc><lastmod>{lastmod(m)}</lastmod><priority>{float(m.get("priority", 0.5)):.1f}</priority></url>\n' for m in pages)
     (ROOT / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + rows + '</urlset>\n', encoding='utf-8')
     print(f'built sitemap.xml ({len(pages)} urls)')
+    # robots.txt: everything public is crawlable, including AI search crawlers; the API and the 404 page are not
+    ai_bots = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'PerplexityBot', 'Google-Extended', 'Applebot-Extended']
+    robots = 'User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /404\n\n' + ''.join(f'User-agent: {b}\nAllow: /\nDisallow: /api/\n\n' for b in ai_bots) + f'Sitemap: {SITE}/sitemap.xml\n'
+    (ROOT / 'robots.txt').write_text(robots, encoding='utf-8')
+    # llms.txt: a plain summary of the site for AI assistants (GEO), generated from the same page list
+    groups = [('Services', lambda p: p.startswith('/services')), ('Process and company', lambda p: p in ('/how-we-work', '/about', '/contact')),
+              ('Case studies', lambda p: p.startswith('/case-studies')), ('Field Notes', lambda p: p.startswith('/insights')),
+              ('Legal', lambda p: p in ('/privacy', '/terms', '/cookies', '/ai-data-policy', '/accessibility', '/privacy-choices'))]
+    out = ['# Fands', '', '> ' + SCHEMA['description'], '',
+           'Fands sells implementation, not software. Clients start with a free 30-minute call, then a paid AI Readiness Audit, then fixed-price builds and a Managed AI Retainer with a monthly results review. Contact: hello@fands.io. Book a call: https://cal.com/fands/intro-call', '']
+    for title, test in groups:
+        out += [f'## {title}', ''] + [f'- [{m["title"].replace(" | Fands", "")}]({SITE}{m["path"]}): {m["description"]}' for m in sorted(pages, key=lambda m: m['path']) if test(m['path'])] + ['']
+    (ROOT / 'llms.txt').write_text('\n'.join(out), encoding='utf-8')
+    print('built robots.txt and llms.txt')
 
 if __name__ == '__main__':
     main()

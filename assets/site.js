@@ -1,4 +1,4 @@
-// Shared page behaviour for fands.io: menu, type reveals, the workflow demo, the estimator, forms and film loops.
+// Shared page behaviour for fands.io: menu, reveals, film loops, workflow demo, forms, consent, privacy choices and analytics events.
 (function () {
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -22,11 +22,12 @@
     var link = e.target.closest('a[href]');
     if (!link) return;
     var href = link.href || '', text = (link.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 120);
+    if (/^(mailto|tel):/i.test(href)) return; // email clicks are reported as email_click below
     var isOutbound = link.origin && link.origin !== location.origin;
-    var isCal = /cal\.com/i.test(href) || /book a free call/i.test(text);
-    if (isCal) track('cal_open', { link_text: text, link_url: href });
+    var isCal = link.hasAttribute('data-cal-link') || /cal\.com/i.test(href) || /book a (free )?call/i.test(text);
+    if (isCal) track('cal_open', { link_text: text, link_url: href, page_section: (link.closest('section,footer,header') || {}).className || '' });
     else if (isOutbound) track('outbound_click', { link_text: text, link_url: href });
-    else if (link.matches('.button, .inline-link, .closing-link, .header-contact, .text-link')) track('cta_click', { link_text: text, link_url: href });
+    else if (link.matches('.button, .arrow-link, .text-link, .closing-link, .header-contact, .hub-card, .case-card, .related a, .leaks a, .lab-service')) track('cta_click', { link_text: text, link_url: href });
   }, { passive: true });
 
   /* booking links open the Cal popup in place; without Cal they fall through to /contact */
@@ -57,27 +58,6 @@
   if (films.length && 'IntersectionObserver' in window) {
     var fo = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { if (!reduce) e.target.play().catch(function () {}); } else e.target.pause(); }); }, { threshold: .2 });
     films.forEach(function (v) { fo.observe(v); });
-  }
-
-  /* services: five practices, one panel at a time; without script every panel shows */
-  var svc = $('.svc');
-  if (svc) {
-    var st = $$('[role=tab]', svc), sp = $$('.svc-panel', svc);
-    var pick = function (n, focus) {
-      st.forEach(function (b, i) { b.setAttribute('aria-selected', String(i === n)); b.tabIndex = i === n ? 0 : -1; });
-      sp.forEach(function (el, i) { el.hidden = i !== n; });
-      if (focus) st[n].focus();
-    };
-    svc.classList.add('is-tabbed');
-    st.forEach(function (b, i) {
-      b.addEventListener('click', function () { pick(i); track('service_tab', { practice: b.textContent.trim() }); });
-      b.addEventListener('keydown', function (e) {
-        var n = i;
-        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') n = (i + 1) % st.length; else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') n = (i + st.length - 1) % st.length; else if (e.key === 'Home') n = 0; else if (e.key === 'End') n = st.length - 1; else return;
-        e.preventDefault(); pick(n, true);
-      });
-    });
-    pick(0);
   }
 
   /* workflow demo: synthetic inputs, a draft, a human approval */
@@ -198,51 +178,77 @@
       status.innerHTML = gpc ? 'Analytics is <b>off</b>: your browser sends a Global Privacy Control signal.' : off ? 'Analytics is <b>off</b> on this browser. You have opted out of sale and sharing.' : 'Analytics is on.';
     };
     sw.addEventListener('click', function () {
-      var off = !getOff();
-      try { if (off) localStorage.setItem('fands-optout', '1'); else localStorage.removeItem('fands-optout'); } catch (e) {}
-      if (typeof window.gtag === 'function') window.gtag('consent', 'update', { analytics_storage: off ? 'denied' : 'granted' });
+      window.fandsConsent(getOff() ? 'granted' : 'denied');
+      var bn = $('.consent'); if (bn) { bn.hidden = true; document.documentElement.classList.remove('consent-open'); }
       paint();
     });
     paint();
   }
 
-  /* estimator: volume × minutes ÷ 60 × assumed reduction */
-  var calc = $('.calc-panel');
-  if (calc) {
-    var v = $('#volume'), m = $('#minutes'), r = $('#reduction'), out = $('#calc-hours');
-    var upd = function () {
-      $('#volume-v').textContent = v.value; $('#minutes-v').textContent = m.value; $('#reduction-v').textContent = r.value + '%';
-      out.textContent = (v.value * m.value / 60 * r.value / 100).toFixed(1);
-    };
-    [v, m, r].forEach(function (el) { el.addEventListener('input', upd); }); upd();
-  }
-
   /* forms: post to /api/lead; if the hand-off is unavailable, open a prefilled email so nothing is lost */
   var interest = new URLSearchParams(location.search).get('interest');
   var sel = $('#interest'); if (sel && interest && /^(diagnostic|pilot|care)$/.test(interest)) sel.value = interest;
+  // Three forms share one flow. Success and failure each show a clear notice; on failure the visitor gets a prefilled
+  // email to send instead, so nothing is lost. Spam: a hidden honeypot field plus the time taken to fill the form.
+  var FORMS = {
+    inquiry: { name: 'workflow_inquiry', lead: 'workflow_review', ok: ['Request received.', 'Thanks — we’ll reply within two business days. Want to talk sooner? <a href="https://cal.com/fands/intro-call" data-cal-namespace="intro-call" data-cal-link="fands/intro-call">Book a free call</a>.'],
+      mail: function (d) { return ['Workflow review: ' + (d.company || ''), 'Name: ' + d.name + '\nCompany: ' + d.company + '\nEmail: ' + d.email + '\nStarting point: ' + d.interest + '\n\nThe handoff slowing us down:\n' + d.workflow]; } },
+    newsletter: { name: 'newsletter', lead: 'newsletter', ok: ['You’re on the list.', 'The first Field Note arrives on a Tuesday. You can unsubscribe from any email.'],
+      mail: function (d) { return ['Field Notes: please add me', 'Please add ' + d.email + ' to Fands Field Notes.']; } },
+    privacy: { name: 'privacy_request', lead: 'privacy_request', ok: ['Request received.', 'We’ll confirm within 10 business days and respond within 45 days. We may email you to verify your identity.'],
+      mail: function (d) { return ['Privacy request: ' + d.request, 'Request: ' + d.request + '\nName: ' + d.name + '\nEmail: ' + d.email + '\nState: ' + d.state + '\n\nDetails:\n' + (d.details || '')]; } }
+  };
+  var ICO_OK = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>';
+  var ICO_ERR = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>';
   $$('form[data-lead]').forEach(function (f) {
-    var newsletter = f.dataset.lead === 'newsletter', btn = $('button', f), ok = $('.feedback', f), err = $('.feedback.error', f);
-    var formName = newsletter ? 'newsletter' : 'workflow_inquiry';
-    var started = false;
-    f.addEventListener('focusin', function () { if (!started) { started = true; track('form_start', { form_name: formName }); } });
+    var cfg = FORMS[f.dataset.lead] || FORMS.inquiry, btn = $('button[type=submit]', f), box = $('.form-notice', f);
+    var started = false, opened = Date.now();
+    var notice = function (kind, title, html) {
+      box.className = 'form-notice ' + kind; box.setAttribute('role', kind === 'error' ? 'alert' : 'status');
+      box.innerHTML = (kind === 'error' ? ICO_ERR : ICO_OK) + '<div><strong>' + title + '</strong><p>' + html + '</p></div>';
+      box.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+    };
+    f.addEventListener('focusin', function () { if (!started) { started = true; track('form_start', { form_name: cfg.name }); } });
     f.addEventListener('submit', function (e) {
       e.preventDefault();
       if (!f.checkValidity()) { f.reportValidity(); return; }
       var d = {}; new FormData(f).forEach(function (val, k) { d[k] = String(val).trim(); });
-      d.kind = newsletter ? 'newsletter' : 'inquiry'; d.source = location.pathname;
-      var label = btn.textContent; btn.disabled = true; btn.textContent = 'Sending…'; ok.textContent = ''; err.hidden = true;
-      var mail = newsletter
-        ? 'mailto:hello@fands.io?subject=' + encodeURIComponent('Field Notes: please add me') + '&body=' + encodeURIComponent('Please add ' + d.email + ' to Fands Field Notes.')
-        : 'mailto:hello@fands.io?subject=' + encodeURIComponent('Workflow review: ' + (d.company || '')) + '&body=' + encodeURIComponent('Name: ' + d.name + '\nCompany: ' + d.company + '\nEmail: ' + d.email + '\nStarting point: ' + d.interest + '\n\nThe handoff slowing us down:\n' + d.workflow);
+      d.kind = f.dataset.lead; d.source = location.pathname; d.elapsed = Date.now() - opened;
+      var label = btn.innerHTML; btn.disabled = true; btn.textContent = 'Sending…'; box.className = 'form-notice'; box.innerHTML = '';
+      var m = cfg.mail(d), mail = 'mailto:hello@fands.io?subject=' + encodeURIComponent(m[0]) + '&body=' + encodeURIComponent(m[1]);
       fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) })
         .then(function (res) { return res.ok ? res.json() : Promise.reject(res.status); })
         .then(function (j) {
           if (!j.ok) throw 0;
-          track('generate_lead', { form_name: formName, lead_type: newsletter ? 'newsletter' : 'workflow_review' });
-          ok.textContent = newsletter ? 'You’re on the list. The first note arrives on a Tuesday.' : 'Got it. We’ll reply within two business days.';
-          f.reset(); btn.disabled = false; btn.textContent = label;
+          track('generate_lead', { form_name: cfg.name, lead_type: cfg.lead });
+          notice('success', cfg.ok[0], cfg.ok[1]);
+          f.reset(); opened = Date.now();
         })
-        .catch(function () { track('form_error', { form_name: formName }); btn.disabled = false; btn.textContent = label; err.hidden = false; location.href = mail; });
+        .catch(function () {
+          track('form_error', { form_name: cfg.name });
+          notice('error', 'We couldn’t send that.', 'Nothing was lost — your details are still in the form. <a href="' + esc(mail) + '">Send it by email instead</a>, or try again in a minute.');
+        })
+        .then(function () { btn.disabled = false; btn.innerHTML = label; });
     });
   });
+
+  /* every email link reports a click, so GA4 can count contact intent */
+  document.addEventListener('click', function (e) { var a = e.target.closest('a[href^="mailto:"]'); if (a) track('email_click', { link_url: a.getAttribute('href').split('?')[0] }); }, { passive: true });
+
+  /* cookie consent: US notice-and-choice model. Analytics runs unless the visitor declines or sends Global Privacy Control.
+     The choice is shared with /privacy-choices and read by the consent defaults in <head> on the next page. */
+  var banner = $('.consent'), gpcOn = !!navigator.globalPrivacyControl;
+  var stored = function () { try { return localStorage.getItem('fands-consent'); } catch (e) { return null; } };
+  window.fandsConsent = function (v) {
+    try { localStorage.setItem('fands-consent', v); if (v === 'granted') localStorage.removeItem('fands-optout'); else localStorage.setItem('fands-optout', '1'); } catch (e) {}
+    if (typeof window.gtag === 'function') window.gtag('consent', 'update', { analytics_storage: v });
+    track('consent_choice', { choice: v });
+  };
+  if (banner) {
+    if (!stored() && !gpcOn) { banner.hidden = false; document.documentElement.classList.add('consent-open'); }
+    banner.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-consent]'); if (!b) return;
+      window.fandsConsent(b.dataset.consent); banner.hidden = true; document.documentElement.classList.remove('consent-open');
+    });
+  }
 })();

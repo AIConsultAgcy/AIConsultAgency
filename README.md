@@ -1,21 +1,41 @@
 # Fands — website
 
-Static site for Fands, the West Hollywood AI agency, live at https://fands.io. One page, no build dependencies.
+Static site for Fands, an AI implementation agency for small and mid-size US businesses, live at https://fands.io and hosted on Vercel.
 
-> We build and deploy AI systems that create measurable outcomes for your business.
+## Build
 
-## Files
-- `index.html` — the site. Open it directly or host it on any static host (Vercel, Netlify, GitHub Pages).
-- `page.html` — the page body without the html/head/body wrapper; this is what the Claude artifact publishes. Edit this file, then run `./build.sh` to regenerate `index.html`.
-- `img/` — photography (Unsplash, free licence), resized to 1600px.
-- `build.sh` — wraps `page.html` into `index.html`.
+Pages are written in `src/` and built into plain HTML at the repo root:
 
-## How it works
-- The hero and the pinned "What we measure" section run on Three.js (loaded from cdnjs, pinned to 0.160.0). 32,000 particles morph from noise into a bar chart, a bookings grid and a rising line as you scroll.
-- Fonts: Instrument Sans and IBM Plex Mono from Google Fonts.
-- The contact form is handled on the page only; wire it to a form service or email before launch.
-- Respects `prefers-reduced-motion`; works at phone width.
+```bash
+python build.py
+```
 
-## Before launch, replace
-- Street address, phone, social links (all marked "placeholder" on the page). The hello@fands.io mailbox still needs to be created.
-- The pilot numbers (71%, 38/wk, 9 hrs) are labelled targets. Swap in real case studies as pilots complete.
+Each `src/*.html` starts with a one-line JSON header, for example:
+
+```json
+{"out": "services.html", "path": "/services", "title": "AI Services for Small Businesses | Fands", "description": "...", "crumbs": [["Services", "/services"]], "priority": 0.9, "type": "CollectionPage"}
+```
+
+Optional keys: `hero` (home page sculpture and intro), `schema`, `noindex`, `og_type`, `type` (schema.org page type).
+
+`build.py` wraps every page with the shared head, header, footer, cookie banner and booking button, expands tokens and writes:
+
+- every page's HTML, with title, description, canonical, Open Graph, Twitter and JSON-LD (Organization, WebPage, breadcrumbs);
+- `sitemap.xml` (indexable pages only, `lastmod` from each source file), `robots.txt` and `llms.txt` for AI assistants.
+
+Tokens: `{{i:name:size}}` icons, `{{cal}}` Cal.com popup attributes, `{{closing}}` final call to action, `{{crumbs}}` breadcrumbs, `{{legal-nav}}` legal document switcher.
+
+Edit `src/`, `assets/` or `build.py`, then rebuild. Never edit the generated HTML at the root.
+
+## Pieces
+
+- `assets/site.css`, `assets/site.js`: shared styles and behaviour (menu, demo, forms, consent, analytics events). Asset URLs carry a content hash, so they are cached for a year.
+- `assets/sculpture.js`: the Three.js hero ring on the home page.
+- `api/lead.js`: Vercel function for the inquiry, Field Notes and privacy-request forms. It filters spam (honeypot, fill time, link spam) and forwards to Google Apps Script via `GOOGLE_APPS_SCRIPT_URL`.
+- Analytics: Google Tag Manager `GTM-N3C2TK2J` with Google Consent Mode, plus Vercel Web Analytics. Events pushed to the data layer: `cta_click`, `cal_open`, `outbound_click`, `email_click`, `form_start`, `generate_lead`, `form_error`, `demo_run`, `consent_choice`.
+- Booking: Cal.com `fands/intro-call` popup, loaded after the page is idle.
+
+## Before launch
+
+- Have the legal pages (`/privacy`, `/terms`, `/cookies`, `/ai-data-policy`, `/accessibility`, `/privacy-choices`) reviewed by a lawyer.
+- Case studies are example engagements; replace them with real, approved client results as projects complete.

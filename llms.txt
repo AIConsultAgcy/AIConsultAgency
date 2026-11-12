@@ -1,0 +1,41 @@
+# Fands
+
+> Fands is an AI implementation agency for small and mid-size businesses in the United States. It builds and runs the systems that answer calls, follow up on leads, run back-office work and get a business found in search and AI answers.
+
+Fands sells implementation, not software. Clients start with a free 30-minute call, then a paid AI Readiness Audit, then fixed-price builds and a Managed AI Retainer with a monthly results review. Contact: hello@fands.io. Book a call: https://cal.com/fands/intro-call
+
+## Services
+
+- [AI Services for Small Businesses](https://fands.io/services): Five AI practices: strategy and audit, business process automation, AI receptionist, AI content and search visibility, web development.
+- [AI Receptionist & Custom AI Agents](https://fands.io/services/ai-assistants): A 24/7 AI receptionist for calls, texts and chat that books appointments and hands off to a human, plus custom AI agents and apps.
+- [Business Process & Lead Automation](https://fands.io/services/ai-operations): Automate invoicing, onboarding and lead follow-up with n8n, Make and Zapier, add a knowledge assistant and train your team on AI.
+- [Website, E-commerce & App Development](https://fands.io/services/digital-development): Websites, online stores and web apps for small businesses, with AI chat, order automation and Shopify, Wix and WordPress integrations.
+- [AI Content, AI Search (GEO) & Local SEO](https://fands.io/services/media-growth): An AI content engine, visibility in ChatGPT, Gemini and Google AI Overviews, local SEO, paid media and branding for small businesses.
+- [AI Readiness Audit & Managed AI Retainer](https://fands.io/services/strategy-entry): A paid AI readiness audit with process mapping, ROI estimate and a 30/60/90-day plan, then a retainer that keeps every system running.
+
+## Process and company
+
+- [About Fands: AI Implementation Agency](https://fands.io/about): Fands is an AI implementation agency for small and mid-size US businesses. We don’t sell software: we implement it, measure it and keep it running.
+- [Contact Fands: Book a Free AI Consultation](https://fands.io/contact): Tell us where the work gets stuck. Request a workflow review or book a free 30-minute call with Fands. We reply within two business days.
+- [How We Work: AI Implementation Process](https://fands.io/how-we-work): Five steps from a free call to a monthly review: AI readiness audit, strategy with a fixed quote, build and launch, measured results.
+
+## Case studies
+
+- [AI Case Studies for Small Businesses](https://fands.io/case-studies): Example AI engagements: an AI receptionist, lead follow-up automation and invoice automation, with the metrics we track on every project.
+- [Invoice Automation for an Accounting Firm](https://fands.io/case-studies/accounting-firm-invoice-automation): Example engagement: AI reads invoices, matches vendors and purchase orders and drafts bill entries for human approval at an accounting firm.
+- [Lead Follow-Up Automation for a Contractor](https://fands.io/case-studies/home-services-lead-follow-up): Example engagement: speed-to-lead replies, missed-call text-back and automatic follow-up for a home services remodeling contractor.
+- [AI Receptionist for a Med Spa: Case Study](https://fands.io/case-studies/med-spa-ai-receptionist): Example engagement: an AI receptionist answers med spa calls 24/7, books appointments and hands medical questions to the front desk.
+
+## Field Notes
+
+- [Field Notes: Practical AI for Small Business](https://fands.io/insights): Practical notes on finding, building and measuring useful AI workflows in a small or mid-size business. One useful idea every two weeks.
+- [Your First AI Workflow Should Be Boring](https://fands.io/insights/first-workflow): A practical scorecard for choosing your first AI workflow, measuring the baseline, testing edge cases and deciding whether to expand.
+
+## Legal
+
+- [Accessibility Statement](https://fands.io/accessibility): Fands aims to meet WCAG 2.1 AA on fands.io. What we do for accessibility, the known limitations and how to report a barrier to our team.
+- [AI & Client Data Policy](https://fands.io/ai-data-policy): How Fands handles client data and uses AI responsibly: confidentiality, AI providers and training, human review, regulated data and deletion.
+- [Cookie Policy](https://fands.io/cookies): The cookies and similar technologies fands.io uses for analytics and functionality, how consent works and how to switch cookies off.
+- [Privacy Policy](https://fands.io/privacy): How Fands collects, uses and protects personal information, how to request access or deletion, and the privacy rights of California residents.
+- [Your Privacy Choices & Data Requests](https://fands.io/privacy-choices): Opt out of analytics and the sale or sharing of personal information, and request access to, correction or deletion of your data at Fands.
+- [Terms of Service](https://fands.io/terms): The terms that govern use of fands.io, including content, submissions, disclaimers, limitation of liability and California governing law.
