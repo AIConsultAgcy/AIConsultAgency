@@ -523,6 +523,10 @@ html:has(.links-page){color-scheme:dark}
 .legal-nav{position:static;flex-direction:row;overflow-x:auto;gap:6px;scrollbar-width:none;margin:0 -6vw;padding:0 6vw}.legal-nav::-webkit-scrollbar{display:none}
 .legal-nav .fh{display:none}.legal-nav a{white-space:nowrap;flex-shrink:0;border:1px solid #c4ccd0;border-radius:100px;padding:9px 16px;font-size:13px}.legal-nav a[aria-current]{border-color:var(--night)}}
 @media(max-width:767px){.legal{padding-bottom:65px}.legal .article h2{font-size:24px}.legal .article p,.legal .article li{font-size:15px}.legal-toc ol{columns:1}.footer-legal{order:3;width:100%}}
+/* the process section is dark: its footer line and link must be light too */
+.approach-section .section-foot{border-color:#353b45}
+.approach-section .section-foot p{color:#eef1f2}
+.approach-section .arrow-link{color:#eef1f2;border-color:#5b6470}
 .desktop-nav a{white-space:nowrap}
 @media(max-width:1200px){.desktop-nav{gap:24px}}
 @media(max-width:960px){.desktop-nav{display:none}}
