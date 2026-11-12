@@ -6,7 +6,7 @@ const MAP = {
   'links.fands.io': '/links',
   'seimur.fands.io': '/seimur',
   'faris.fands.io': '/faris',
-  'pitch.fands.io': '/pitch/index.html'
+  'pitch.fands.io': '/pitch'
 };
 
 export const config = { matcher: '/' };
