@@ -1,0 +1,49 @@
+{
+  "order": 3,
+  "slug": "med-spa-ai-receptionist",
+  "feature": false,
+  "tag_industry": "Med spa",
+  "tag_practice": "AI Receptionist",
+  "card_title": "After-hours calls turned into booked appointments.",
+  "card_summary": "A 24/7 AI receptionist answers, books into the calendar and hands sensitive questions to the front desk.",
+  "card_kpis": [
+    {
+      "value": "24/7",
+      "label": "Calls answered, target"
+    },
+    {
+      "value": "< 1 min",
+      "label": "Missed-call text-back, target"
+    }
+  ],
+  "crumb": "Med spa AI receptionist",
+  "seo_title": "AI Receptionist for a Med Spa: Case Study | Fands",
+  "seo_description": "Example engagement: an AI receptionist answers med spa calls 24/7, books appointments and hands medical questions to the front desk.",
+  "eyebrow": "EXAMPLE ENGAGEMENT · AI ASSISTANTS",
+  "headline_main": "After-hours calls turned into",
+  "headline_em": "booked appointments.",
+  "lead": "A med spa with two locations was losing bookings to voicemail every evening and weekend. An AI receptionist now answers every call, books into the calendar and passes anything medical to the team.",
+  "facts": [
+    {
+      "label": "Industry",
+      "value": "Med spa, 2 locations"
+    },
+    {
+      "label": "Services",
+      "value": "AI Receptionist, Lead-to-Revenue"
+    },
+    {
+      "label": "Timeline",
+      "value": "Audit 1 week · build 3 weeks"
+    },
+    {
+      "label": "Primary metric",
+      "value": "After-hours calls booked"
+    }
+  ],
+  "schema_headline": "AI Receptionist for a Med Spa: After-Hours Calls to Bookings",
+  "schema_description": "Example engagement showing how an AI receptionist answers med spa calls 24/7 and books appointments.",
+  "body": "## The challenge\n\n    \n\nMost new clients called in the evening, after work, when the front desk had gone home. Calls went to voicemail, few callers left a message and fewer were called back the next morning. During the day, staff juggled phones and in-person clients at the same time.\n\n    \n\n## What the audit found\n\n    \n\nOver a two-week baseline, a large share of calls arrived outside opening hours, and most of them were simple: prices, availability and rescheduling. Missed callers rarely tried again. The booking system and CRM both had integrations available, so a connected assistant was realistic.\n\n    \n\n## What we built\n\n    \n\n- A 24/7 AI voice agent on the existing phone number, answering from an approved list of services, prices and policies.\n- Direct booking and rescheduling in the spa’s calendar, with SMS confirmations and reminders.\n- Missed-call text-back within a minute when a line is busy.\n- Every call logged to the CRM with a summary and transcript.\n- Review requests sent after completed appointments.\n\n    \n\n## How people stay in control\n\n    \n\nThe assistant never gives medical advice. Questions about treatments, contraindications or complaints go to a named team member with the transcript, by text and as a callback task. The owner approved the scripts and can change prices and rules without us.\n\n    \n\n## The metrics we track\n\n    \n\n| Metric | Baseline (example) | Target |\n| --- | --- | --- |\n| After-hours calls answered | Voicemail only | 100% |\n| Missed-call text-back | None | &lt; 1 minute |\n| After-hours calls that book | Measured in audit | Agreed uplift |\n| Front-desk phone time | Measured in audit | −30% |\n\n    \n\n## What happens next\n\n    \n\nUnder the Managed AI Retainer the system is reviewed monthly: booking rate, handoffs and caller questions the assistant could not answer. The natural next build is an AI content engine to fill quieter weekdays.\n\n    \n\n> **Example engagement, not a client result**\n> This case is built from a typical med spa scenario to show our process. Baselines and targets are illustrative and are set for each client during the audit.\n\n    \n\n[Learn more about the AI Receptionist](/services/ai-assistants#ai-receptionist)",
+  "cover": "/img/cases/med-spa-ai-receptionist.svg",
+  "cover_alt": "Ai Receptionist example: 24/7 calls answered and booked"
+}

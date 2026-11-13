@@ -965,3 +965,18 @@ a.post-card.soon .arrow-link{align-self:flex-start;margin-top:auto}
 .vid-all{margin-top:18px}
 .follow-section+.newsletter.wrap{padding-top:100px}
 @media(max-width:767px){.follow-section+.newsletter.wrap{padding-top:65px}}
+
+/* covers and figures for case studies and Field Notes */
+.case-card .case-cover{display:block;margin:-26px -24px 22px;aspect-ratio:16/10;overflow:hidden;border-radius:18px 18px 0 0;background:var(--night)}
+.case-card .case-cover img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.22,1,.36,1)}
+.case-card:hover .case-cover img{transform:scale(1.03)}
+.case-card:has(.case-cover) h3{margin-top:4px}
+.article-cover{max-width:1100px;margin:36px auto 10px;padding:0 7vw}
+.article-cover img,.article-figure img{display:block;width:100%;height:auto;border-radius:20px;background:var(--night)}
+.article-cover figcaption,.article-figure figcaption{margin-top:10px;font-size:13px;color:#5d666e}
+.article-figure{margin:30px 0}
+@media(max-width:767px){.article-cover{padding:0 6vw}.article-cover img,.article-figure img{border-radius:14px}.case-card .case-cover{margin:-26px -24px 18px}}
+
+/* hero buttons: always two in one row on phones */
+@media(max-width:767px){.page-head .head-actions{flex-wrap:nowrap;gap:10px}.page-head .head-actions .button{flex:1 1 0;min-width:0;justify-content:center;gap:8px;padding:12px 14px;font-size:12px;min-height:46px;white-space:nowrap}.page-head .head-actions .button svg{width:15px;height:15px;flex:none}}
+@media(max-width:380px){.page-head .head-actions .button{padding:12px 10px}.page-head .head-actions .button svg{display:none}}

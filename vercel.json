@@ -114,9 +114,54 @@
           "value": "noindex, nofollow, noarchive"
         }
       ]
+    },
+    {
+      "source": "/wms(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive, nosnippet, noimageindex"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        }
+      ]
+    },
+    {
+      "source": "/(src|content)/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive, nosnippet, noimageindex"
+        }
+      ]
     }
   ],
   "redirects": [
+    {
+      "source": "/(src|content)/(.*)",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/(build|content)\\.py",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/(package\\.json|README\\.md|middleware\\.js)",
+      "destination": "/",
+      "permanent": false
+    },
     {
       "source": "/:path((?!assets/|brand/|img/|video/|contact/|pitch/|api/|_vercel/|favicon|site\\.webmanifest|robots\\.txt).+)",
       "has": [
@@ -161,5 +206,7 @@
       "destination": "https://fands.io/:path",
       "permanent": false
     }
-  ]
+  ],
+  "buildCommand": "python3 build.py",
+  "outputDirectory": "."
 }

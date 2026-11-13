@@ -1,0 +1,49 @@
+{
+  "order": 1,
+  "slug": "accounting-firm-invoice-automation",
+  "feature": false,
+  "tag_industry": "Accounting firm",
+  "tag_practice": "Process Automation",
+  "card_title": "An invoice inbox that sorts itself before review.",
+  "card_summary": "Invoices are read, matched and drafted into the books. A person approves before anything posts.",
+  "card_kpis": [
+    {
+      "value": "−50%",
+      "label": "Handling time per invoice, target"
+    },
+    {
+      "value": "0",
+      "label": "Unreviewed postings"
+    }
+  ],
+  "crumb": "Accounting firm invoice automation",
+  "seo_title": "Invoice Automation for an Accounting Firm | Fands",
+  "seo_description": "Example engagement: AI reads invoices, matches vendors and purchase orders and drafts bill entries for human approval at an accounting firm.",
+  "eyebrow": "EXAMPLE ENGAGEMENT · AI OPERATIONS",
+  "headline_main": "An invoice inbox that",
+  "headline_em": "sorts itself before review.",
+  "lead": "A small accounting firm processed hundreds of client invoices a month by hand. Business process automation now reads, matches and drafts each one, and a person approves before anything posts.",
+  "facts": [
+    {
+      "label": "Industry",
+      "value": "Accounting, 12 people"
+    },
+    {
+      "label": "Services",
+      "value": "Business Process Automation"
+    },
+    {
+      "label": "Timeline",
+      "value": "Audit 2 weeks · build 5 weeks"
+    },
+    {
+      "label": "Primary metric",
+      "value": "Handling time per invoice"
+    }
+  ],
+  "schema_headline": "Invoice Processing Automation for an Accounting Firm",
+  "schema_description": "Example engagement showing AI invoice extraction, matching and human approval at an accounting firm.",
+  "body": "## The challenge\n\n    \n\nInvoices arrived by email as PDFs in every format. Staff opened each one, typed the vendor, amount, due date and reference into the accounting software and checked it against the purchase order. Month-end meant overtime, and typing errors slipped through.\n\n    \n\n## What the audit found\n\n    \n\nMost invoices came from a stable set of known vendors, and a majority had a purchase order to match against. The accounting software had a usable API. Handling time per invoice and the error rate were measured over a full month to cover the month-end peak.\n\n    \n\n## What we built\n\n    \n\n- A shared inbox watcher that picks up every invoice attachment.\n- AI extraction of vendor, amounts, dates and references, with a confidence score for each field.\n- Rules that match the vendor and purchase order and flag any difference.\n- Draft bill entries created in the accounting software, never posted automatically.\n- A review queue where staff approve, correct or reject in one click.\n- An integration layer built on n8n with an LLM, documented in a runbook.\n\n    \n\n## How people stay in control\n\n    \n\nNothing posts without approval. Low-confidence fields are highlighted, mismatches go to a named person, and instructions inside an invoice are treated as text, never as commands.\n\n    \n\n## The metrics we track\n\n    \n\n| Metric | Baseline (example) | Target |\n| --- | --- | --- |\n| Handling time per invoice | Measured in audit | −50% |\n| Data-entry errors | Measured in audit | Below baseline |\n| Invoices posted without review | — | 0 |\n| Month-end overtime hours | Measured in audit | Agreed reduction |\n\n    \n\n## What happens next\n\n    \n\nMonthly reviews track handling time, exception rate and accuracy. Typical next builds are client onboarding automation and an internal knowledge assistant over the firm’s procedures.\n\n    \n\n> **Example engagement, not a client result**\n> This case is built from a typical accounting firm scenario to show our process. Baselines and targets are illustrative and are set for each client during the audit.\n\n    \n\n[Learn more about Business Process Automation](/services/ai-operations#business-process-automation)",
+  "cover": "/img/cases/accounting-firm-invoice-automation.svg",
+  "cover_alt": "Invoice Inbox example: −50% handling time per invoice"
+}

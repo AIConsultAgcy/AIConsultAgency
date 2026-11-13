@@ -1,0 +1,49 @@
+{
+  "order": 2,
+  "slug": "home-services-lead-follow-up",
+  "feature": true,
+  "tag_industry": "Home services",
+  "tag_practice": "Lead-to-Revenue",
+  "card_title": "Every quote request answered in minutes, not days.",
+  "card_summary": "Speed-to-lead replies, a clean pipeline and automatic follow-up for a remodeling contractor.",
+  "card_kpis": [
+    {
+      "value": "< 5 min",
+      "label": "First reply, target"
+    },
+    {
+      "value": "100%",
+      "label": "Leads with a follow-up, target"
+    }
+  ],
+  "crumb": "Home services lead follow-up",
+  "seo_title": "Lead Follow-Up Automation for a Contractor | Fands",
+  "seo_description": "Example engagement: speed-to-lead replies, missed-call text-back and automatic follow-up for a home services remodeling contractor.",
+  "eyebrow": "EXAMPLE ENGAGEMENT · AI OPERATIONS",
+  "headline_main": "Every quote request answered",
+  "headline_em": "in minutes, not days.",
+  "lead": "A remodeling contractor got plenty of inquiries but answered them between job sites, often a day or two later. Lead-to-revenue automation now replies in minutes and makes sure no lead goes without a follow-up.",
+  "facts": [
+    {
+      "label": "Industry",
+      "value": "Home services, remodeling"
+    },
+    {
+      "label": "Services",
+      "value": "Lead-to-Revenue Automation"
+    },
+    {
+      "label": "Timeline",
+      "value": "Audit 1 week · build 3 weeks"
+    },
+    {
+      "label": "Primary metric",
+      "value": "Minutes to first reply"
+    }
+  ],
+  "schema_headline": "Lead Follow-Up Automation for a Remodeling Contractor",
+  "schema_description": "Example engagement showing speed-to-lead replies and automatic follow-up for a home services contractor.",
+  "body": "## The challenge\n\n    \n\nLeads arrived from the website, Google, Facebook and phone calls. The owner answered them in the evening, if at all. By then, many homeowners had already booked a competitor who called back first. Nobody could say how many leads were lost each month.\n\n    \n\n## What the audit found\n\n    \n\nThe baseline showed long and uneven reply times, no consistent follow-up after a quote and no single list of open leads. Old quotes that never closed were a sizable, untouched pipeline.\n\n    \n\n## What we built\n\n    \n\n- A CRM set up as the one place every lead lands, from every source.\n- An instant, personal first reply by text and email with two call times to choose from.\n- Missed-call text-back for calls the crew can’t take on site.\n- A follow-up sequence after every quote until the homeowner decides.\n- A reactivation campaign for past quotes and review requests after finished jobs.\n- A one-page pipeline dashboard: leads, quotes, won jobs and value.\n\n    \n\n## How people stay in control\n\n    \n\nThe owner approved every message template. For the first month, first replies were reviewed before sending until the tone was right. Pricing questions always go to a person.\n\n    \n\n## The metrics we track\n\n    \n\n| Metric | Baseline (example) | Target |\n| --- | --- | --- |\n| Minutes to first reply | Hours to days | &lt; 5 minutes |\n| Leads with a scheduled follow-up | Inconsistent | 100% |\n| Lead-to-booked-estimate rate | Measured in audit | Agreed uplift |\n| New Google reviews per month | Measured in audit | 2× baseline |\n\n    \n\n## What happens next\n\n    \n\nMonthly reviews track reply time, conversion and pipeline value. Typical next steps are an AI receptionist for after-hours calls and local SEO to bring in more of the right leads.\n\n    \n\n> **Example engagement, not a client result**\n> This case is built from a typical home services scenario to show our process. Baselines and targets are illustrative and are set for each client during the audit.\n\n    \n\n[Learn more about Lead-to-Revenue Automation](/services/ai-operations#lead-to-revenue-automation)",
+  "cover": "/img/cases/home-services-lead-follow-up.svg",
+  "cover_alt": "Lead Follow-Up example: < 5 min first reply to a new lead"
+}

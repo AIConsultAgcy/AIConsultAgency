@@ -3,6 +3,7 @@
    {"out": "contact.html", "title": "...", "description": "...", "path": "/contact", "hero": false}
 The build wraps it with the shared head, header and footer and expands {{i:name:size}} icon tokens."""
 import json, re, pathlib
+import content as cms
 
 ROOT = pathlib.Path(__file__).resolve().parent
 SITE = 'https://fands.io'
@@ -214,9 +215,7 @@ FILM_LD = {"@context": "https://schema.org", "@type": "VideoObject", "name": "Yo
 
 
 # Video and field-note feeds. VIDEOS lists published YouTube videos, newest first; the feeds show up to three.
-VIDEOS = [
-    {'id': FILM_ID, 'title': 'Your next lead shouldn’t wait until Monday', 'meta': '0:56', 'desc': 'The FANDS film: media earns the attention, systems earn the revenue.'},
-]
+VIDEOS = [{'id': v['id'], 'title': v['title'], 'meta': v.get('duration', ''), 'desc': v.get('description', '')} for v in cms.load_videos()]
 YT_CHANNEL = 'https://www.youtube.com/@fands-ai'
 
 
@@ -239,13 +238,6 @@ FOLLOW = (
     '<a class="follow-card" href="' + YT_CHANNEL + '" target="_blank" rel="noopener noreferrer" data-track="Follow: YouTube"><i class="follow-ico">{{i:youtube:24}}</i><span><b>YouTube</b><small>Workflow demos and walkthroughs</small></span>{{i:up-right:18}}</a>'
     '</div>')
 
-NOTE_FIRST = ('<article class="post-card"><a class="post-cover" href="/insights/first-workflow" tabindex="-1" aria-hidden="true"><img src="/img/insights/first-workflow-cover.svg" alt="" width="1600" height="1000" loading="lazy" decoding="async"></a>'
-              '<div class="post-body"><div class="post-meta"><span class="tag">Field Guide 001</span><span class="tag outline">7 min read</span></div>'
-              '<h3><a href="/insights/first-workflow">Your first AI workflow should be boring.</a></h3>'
-              '<p>A practical scorecard for choosing your first AI project, measuring the baseline and deciding whether it earned the next step.</p>'
-              '<a class="arrow-link" href="/insights/first-workflow">Read the guide {{i:right:15}}</a></div></article>')
-
-
 def video_thumb(v):
     return ('<a class="vid-thumb" href="https://www.youtube.com/watch?v=' + v['id'] + '" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube: ' + v['title'] + '" data-track="Video: ' + v['title'] + '">'
             '<img src="https://i.ytimg.com/vi/' + v['id'] + '/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" decoding="async">'
@@ -259,7 +251,9 @@ def videos_html():
 
 
 def notes_feed_html():
-    return '<div class="post-grid">' + NOTE_FIRST + (
+    posts = [p for p in cms.load_posts() if not p.get('draft')]
+    first = cms.post_card(posts[0], 'h3', False) if posts else ''
+    return '<div class="post-grid">' + first + (
         '<a class="post-card soon" href="/insights#field-notes-signup"><span>Next note</span><p>New field notes arrive every two weeks. Join the list to get the next one first.</p><span class="arrow-link">Join Field Notes {{i:down:15}}</span></a>') + '</div>'
 
 
@@ -314,9 +308,12 @@ def main():
     import hashlib, datetime
     v = hashlib.sha1(b''.join((ROOT / 'assets' / f).read_bytes() for f in ('site.css', 'site.js', 'sculpture.js'))).hexdigest()[:8]
     pages = []
+    sources = []
     for src in sorted((ROOT / 'src').glob('*.html')):
         first, body = src.read_text(encoding='utf-8').split('\n', 1)
-        meta = json.loads(first)
+        sources.append((json.loads(first), body, src))
+    sources += cms.generated_pages()  # case studies and Field Notes articles from content/
+    for meta, body, src in sources:
         meta['src'] = src
         noindex = meta.get('noindex')
         # structured data on every page: who publishes it (Organization), what it is (WebPage type), where it sits (breadcrumbs)
@@ -344,7 +341,8 @@ def main():
         if meta.get('bare'):  # bare pages (the links page): no site header, footer or floating booking button
             html = re.sub(r'<a class="book-fab".*?</a>\n', '', html, flags=re.S)
         html = (html.replace('{{closing}}', CLOSING).replace('{{cal}}', CAL).replace('{{videos}}', videos_html())
-                .replace('{{follow}}', FOLLOW).replace('{{notes-feed}}', notes_feed_html()))
+                .replace('{{follow}}', FOLLOW).replace('{{notes-feed}}', notes_feed_html())
+                .replace('{{case-cards}}', cms.case_cards_html()).replace('{{insight-cards}}', cms.post_cards_html()))
         html = re.sub(r'\{\{i:([a-z-]+)(?::(\d+))?(?::([a-z-]+))?\}\}', icon, html)
         out = ROOT / meta['out']
         out.parent.mkdir(parents=True, exist_ok=True)

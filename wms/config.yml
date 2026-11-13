@@ -1,0 +1,117 @@
+# Content manager for fands.io. Sign in with a GitHub account that has write access to the repository.
+backend:
+  name: github
+  repo: AIConsultAgcy/AIConsultAgency
+  branch: main
+
+publish_mode: editorial_workflow   # every change opens a pull request first; "Publish" merges it
+media_folder: img/uploads
+public_folder: /img/uploads
+site_url: https://fands.io
+display_url: https://fands.io
+locale: en
+
+collections:
+  - name: cases
+    label: Case studies
+    label_singular: Case study
+    folder: content/cases
+    extension: json
+    format: json
+    create: true
+    slug: "{{fields.slug}}"
+    summary: "{{card_title}}"
+    sortable_fields: [order, card_title]
+    fields:
+      - {name: slug, label: URL slug, widget: string, hint: "Lowercase words joined by hyphens. The page is /case-studies/<slug>. Do not change it after publishing."}
+      - {name: draft, label: Draft (hide from the site), widget: boolean, default: false, required: false}
+      - {name: order, label: Order on the page, widget: number, value_type: int, default: 10}
+      - {name: feature, label: Highlight as the dark accent card, widget: boolean, default: false, required: false}
+      - {name: cover, label: Cover image (shown on the card and at the top of the case), widget: image, required: false}
+      - {name: cover_alt, label: Cover image description, widget: string, required: false}
+      - {name: cover_caption, label: Cover caption, widget: string, required: false}
+      - {name: tag_industry, label: Card tag (industry), widget: string}
+      - {name: tag_practice, label: Card tag (practice), widget: string}
+      - {name: card_title, label: Card headline, widget: string}
+      - {name: card_summary, label: Card summary, widget: text}
+      - label: Card numbers
+        name: card_kpis
+        widget: list
+        summary: "{{fields.value}}: {{fields.label}}"
+        fields:
+          - {name: value, label: Number, widget: string}
+          - {name: label, label: What it measures, widget: string}
+      - {name: crumb, label: Breadcrumb name, widget: string}
+      - {name: eyebrow, label: Small label above the headline, widget: string}
+      - {name: headline_main, label: Headline (first line), widget: string}
+      - {name: headline_em, label: Headline (second line, orange), widget: string}
+      - {name: lead, label: Intro paragraph, widget: text}
+      - label: Facts (industry, services, timeline, metric)
+        name: facts
+        widget: list
+        summary: "{{fields.label}}: {{fields.value}}"
+        fields:
+          - {name: label, label: Label, widget: string}
+          - {name: value, label: Value, widget: string}
+      - {name: body, label: Case text, widget: markdown, hint: "Headings: ## Title. Lists: - item. Tables: | a | b |. Note box: > **Title**. Photos: ![description](/img/uploads/photo.jpg). Use Raw mode for tables."}
+      - {name: seo_title, label: Search result title, widget: string}
+      - {name: seo_description, label: Search result description, widget: text}
+      - {name: schema_headline, label: Structured data headline, widget: string, required: false}
+      - {name: schema_description, label: Structured data description, widget: text, required: false}
+
+  - name: insights
+    label: Field Notes
+    label_singular: Article
+    folder: content/insights
+    extension: json
+    format: json
+    create: true
+    slug: "{{fields.slug}}"
+    summary: "{{card_title}}"
+    sortable_fields: [date, card_title]
+    fields:
+      - {name: slug, label: URL slug, widget: string, hint: "Lowercase words joined by hyphens. The page is /insights/<slug>. Do not change it after publishing."}
+      - {name: draft, label: Draft (hide from the site), widget: boolean, default: false, required: false}
+      - {name: date, label: Publication date, widget: string, hint: "Format YYYY-MM-DD, for example 2026-11-20"}
+      - {name: label, label: Label on the card (for example Field Guide 002), widget: string}
+      - {name: minutes, label: Reading time in minutes, widget: number, value_type: int}
+      - {name: cover, label: Cover image (shown on the card and at the top of the article), widget: image}
+      - {name: cover_alt, label: Cover image description, widget: string, required: false}
+      - {name: cover_caption, label: Cover caption, widget: string, required: false}
+      - {name: card_title, label: Card headline, widget: string}
+      - {name: card_summary, label: Card summary, widget: text}
+      - {name: card_cta, label: Card button text, widget: string, default: Read the guide, required: false}
+      - {name: crumb, label: Breadcrumb name, widget: string}
+      - {name: eyebrow, label: Small label above the headline, widget: string}
+      - {name: headline_main, label: Headline (first line), widget: string}
+      - {name: headline_mid, label: Headline (second line, plain words before the orange ones), widget: string, required: false}
+      - {name: headline_em, label: Headline (orange words), widget: string, required: false}
+      - {name: subtitle, label: Subtitle, widget: text}
+      - {name: body, label: Article text, widget: markdown, hint: "Headings: ## Title. Lists: - item. Tables: | a | b |. Note box: > **Title**. Small print: ~ text. Photos: ![description](/img/uploads/photo.jpg). Use Raw mode for tables."}
+      - {name: closing_main, label: Closing block (first line), widget: string, default: Find the first, required: false}
+      - {name: closing_mid, label: Closing block (plain word), widget: string, default: useful, required: false}
+      - {name: closing_em, label: Closing block (orange word), widget: string, default: "system.", required: false}
+      - {name: closing_text, label: Closing block text, widget: string, default: Tell us which handoff you would start with., required: false}
+      - {name: closing_button, label: Closing block button, widget: string, default: Request a workflow review, required: false}
+      - {name: seo_title, label: Search result title, widget: string}
+      - {name: seo_description, label: Search result description, widget: text}
+      - {name: schema_headline, label: Structured data headline, widget: string, required: false}
+      - {name: schema_description, label: Structured data description, widget: text, required: false}
+
+  - name: videos
+    label: Videos
+    files:
+      - name: videos
+        label: YouTube videos
+        file: content/videos.json
+        format: json
+        fields:
+          - label: Videos (newest first, the first three are shown)
+            name: videos
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - {name: id, label: YouTube video ID (the part after v= in the link), widget: string}
+              - {name: title, label: Title, widget: string}
+              - {name: duration, label: Length (for example 3:20), widget: string}
+              - {name: description, label: Short description, widget: text, required: false}
