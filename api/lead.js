@@ -1,6 +1,6 @@
 // Lead capture for fands.io. Receives the workflow-review, Field Notes and privacy-request forms, validates them,
 // filters obvious spam and forwards them to the configured Google Apps Script Web App.
-const MAX = { name: 120, company: 200, email: 254, phone: 30, interest: 40, workflow: 2000, source: 120, request: 80, state: 40 };
+const MAX = { name: 120, company: 200, email: 254, phone: 30, interest: 40, workflow: 2000, source: 120, attr: 400, request: 80, state: 40 };
 // values of the "Which service" select on /contact: the five practices. Service-level and older values are kept so
 // links like /contact?interest=receptionist or ?interest=pilot still arrive with a readable label.
 const INTEREST = {
@@ -17,6 +17,13 @@ const REQUESTS = ['Delete my personal information', 'Tell me what personal infor
 const MIN_FILL_MS = 2500; // humans take longer than this to fill a form; most bots do not
 
 function clean(v, max) { return String(v || '').replace(/[\u0000-\u001f]+/g, ' ').trim().slice(0, max); }
+// campaign params kept in the browser session (UTMs, click ids), appended to "source" so each lead shows where it came from
+function attribution(a) {
+  if (!a || typeof a !== 'object') return '';
+  const parts = Object.keys(a).filter((k) => /^(utm_[a-z_]{1,30}|gclid|fbclid|ttclid|msclkid)$/i.test(k)).slice(0, 8)
+    .map((k) => `${k.replace(/^utm_/i, '')}=${clean(a[k], 60)}`);
+  return parts.length ? ` | ${parts.join(', ')}` : '';
+}
 function send(res, code, body) { res.statusCode = code; res.setHeader('Content-Type', 'application/json'); return res.end(JSON.stringify(body)); }
 function looksLikeSpam(text) { return (text.match(/https?:\/\//gi) || []).length > 3 || /<a\s|\[url=/i.test(text); }
 
@@ -32,7 +39,7 @@ module.exports = async (req, res) => {
   const lead = {
     name: clean(body.name, MAX.name), company: clean(body.company, MAX.company), email: clean(body.email, MAX.email),
     phone: /^[0-9+()\-.\s]{7,30}$/.test(clean(body.phone, MAX.phone)) ? clean(body.phone, MAX.phone) : '',
-    interest: INTEREST[clean(body.interest, MAX.interest)] || '', workflow: clean(body.workflow || body.details, MAX.workflow), source: clean(body.source, MAX.source),
+    interest: INTEREST[clean(body.interest, MAX.interest)] || '', workflow: clean(body.workflow || body.details, MAX.workflow), source: clean(body.source, MAX.source) + attribution(body.attr),
     request: REQUESTS.includes(clean(body.request, MAX.request)) ? clean(body.request, MAX.request) : '', state: clean(body.state, MAX.state),
   };
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.email) || body.consent !== 'yes') return send(res, 400, { ok: false, error: 'fields' });

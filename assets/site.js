@@ -15,6 +15,30 @@
     shield: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>',
     reset: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>'
   };
+  /* campaign params: keep them for the session, let GTM/GA4 read them from the landing URL, then tidy the address bar */
+  (function () {
+    var KEYS = /^(utm_[a-z_]+|gclid|fbclid|ttclid|msclkid)$/i;
+    try {
+      var p = new URLSearchParams(location.search), found = {}, any = false;
+      p.forEach(function (v, k) { if (KEYS.test(k)) { found[k] = v; any = true; } });
+      if (!any) return;
+      try { sessionStorage.setItem('fands_attr', JSON.stringify(found)); } catch (e) {}
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'campaign_attribution', campaign: found });
+      var clean = function () {
+        try {
+          var q = new URLSearchParams(location.search);
+          Object.keys(found).forEach(function (k) { q.delete(k); });
+          var s = q.toString();
+          history.replaceState(history.state, '', location.pathname + (s ? '?' + s : '') + location.hash);
+        } catch (e) {}
+      };
+      /* wait until the page view has been sent, otherwise analytics would not see the UTMs */
+      var done = false, go = function () { if (!done) { done = true; setTimeout(clean, 800); } };
+      if (document.readyState === 'complete') go(); else addEventListener('load', go);
+      setTimeout(go, 4000);
+    } catch (e) {}
+  })();
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
   /* analytics: funnel events are sent to GTM; GA4 tags are configured in the container */
@@ -290,6 +314,7 @@
       if (!f.checkValidity()) { f.reportValidity(); return; }
       var d = {}; new FormData(f).forEach(function (val, k) { d[k] = String(val).trim(); });
       d.kind = f.dataset.lead; d.source = location.pathname; d.elapsed = Date.now() - opened;
+      try { var a = JSON.parse(sessionStorage.getItem('fands_attr') || 'null'); if (a) d.attr = a; } catch (x) {}
       var label = btn.innerHTML; btn.disabled = true; btn.textContent = 'Sending…'; box.className = 'form-notice'; box.innerHTML = '';
       var m = cfg.mail(d), mail = 'mailto:hello@fands.io?subject=' + encodeURIComponent(m[0]) + '&body=' + encodeURIComponent(m[1]);
       fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) })
