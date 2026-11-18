@@ -51,7 +51,7 @@
     var isCal = link.hasAttribute('data-cal-link') || /cal\.com/i.test(href) || /book a (free )?call/i.test(text);
     if (isCal) track('cal_open', { link_text: text, link_url: href, page_section: (link.closest('section,footer,header') || {}).className || '' });
     else if (isOutbound) track('outbound_click', { link_text: text, link_url: href });
-    else if (link.matches('.button, .arrow-link, .text-link, .closing-link, .header-contact, .hub-card, .case-card, .related a, .leaks a, .lab-service, .link-btn')) track('cta_click', { link_text: text, link_url: href });
+    else if (link.matches('.button, .arrow-link, .text-link, .closing-link, .header-contact, .hub-card, .case-card, .cs-chips a, .related a, .leaks a, .lab-service, .link-btn')) track('cta_click', { link_text: text, link_url: href });
   }, { passive: true });
 
   /* booking links open the Cal popup in place; without Cal they fall through to /contact */

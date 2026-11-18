@@ -1,0 +1,125 @@
+{
+  "slug": "estate-saudi-real-estate-portal",
+  "order": 2,
+  "feature": true,
+  "kind": "project",
+  "tag_industry": "Real estate",
+  "tag_practice": "Digital Development",
+  "card_title": "A live-map portal for Saudi real estate.",
+  "card_summary": "An interactive map of developer projects, a developer database, a shared property inventory and AI that loads new projects automatically.",
+  "card_kpis": [
+    {
+      "value": "KSA",
+      "label": "Built for real estate agencies in Saudi Arabia"
+    },
+    {
+      "value": "AI",
+      "label": "Automated loading of new projects"
+    }
+  ],
+  "crumb": "Estate Saudi",
+  "seo_title": "Estate Saudi: Real Estate Portal with AI Import | Fands",
+  "seo_description": "Fands built Estate Saudi, a web portal for real estate agencies in Saudi Arabia with an interactive map, a developer database and AI-automated project loading.",
+  "eyebrow": "PROJECT · DIGITAL DEVELOPMENT · AI OPERATIONS",
+  "headline_main": "A real estate portal",
+  "headline_em": "with a live Saudi map.",
+  "lead": "Estate Saudi is a web portal for real estate agencies in Saudi Arabia. It brings developers, projects and available properties into one place, with an interactive map and AI that loads new projects into the database instead of staff typing them in.",
+  "facts": [
+    {
+      "label": "Industry",
+      "value": "Real estate, Saudi Arabia"
+    },
+    {
+      "label": "Services",
+      "value": "Web & App Development · Custom AI Agents & Apps · Business Process Automation"
+    },
+    {
+      "label": "Delivered",
+      "value": "Web portal, map, databases, AI project import"
+    },
+    {
+      "label": "Website",
+      "value": "estatesaudi.com"
+    }
+  ],
+  "schema_headline": "Real estate portal with an interactive map and AI project import",
+  "schema_description": "Fands built a web portal for real estate agencies in Saudi Arabia: an interactive map of developer projects, developer and property databases and AI-automated loading of projects.",
+  "cover": "/img/cases/estate-saudi-real-estate-portal.jpg",
+  "cover_alt": "Estate Saudi portal showing a map of Saudi Arabia with developer projects, an open project card for Enar and a list of projects in view",
+  "link": {
+    "url": "https://estatesaudi.com",
+    "label": "Visit estatesaudi.com"
+  },
+  "highlights": [
+    {
+      "value": "Map",
+      "label": "Developer projects placed on Saudi Arabia"
+    },
+    {
+      "value": "AI",
+      "label": "Automated loading of new projects"
+    },
+    {
+      "value": "1",
+      "label": "Shared inventory for agencies"
+    }
+  ],
+  "challenge_title": "Too many sources, too much retyping",
+  "challenge": "Real estate agencies in Saudi Arabia work with many developers and a constant flow of new projects. Information sits in brochures, messages and spreadsheets, so finding what is available, where it is and who sells it takes time.\n\nEvery agency also retypes the same project data, which is slow and leads to mistakes.",
+  "built_title": "What we built",
+  "built_intro": "A web portal where agencies find projects by location and work from one shared set of data.",
+  "built": [
+    {
+      "icon": "globe",
+      "title": "An interactive map",
+      "text": "Developer projects on a map of Saudi Arabia, with a live list of what is in view and filters by project status and developer."
+    },
+    {
+      "icon": "building",
+      "title": "A developer database",
+      "text": "Developers with their projects, so an agent sees who is selling what and where."
+    },
+    {
+      "icon": "store",
+      "title": "A shared property inventory",
+      "text": "Units for sale with prices, sizes, payment plans and documents on one project card."
+    },
+    {
+      "icon": "sparkles",
+      "title": "AI-assisted project import",
+      "text": "New projects are read, structured and added to the database automatically, then checked by a person."
+    },
+    {
+      "icon": "users",
+      "title": "Tools for agents",
+      "text": "Favorites, a personal catalog and messages to the seller, right from the project card."
+    }
+  ],
+  "ai_title": "AI removes the typing",
+  "ai_text": "The slow step was entering project data. AI reads incoming project material, extracts the fields that matter and places them in the right records. A person reviews what was added, so the database stays trustworthy.",
+  "ai_points": [
+    "Project material read and structured automatically",
+    "Fields placed into the right records",
+    "A person reviews before it goes live"
+  ],
+  "outcomes_title": "What it gives agencies",
+  "outcomes": [
+    {
+      "title": "One place",
+      "text": "Developers, projects and available properties in a single portal."
+    },
+    {
+      "title": "Location first",
+      "text": "A map that makes the place the starting point of the search."
+    },
+    {
+      "title": "Less data entry",
+      "text": "A database that grows without a team typing in every project."
+    }
+  ],
+  "services": [
+    "Web & App Development",
+    "Custom AI Agents & Apps",
+    "Business Process Automation"
+  ]
+}

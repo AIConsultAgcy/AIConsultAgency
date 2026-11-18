@@ -1,0 +1,125 @@
+{
+  "slug": "rsvp-agency-website-and-portal",
+  "order": 1,
+  "feature": false,
+  "kind": "project",
+  "tag_industry": "Event agency",
+  "tag_practice": "Digital Development",
+  "card_title": "A website and AI portal for an event agency.",
+  "card_summary": "An optimized website, a HubSpot CRM with a sales pipeline, and an internal portal where AI generates event mockups.",
+  "card_kpis": [
+    {
+      "value": "2",
+      "label": "Systems: public website and internal portal"
+    },
+    {
+      "value": "5",
+      "label": "People working in one CRM and one pipeline"
+    }
+  ],
+  "crumb": "RSVP Agency",
+  "seo_title": "RSVP Agency: Website, CRM and AI Portal | Fands",
+  "seo_description": "How Fands built an optimized website, a HubSpot CRM with a sales pipeline and an internal AI portal for RSVP Agency, a five-person event agency.",
+  "eyebrow": "PROJECT · DIGITAL DEVELOPMENT · AI OPERATIONS",
+  "headline_main": "A website and a portal",
+  "headline_em": "built for an event agency.",
+  "lead": "RSVP Agency is a five-person event agency that grew through word of mouth. We rebuilt its website, set up its CRM and sales pipeline in HubSpot, and gave the team an internal portal where AI generates event mockups and examples.",
+  "facts": [
+    {
+      "label": "Industry",
+      "value": "Event agency, 5 people"
+    },
+    {
+      "label": "Services",
+      "value": "Web & App Development · Lead-to-Revenue Automation · Custom AI Agents & Apps"
+    },
+    {
+      "label": "Delivered",
+      "value": "Website, internal portal, HubSpot CRM and pipeline"
+    },
+    {
+      "label": "Website",
+      "value": "thersvpagency.com"
+    }
+  ],
+  "schema_headline": "Website, CRM and AI portal for an event agency",
+  "schema_description": "Fands built an optimized website, a HubSpot CRM with a sales pipeline and an internal portal with AI mockup generation for an event agency.",
+  "cover": "/img/cases/rsvp-agency-website-and-portal.jpg",
+  "cover_alt": "RSVP Agency website home page with the headline \"We create moments that matter\" over an aerial night view of a waterfront event",
+  "link": {
+    "url": "https://thersvpagency.com",
+    "label": "Visit thersvpagency.com"
+  },
+  "highlights": [
+    {
+      "value": "5",
+      "label": "People working in one CRM and one pipeline"
+    },
+    {
+      "value": "2",
+      "label": "Systems delivered: website and internal portal"
+    },
+    {
+      "value": "AI",
+      "label": "Event mockups generated inside the portal"
+    }
+  ],
+  "challenge_title": "From referrals to a system",
+  "challenge": "RSVP Agency is an experiential agency that creates brand experiences, corporate events, weddings and private celebrations across Southern California. It grew through word of mouth and promoted its services mostly locally.\n\nThat works until a five-person team needs to know where each lead stands, who follows up and what to show a client before an event is booked. Leads and conversations lived in inboxes and in people’s heads, and the old website did little to bring in new business.",
+  "built_title": "What we built",
+  "built_intro": "A public website, a CRM and an internal portal that work as one system.",
+  "built": [
+    {
+      "icon": "globe",
+      "title": "An optimized website",
+      "text": "A fast, search-optimized site at [thersvpagency.com](https://thersvpagency.com) that shows the agency’s events and turns visitors into inquiries."
+    },
+    {
+      "icon": "chart",
+      "title": "HubSpot CRM",
+      "text": "A configured CRM where every lead has an owner, a stage and a next step."
+    },
+    {
+      "icon": "workflow",
+      "title": "Sales pipeline and connectors",
+      "text": "A defined pipeline, plus connectors between the website, HubSpot and the team’s everyday tools, so inquiries arrive without retyping."
+    },
+    {
+      "icon": "building",
+      "title": "An internal portal",
+      "text": "A portal for the team, built around how an event agency works day to day."
+    },
+    {
+      "icon": "sparkles",
+      "title": "AI mockups and examples",
+      "text": "AI generation of mockups and examples inside the portal, so a concept reaches the client far faster than building each visual by hand."
+    }
+  ],
+  "ai_title": "AI where it saves creative time",
+  "ai_text": "AI drafts event mockups and examples from a short brief. The team picks, edits and presents what is worth showing, and nothing goes to a client without a person approving it.",
+  "ai_points": [
+    "Mockups and examples generated from a short brief",
+    "A person selects and approves every visual",
+    "Built into the internal portal, not a separate tool"
+  ],
+  "outcomes_title": "What it gives the agency",
+  "outcomes": [
+    {
+      "title": "Found online",
+      "text": "A website that explains the services and brings in inquiries beyond referrals."
+    },
+    {
+      "title": "One pipeline",
+      "text": "The whole team sees every lead, its stage and the next step."
+    },
+    {
+      "title": "Faster concepts",
+      "text": "A mockup the client can react to, without building each visual by hand."
+    }
+  ],
+  "services": [
+    "Web & App Development",
+    "Lead-to-Revenue Automation",
+    "Custom AI Agents & Apps"
+  ]
+}

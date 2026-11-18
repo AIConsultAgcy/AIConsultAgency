@@ -1,0 +1,121 @@
+{
+  "slug": "tasbih-pro-ios-app",
+  "order": 3,
+  "feature": false,
+  "kind": "project",
+  "tag_industry": "Mobile app",
+  "tag_practice": "Digital Development",
+  "card_title": "An iOS app, from idea to App Store.",
+  "card_summary": "Design, development and App Store release of an iOS app, published under our own developer profile.",
+  "card_kpis": [
+    {
+      "value": "iOS",
+      "label": "Published on the App Store"
+    },
+    {
+      "value": "Full cycle",
+      "label": "Development and release by Fands"
+    }
+  ],
+  "crumb": "Tasbih Pro iOS app",
+  "seo_title": "Tasbih Pro: iOS App Built and Published | Fands",
+  "seo_description": "Fands designed, built and published Tasbih Pro, an iOS app for dhikr and qibla, on the App Store under our own developer profile.",
+  "eyebrow": "PROJECT · DIGITAL DEVELOPMENT · OUR OWN PRODUCT",
+  "headline_main": "A mobile app",
+  "headline_em": "from idea to the App Store.",
+  "lead": "Tasbih Pro is an iOS app for dhikr and qibla that we built and released ourselves. It shows the full cycle we offer for mobile products: design, development, testing and App Store publication.",
+  "facts": [
+    {
+      "label": "Type",
+      "value": "iOS app, our own product"
+    },
+    {
+      "label": "Services",
+      "value": "Web & App Development"
+    },
+    {
+      "label": "Delivered",
+      "value": "Design, development, App Store release"
+    },
+    {
+      "label": "App Store",
+      "value": "Tasbih Pro: Dhikr & Qibla"
+    }
+  ],
+  "schema_headline": "Tasbih Pro iOS app built and published on the App Store",
+  "schema_description": "Fands designed, built and published an iOS app for dhikr and qibla on the App Store under its own developer profile.",
+  "cover": "/img/cases/tasbih-pro-ios-app.jpg",
+  "cover_alt": "Tasbih Pro iPhone app: the product page with a dhikr counter on an iPhone and an Available on the App Store button",
+  "link": {
+    "url": "https://apps.apple.com/cm/app/tasbih-pro-dhikr-qibla/id6788861682?l=en-GB",
+    "label": "View on the App Store"
+  },
+  "highlights": [
+    {
+      "value": "iOS",
+      "label": "Native iPhone app"
+    },
+    {
+      "value": "Private",
+      "label": "Dhikr statistics stay on the device"
+    },
+    {
+      "value": "1",
+      "label": "Premium purchase removes ads"
+    }
+  ],
+  "challenge_title": "A focused app for a daily practice",
+  "challenge": "We wanted a simple companion for daily dhikr that stays out of the way: a counter that works with one tap, the qibla direction and prayer times in the same place, and progress that belongs to the user.\n\nWe took it from idea to a published product under our own developer profile, which also tested our own mobile process end to end.",
+  "built_title": "What we built",
+  "built_intro": "A native iPhone app, from the first screen to the App Store listing.",
+  "built": [
+    {
+      "icon": "target",
+      "title": "A dhikr counter",
+      "text": "A focused counter with daily dhikr lists and progress tracking."
+    },
+    {
+      "icon": "compass",
+      "title": "Qibla direction",
+      "text": "The qibla direction from the device location and compass."
+    },
+    {
+      "icon": "clock",
+      "title": "Prayer times and reminders",
+      "text": "Local prayer times with reminders."
+    },
+    {
+      "icon": "shield-check",
+      "title": "Private by design",
+      "text": "Statistics stay on the device, not on a server."
+    },
+    {
+      "icon": "code",
+      "title": "A native iOS build",
+      "text": "Built natively for iPhone, with a one-time premium purchase that removes ads."
+    },
+    {
+      "icon": "store",
+      "title": "App Store release",
+      "text": "Listing, review and release through our own developer profile."
+    }
+  ],
+  "outcomes_title": "Why it matters for clients",
+  "outcomes": [
+    {
+      "title": "The full cycle",
+      "text": "Publishing an app is more than code: store rules, review, listing text and updates. We have done all of it."
+    },
+    {
+      "title": "Our own product",
+      "text": "Every decision was ours, so we know what the process costs and where it slows down."
+    },
+    {
+      "title": "Live on the Store",
+      "text": "The app is public and can be installed today."
+    }
+  ],
+  "services": [
+    "Web & App Development"
+  ]
+}

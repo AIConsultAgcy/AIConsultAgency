@@ -21,10 +21,11 @@ Fands sells implementation, not software. Clients start with a free 30-minute ca
 
 ## Case studies
 
-- [AI Case Studies for Small Businesses](https://fands.io/case-studies): Example AI engagements: invoice automation, lead follow-up automation and an AI receptionist, with the metrics we track on every project.
-- [Invoice Automation for an Accounting Firm](https://fands.io/case-studies/accounting-firm-invoice-automation): Example engagement: AI reads invoices, matches vendors and purchase orders and drafts bill entries for human approval at an accounting firm.
-- [Lead Follow-Up Automation for a Contractor](https://fands.io/case-studies/home-services-lead-follow-up): Example engagement: speed-to-lead replies, missed-call text-back and automatic follow-up for a home services remodeling contractor.
-- [AI Receptionist for a Med Spa: Case Study](https://fands.io/case-studies/med-spa-ai-receptionist): Example engagement: an AI receptionist answers med spa calls 24/7, books appointments and hands medical questions to the front desk.
+- [AI Case Studies for Small Businesses](https://fands.io/case-studies): Projects Fands delivered: a website and CRM for an event agency, a real estate portal with AI import, an iOS app and a personal AI operating system.
+- [Estate Saudi: Real Estate Portal with AI Import](https://fands.io/case-studies/estate-saudi-real-estate-portal): Fands built Estate Saudi, a web portal for real estate agencies in Saudi Arabia with an interactive map, a developer database and AI-automated project loading.
+- [LifeOS: Personal AI Operating System](https://fands.io/case-studies/lifeos-personal-operating-system): Fands built LifeOS from scratch: a personal system for tasks, goals, health and learning with a web app, a backend and an AI Telegram assistant on an Obsidian knowledge base.
+- [RSVP Agency: Website, CRM and AI Portal](https://fands.io/case-studies/rsvp-agency-website-and-portal): How Fands built an optimized website, a HubSpot CRM with a sales pipeline and an internal AI portal for RSVP Agency, a five-person event agency.
+- [Tasbih Pro: iOS App Built and Published](https://fands.io/case-studies/tasbih-pro-ios-app): Fands designed, built and published Tasbih Pro, an iOS app for dhikr and qibla, on the App Store under our own developer profile.
 
 ## Field Notes
 

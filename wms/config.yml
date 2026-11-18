@@ -26,15 +26,15 @@ collections:
       - {name: slug, label: URL slug, widget: string, hint: "Lowercase words joined by hyphens. The page is /case-studies/<slug>. Do not change it after publishing."}
       - {name: draft, label: Draft (hide from the site), widget: boolean, default: false, required: false}
       - {name: order, label: Order on the page, widget: number, value_type: int, default: 10}
-      - {name: feature, label: Highlight as the dark accent card, widget: boolean, default: false, required: false}
-      - {name: cover, label: Cover image (shown on the card and at the top of the case), widget: image, required: false}
-      - {name: cover_alt, label: Cover image description, widget: string, required: false}
+      - {name: feature, label: Show as the dark accent card, widget: boolean, default: false, required: false}
+      - {name: cover, label: "Cover image (1600x1000 JPG, shown on the card and at the top of the page; the Fands badge is added automatically)", widget: image}
+      - {name: cover_alt, label: Cover image description (for search and accessibility), widget: string, hint: "Describe what the image shows, in one sentence."}
       - {name: cover_caption, label: Cover caption, widget: string, required: false}
       - {name: tag_industry, label: Card tag (industry), widget: string}
       - {name: tag_practice, label: Card tag (practice), widget: string}
-      - {name: card_title, label: Card headline, widget: string}
+      - {name: card_title, label: Card headline (keep it short), widget: string}
       - {name: card_summary, label: Card summary, widget: text}
-      - label: Card numbers
+      - label: Card numbers (two)
         name: card_kpis
         widget: list
         summary: "{{fields.value}}: {{fields.label}}"
@@ -46,16 +46,64 @@ collections:
       - {name: headline_main, label: Headline (first line), widget: string}
       - {name: headline_em, label: Headline (second line, orange), widget: string}
       - {name: lead, label: Intro paragraph, widget: text}
-      - label: Facts (industry, services, timeline, metric)
+      - label: Button to the live project (optional)
+        name: link
+        widget: object
+        required: false
+        fields:
+          - {name: url, label: Address, widget: string}
+          - {name: label, label: Button text, widget: string}
+      - label: Facts (industry, services, delivered, website)
         name: facts
         widget: list
         summary: "{{fields.label}}: {{fields.value}}"
         fields:
           - {name: label, label: Label, widget: string}
           - {name: value, label: Value, widget: string}
-      - {name: body, label: Case text, widget: markdown, hint: "Headings: ## Title. Lists: - item. Tables: | a | b |. Note box: > **Title**. Photos: ![description](/img/uploads/photo.jpg). Use Raw mode for tables."}
-      - {name: seo_title, label: Search result title, widget: string}
-      - {name: seo_description, label: Search result description, widget: text}
+      - label: Highlights under the cover (three)
+        name: highlights
+        widget: list
+        summary: "{{fields.value}}: {{fields.label}}"
+        fields:
+          - {name: value, label: Number or word, widget: string}
+          - {name: label, label: What it means, widget: string}
+      - {name: challenge_title, label: Starting point, section title, widget: string}
+      - {name: challenge, label: Starting point, text (separate paragraphs with a blank line), widget: text}
+      - {name: built_title, label: What we built, section title, widget: string, default: What we built}
+      - {name: built_intro, label: What we built, one-line intro, widget: string, required: false}
+      - label: What we built (cards)
+        name: built
+        widget: list
+        summary: "{{fields.title}}"
+        fields:
+          - {name: icon, label: Icon, widget: select, options: [workflow, plug, code, sparkles, search, globe, building, chart, target, message, clock, pen, shield-check, key-round, users, gauge, calendar, heart-pulse, store, briefcase, megaphone, compass, house], default: sparkles}
+          - {name: title, label: Title, widget: string}
+          - {name: text, label: Text, widget: text}
+      - {name: ai_title, label: AI section title (leave the AI fields empty if the project has no AI), widget: string, required: false}
+      - {name: ai_text, label: AI section text, widget: text, required: false}
+      - {label: AI section points, name: ai_points, widget: list, required: false, field: {name: point, label: Point, widget: string}}
+      - label: Extra screenshots (optional)
+        name: gallery
+        widget: list
+        required: false
+        summary: "{{fields.caption}}"
+        fields:
+          - {name: image, label: Image, widget: image}
+          - {name: alt, label: Image description (for search and accessibility), widget: string}
+          - {name: caption, label: Caption, widget: string, required: false}
+      - {name: body, label: Extra text (optional, Markdown), widget: markdown, required: false}
+      - {name: outcomes_title, label: Outcomes, section title, widget: string, default: What it gives the business}
+      - {name: outcomes_intro, label: Outcomes, one-line intro, widget: string, required: false}
+      - label: Outcomes (three cards)
+        name: outcomes
+        widget: list
+        summary: "{{fields.title}}"
+        fields:
+          - {name: title, label: Title, widget: string}
+          - {name: text, label: Text, widget: text}
+      - {name: services, label: Services behind this project, widget: select, multiple: true, options: ["Business Process Automation", "Lead-to-Revenue Automation", "Internal Knowledge Assistant & Analytics", "AI Training & Enablement", "AI Receptionist & Inbound Lead Capture", "Custom AI Agents & Apps", "AI Content Engine", "AI Search Visibility (GEO/AEO) + Local SEO", "Paid Media Management", "Branding & Design", "Web & App Development", "Website & E-commerce Automation", "AI Readiness Audit & Roadmap", "Managed AI Retainer"]}
+      - {name: seo_title, label: Search result title (under 60 characters), widget: string}
+      - {name: seo_description, label: Search result description (under 160 characters), widget: text}
       - {name: schema_headline, label: Structured data headline, widget: string, required: false}
       - {name: schema_description, label: Structured data description, widget: text, required: false}
 

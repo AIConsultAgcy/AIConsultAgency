@@ -3,6 +3,7 @@
    {"out": "contact.html", "title": "...", "description": "...", "path": "/contact", "hero": false}
 The build wraps it with the shared head, header and footer and expands {{i:name:size}} icon tokens."""
 import json, re, pathlib
+import html as htmllib
 import content as cms
 
 ROOT = pathlib.Path(__file__).resolve().parent
@@ -142,15 +143,16 @@ HEAD = '''<!doctype html>
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{description}">
 <meta property="og:url" content="{url}">
-<meta property="og:image" content="https://fands.io/brand/og-v2.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Fands: From friction to flow. AI systems built around a measurable outcome.">
+<meta property="og:image" content="{og_image}">
+<meta property="og:image:width" content="{og_w}">
+<meta property="og:image:height" content="{og_h}">
+<meta property="og:image:alt" content="{og_alt}">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{title}">
 <meta name="twitter:description" content="{description}">
-<meta name="twitter:image" content="https://fands.io/brand/og-v2.png">
+<meta name="twitter:image" content="{og_image}">
+<meta name="twitter:image:alt" content="{og_alt}">
 {extra}</head>
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N3C2TK2J" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -334,7 +336,9 @@ def main():
             extra += ld(FILM_LD)
             body = body.replace('{{film}}', FILM)
         html = (HEAD.format(title=meta['title'], description=meta['description'], url=meta.get('canonical', SITE + meta['path']), v=v, extra=extra,
-                            robots='noindex,follow' if noindex else 'index,follow,max-image-preview:large', og_type=meta.get('og_type', 'website'))
+                            robots='noindex,follow' if noindex else 'index,follow,max-image-preview:large', og_type=meta.get('og_type', 'website'),
+                            og_image=meta.get('og_image', SITE + '/brand/og-v2.png'), og_w=meta.get('og_w', 1200), og_h=meta.get('og_h', 630),
+                            og_alt=htmllib.escape(meta.get('og_alt', 'Fands: From friction to flow. AI systems built around a measurable outcome.'), quote=True))
                 + (INTRO if meta.get('hero') else '') + ('' if meta.get('bare') else HEADER) + '\n' + body.strip() + '\n'
                 + ('' if meta.get('bare') else FOOTER) + '\n'
                 + TAIL.format(v=v, sculpture=SCULPTURE.replace('{v}', v) if meta.get('hero') else ''))
@@ -342,7 +346,7 @@ def main():
             html = re.sub(r'<a class="book-fab".*?</a>\n', '', html, flags=re.S)
         html = (html.replace('{{closing}}', CLOSING).replace('{{cal}}', CAL).replace('{{videos}}', videos_html())
                 .replace('{{follow}}', FOLLOW).replace('{{notes-feed}}', notes_feed_html())
-                .replace('{{case-cards}}', cms.case_cards_html()).replace('{{insight-cards}}', cms.post_cards_html()))
+                .replace('{{case-cards}}', cms.case_cards_html()).replace('{{case-cards-home}}', cms.case_cards_html(3)).replace('{{insight-cards}}', cms.post_cards_html()))
         html = re.sub(r'\{\{i:([a-z-]+)(?::(\d+))?(?::([a-z-]+))?\}\}', icon, html)
         out = ROOT / meta['out']
         out.parent.mkdir(parents=True, exist_ok=True)
