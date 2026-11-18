@@ -254,9 +254,7 @@ def videos_html():
 
 def notes_feed_html():
     posts = [p for p in cms.load_posts() if not p.get('draft')]
-    first = cms.post_card(posts[0], 'h3', False) if posts else ''
-    return '<div class="post-grid">' + first + (
-        '<a class="post-card soon" href="/insights#field-notes-signup"><span>Next note</span><p>New field notes arrive every two weeks. Join the list to get the next one first.</p><span class="arrow-link">Join Field Notes {{i:down:15}}</span></a>') + '</div>'
+    return '<div class="post-grid">' + ''.join(cms.post_card(p, 'h3', False) for p in posts[:3]) + '</div>'
 
 
 def crumbs_html(crumbs):

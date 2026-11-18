@@ -89,7 +89,7 @@ def load_cases():
 
 
 def load_posts():
-    return sorted(_load('insights'), key=lambda p: p.get('date', ''), reverse=True)
+    return sorted(_load('insights'), key=lambda p: (p.get('date', ''), -p.get('order', 99)), reverse=True)
 
 
 def load_videos():

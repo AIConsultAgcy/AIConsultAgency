@@ -31,6 +31,12 @@ Fands sells implementation, not software. Clients start with a free 30-minute ca
 
 - [Field Notes: Practical AI for Small Business](https://fands.io/insights): Practical notes on finding, building and measuring useful AI workflows in a small or mid-size business. One useful idea every two weeks.
 - [Your First AI Workflow Should Be Boring](https://fands.io/insights/first-workflow): A practical scorecard for choosing your first AI workflow, measuring the baseline, testing edge cases and deciding whether to expand.
+- [Get Found in AI Search: A Local Business Checklist](https://fands.io/insights/get-found-in-ai-answers-local-business): How local businesses show up in ChatGPT, Perplexity and Google AI answers, and a seven-step checklist to improve the odds of being recommended.
+- [AI Guardrails: Keep a Person in Control](https://fands.io/insights/keep-a-person-in-control-ai-guardrails): Six practical guardrails for business AI workflows: least privilege, approval gates, plain logs and more, including how prompt injection works.
+- [How to Measure AI ROI in a Small Business](https://fands.io/insights/measure-ai-roi-small-business): A simple method to measure AI ROI without a data team: a baseline, one metric, true costs and a monthly review, with an illustrative calculation.
+- [Speed to Lead: Reply in 5 Minutes and Win More Jobs](https://fands.io/insights/speed-to-lead-first-five-minutes): Why first-reply speed decides who wins the job, what slows small businesses down, and a five-step plan to answer every new lead in minutes.
+- [A Weekly AI Content Engine for Small Business](https://fands.io/insights/weekly-content-engine-no-marketing-team): How a small business can publish every week without a marketing team: one idea turned into posts, video, email and a blog with AI drafting and a person editing.
+- [Workflow or AI Agent? How to Choose](https://fands.io/insights/workflow-or-ai-agent): A plain-English guide to choosing between an automated workflow and an AI agent for a small business, with a simple decision table.
 
 ## Legal
 
