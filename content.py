@@ -118,7 +118,7 @@ def cover_figure(item):
     if not item.get('cover'):
         return ''
     cap = f'<figcaption>{esc(item["cover_caption"])}</figcaption>' if item.get('cover_caption') else ''
-    return (f'<figure class="article-cover"><img src="{item["cover"]}" alt="{esc(item.get("cover_alt", ""))}" width="1600" height="1000" '
+    return (f'<figure class="article-cover"><img {responsive(item["cover"], "(max-width: 1100px) 100vw, 1100px")} alt="{esc(item.get("cover_alt", ""))}" width="1600" height="1000" '
             f'decoding="async">{cap}</figure>\n  ')
 
 
@@ -132,6 +132,43 @@ def _lines(main, em, mid=''):
     return esc(main) + '<br>' + (esc(mid) + ' ' if mid else '') + '<em>' + esc(em) + '</em>'
 
 
+# ---------- responsive images ----------
+WIDTHS = (480, 800, 1200, 1600)
+
+
+def make_variants(path):
+    # make WebP copies of a local JPEG or PNG at several widths; needs Pillow and is skipped quietly without it
+    try:
+        from PIL import Image
+    except ImportError:
+        return
+    src = ROOT / path.lstrip('/')
+    if src.suffix.lower() not in ('.jpg', '.jpeg', '.png') or not src.exists():
+        return
+    with Image.open(src) as im:
+        im = im.convert('RGB')
+        for w in WIDTHS:
+            if w > im.width:
+                continue
+            dest = src.with_name(f'{src.stem}-{w}.webp')
+            if dest.exists() and dest.stat().st_mtime >= src.stat().st_mtime:
+                continue
+            im.resize((w, round(im.height * w / im.width)), Image.LANCZOS).save(dest, 'WEBP', quality=80, method=6)
+
+
+def responsive(path, sizes):
+    # returns the src, srcset and sizes attributes for an image, using WebP copies when they exist
+    if not path or path.rsplit('.', 1)[-1].lower() not in ('jpg', 'jpeg', 'png'):
+        return f'src="{path}"'
+    make_variants(path)
+    base = path.rsplit('.', 1)[0]
+    found = [(w, f'{base}-{w}.webp') for w in WIDTHS if (ROOT / f'{base}-{w}.webp'.lstrip('/')).exists()]
+    if not found:
+        return f'src="{path}"'
+    mid = [u for w, u in found if w >= 1200] or [found[-1][1]]
+    return f'src="{mid[0]}" srcset="' + ', '.join(f'{u} {w}w' for w, u in found) + f'" sizes="{sizes}"'
+
+
 # ---------- case studies ----------
 def case_path(c):
     return '/case-studies/' + c['slug']
@@ -143,7 +180,7 @@ BADGE = ('<span class="cs-badge" aria-hidden="true"><svg viewBox="0 0 64 64" wid
 def case_card(c):
     feature = ' feature' if c.get('feature') else ''
     kpis = ''.join(f'<div><strong>{esc(k["value"])}</strong><span>{esc(k["label"])}</span></div>' for k in c.get('card_kpis', []))
-    cover = f'<span class="case-cover"><img src="{c["cover"]}" alt="" width="1600" height="1000" loading="lazy" decoding="async">' + BADGE + '</span>' if c.get('cover') else ''
+    cover = (f'<span class="case-cover"><img {responsive(c["cover"], "(max-width: 767px) 92vw, 33vw")} alt="" width="1600" height="1000" loading="lazy" decoding="async">' + BADGE + '</span>') if c.get('cover') else ''
     return (f'<a class="case-card{feature}" href="{case_path(c)}">{cover}<div class="tags"><span class="tag">{esc(c["tag_industry"])}</span>'
             f'<span class="tag outline">{esc(c["tag_practice"])}</span></div><h3>{esc(c["card_title"])}</h3><p>{esc(c["card_summary"])}</p>'
             f'<div class="kpis">{kpis}</div><b>Read the case {{{{i:right:15}}}}</b></a>')
@@ -246,7 +283,7 @@ def case_page(c):
 
     if cover:
         cap = f'<figcaption>{esc(c["cover_caption"])}</figcaption>' if c.get('cover_caption') else ''
-        out.append(f'''  <figure class="cs-cover wrap"><div class="cs-frame"><img src="{cover}" alt="{esc(c.get('cover_alt', name))}" width="{cw}" height="{ch}" fetchpriority="high" decoding="async">{BADGE}</div>{cap}</figure>''')
+        out.append(f'''  <figure class="cs-cover wrap"><div class="cs-frame"><img {responsive(cover, '(max-width: 1100px) 100vw, 1040px')} alt="{esc(c.get('cover_alt', name))}" width="{cw}" height="{ch}" fetchpriority="high" decoding="async">{BADGE}</div>{cap}</figure>''')
 
     stats = c.get('highlights') or c.get('card_kpis') or []
     if stats:
@@ -280,7 +317,7 @@ def case_page(c):
   </section>''')
 
     if c.get('gallery'):
-        figs = ''.join(f'<figure><img src="{g["image"]}" alt="{esc(g.get("alt", ""))}" loading="lazy" decoding="async">' +
+        figs = ''.join(f'<figure><img {responsive(g["image"], "(max-width: 767px) 100vw, 50vw")} alt="{esc(g.get("alt", ""))}" loading="lazy" decoding="async">' +
                        (f'<figcaption>{esc(g["caption"])}</figcaption>' if g.get('caption') else '') + '</figure>' for g in c['gallery'])
         out.append(f'  <section class="section wrap" aria-label="Project screens"><div class="cs-gallery">{figs}</div></section>')
 
@@ -353,7 +390,7 @@ def post_card(p, heading='h2', with_date=True):
     tags = f'<span class="tag">{esc(p["label"])}</span><span class="tag outline">{post_minutes(p)} min read</span>'
     if with_date and post_date_label(p):
         tags += f'<span class="tag outline">{post_date_label(p)}</span>'
-    return (f'<article class="post-card">\n        <a class="post-cover" href="{post_path(p)}" tabindex="-1" aria-hidden="true"><img src="{cover}" alt="" width="1600" height="1000" loading="lazy" decoding="async"></a>\n'
+    return (f'<article class="post-card">\n        <a class="post-cover" href="{post_path(p)}" tabindex="-1" aria-hidden="true"><img {responsive(cover, "(max-width: 767px) 92vw, 33vw")} alt="" width="1600" height="1000" loading="lazy" decoding="async"></a>\n'
             f'        <div class="post-body">\n          <div class="post-meta">{tags}</div>\n'
             f'          <{heading}><a href="{post_path(p)}">{esc(p["card_title"])}</a></{heading}>\n          <p>{esc(p["card_summary"])}</p>\n'
             f'          <a class="arrow-link" href="{post_path(p)}">{esc(p.get("card_cta", "Read the guide"))} {{{{i:right:15}}}}</a>\n        </div>\n      </article>')

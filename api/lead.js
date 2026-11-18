@@ -27,7 +27,7 @@ function attribution(a) {
 function send(res, code, body) { res.statusCode = code; res.setHeader('Content-Type', 'application/json'); return res.end(JSON.stringify(body)); }
 function looksLikeSpam(text) { return (text.match(/https?:\/\//gi) || []).length > 3 || /<a\s|\[url=/i.test(text); }
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   if (req.method !== 'POST') return send(res, 405, { ok: false, error: 'method' });
   let body = req.body;
@@ -64,4 +64,4 @@ module.exports = async (req, res) => {
     if (!r.ok || j.ok !== true) return send(res, 502, { ok: false, error: 'upstream' });
     return send(res, 200, { ok: true });
   } catch (e) { return send(res, 502, { ok: false, error: 'upstream' }); }
-};
+}
