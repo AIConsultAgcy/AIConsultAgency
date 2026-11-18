@@ -353,3 +353,48 @@
     });
   }
 })();
+
+
+/* blog posts: reading progress, section links, current section in the contents list, copy link */
+(function () {
+  var body = document.querySelector('.post-body');
+  if (!body) return;
+  var bar = document.createElement('div');
+  bar.className = 'read-progress'; bar.setAttribute('aria-hidden', 'true'); document.body.appendChild(bar);
+  var ticking = false;
+  function update() {
+    var r = body.getBoundingClientRect(), total = r.height - innerHeight * 0.5;
+    bar.style.transform = 'scaleX(' + Math.min(1, Math.max(0, (innerHeight * 0.2 - r.top) / total)) + ')';
+    ticking = false;
+  }
+  addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
+  var heads = document.querySelectorAll('.post-body h2[id], .post-body h3[id], .faq-block h2[id], .sources h2[id]');
+  heads.forEach(function (h) {
+    var a = document.createElement('a');
+    a.className = 'h-anchor'; a.href = '#' + h.id; a.setAttribute('aria-label', 'Link to this section'); a.textContent = '#';
+    h.appendChild(a);
+  });
+  var links = {};
+  document.querySelectorAll('.toc a[href^="#"]').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        Object.keys(links).forEach(function (k) { links[k].classList.remove('on'); });
+        var l = links[e.target.id]; if (l) l.classList.add('on');
+      });
+    }, { rootMargin: '-8% 0px -80% 0px' });
+    heads.forEach(function (h) { io.observe(h); });
+  }
+  var det = document.querySelector('.toc details');
+  if (det && innerWidth < 1100) det.removeAttribute('open');
+  var cp = document.querySelector('[data-copy]');
+  if (cp) cp.addEventListener('click', function () {
+    var u = cp.getAttribute('data-copy');
+    (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(function () {
+      cp.textContent = 'Link copied'; setTimeout(function () { cp.textContent = 'Copy link'; }, 1800);
+      try { (window.dataLayer = window.dataLayer || []).push({ event: 'cta_click', link_text: 'Share: copy link', link_url: u }); } catch (e) {}
+    }).catch(function () { window.prompt('Copy this link', u); });
+  });
+})();

@@ -2,7 +2,7 @@
 """Builds the static site. Each src/*.html is a page body whose first line is a JSON header:
    {"out": "contact.html", "title": "...", "description": "...", "path": "/contact", "hero": false}
 The build wraps it with the shared head, header and footer and expands {{i:name:size}} icon tokens."""
-import json, re, pathlib
+import json, re, pathlib, os
 import html as htmllib
 import content as cms
 
@@ -138,6 +138,7 @@ HEAD = '''<!doctype html>
 <link rel="icon" href="/brand/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" sizes="180x180" href="/brand/apple-touch-icon.png?v=2">
 <link rel="manifest" href="/site.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="Fands Field Notes" href="/feed.xml">
 <meta property="og:type" content="{og_type}">
 <meta property="og:site_name" content="Fands">
 <meta property="og:title" content="{title}">
@@ -329,6 +330,7 @@ def main():
         crumbs = meta.get('crumbs')
         if crumbs:
             extra += ld(crumbs_schema(crumbs))
+        extra += meta.get('head_extra', '')
         body = body.replace('{{crumbs}}', crumbs_html(crumbs) if crumbs else '').replace('{{legal-nav}}', legal_nav(meta['path']))
         if '{{film}}' in body:  # pages that show the company film also describe it for search engines
             extra += ld(FILM_LD)
@@ -360,10 +362,21 @@ def main():
     pages = [m for m in pages if not m.get('noindex')]
     pages.sort(key=lambda m: (-float(m.get('priority', 0.5)), m['path']))
     def lastmod(m):
-        return datetime.date.fromtimestamp(m['src'].stat().st_mtime).isoformat()
+        return m.get('lastmod') or datetime.date.fromtimestamp(m['src'].stat().st_mtime).isoformat()
     rows = ''.join(f'  <url><loc>{SITE}{m["path"]}</loc><lastmod>{lastmod(m)}</lastmod><priority>{float(m.get("priority", 0.5)):.1f}</priority></url>\n' for m in pages)
     (ROOT / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + rows + '</urlset>\n', encoding='utf-8')
     print(f'built sitemap.xml ({len(pages)} urls)')
+    (ROOT / 'feed.xml').write_text(cms.feed_xml(), encoding='utf-8')
+    for post in cms.load_posts():
+        if not post.get('draft'):
+            (ROOT / 'insights' / f'{post["slug"]}.md').write_text(cms.post_markdown(post), encoding='utf-8')
+    (ROOT / 'llms-full.txt').write_text(cms.llms_full(), encoding='utf-8')
+    print('built feed.xml')
+    warns = cms.lint_posts()
+    for w in warns:
+        print('LINT', w)
+    if warns and os.environ.get('FANDS_STRICT'):
+        raise SystemExit(f'{len(warns)} content warning(s); fix them or unset FANDS_STRICT')
     # robots.txt: everything public is crawlable, including AI search crawlers; the API and the 404 page are not
     ai_bots = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'PerplexityBot', 'Google-Extended', 'Applebot-Extended']
     robots = 'User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /404\n\n' + ''.join(f'User-agent: {b}\nAllow: /\nDisallow: /api/\n\n' for b in ai_bots) + f'Sitemap: {SITE}/sitemap.xml\n'
@@ -377,6 +390,9 @@ def main():
     for title, test in groups:
         out += [f'## {title}', ''] + [f'- [{m["title"].replace(" | Fands", "")}]({SITE}{m["path"]}): {m["description"]}' for m in sorted(pages, key=lambda m: m['path']) if test(m['path'])] + ['']
     (ROOT / 'llms.txt').write_text('\n'.join(out), encoding='utf-8')
+    notes = [q for q in cms.load_posts() if not q.get('draft')]
+    extra_llms = ['## Field Notes as Markdown', ''] + [f'- [{q["card_title"]}]({SITE}{cms.post_path(q)}.md): {q["card_summary"]}' for q in notes] + ['', f'- [All Field Notes, full text]({SITE}/llms-full.txt)', f'- [RSS feed]({SITE}/feed.xml)', '']
+    (ROOT / 'llms.txt').write_text((ROOT / 'llms.txt').read_text(encoding='utf-8').rstrip('\n') + '\n\n' + '\n'.join(extra_llms), encoding='utf-8')
     print('built robots.txt and llms.txt')
 
 if __name__ == '__main__':

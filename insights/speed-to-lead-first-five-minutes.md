@@ -1,0 +1,105 @@
+---
+title: "Win the job in the first five minutes."
+url: https://fands.io/insights/speed-to-lead-first-five-minutes
+published: 2026-11-17
+updated: 2026-11-17
+author: Fands Team
+category: Lead generation
+tags: [speed to lead, lead follow-up, small business, automation]
+description: "Why first-reply speed decides who wins the job, what slows small businesses down, and a five-step plan to answer every new lead in minutes."
+reading_time_minutes: 6
+---
+
+# Win the job in the first five minutes.
+
+The business that answers first usually wins. Here is how a small team can reply in minutes, without sitting on the phone all day.
+
+## Key takeaways
+
+- The speed of your first reply is one of the few levers that costs little and often decides who gets the conversation.
+- The MIT/InsideSales (2007) and Harvard Business Review (2011) studies show the pattern, but the multipliers are old and mostly about B2B leads. Measure your own.
+- Put every lead in one place, acknowledge instantly, and give each lead an owner with a deadline.
+- Let AI prepare the reply and a person approve anything that commits price, scope or time.
+
+A homeowner fills in a quote form, then opens two more tabs and does the same with your competitors. Whoever calls back first is usually the one who gets the conversation, and often the job. The price and the quality of the work come later.
+
+Small businesses lose a lot of work this way without noticing. Nobody decides to ignore a lead. The owner is on a roof, in a meeting or at dinner, and the form sits in an inbox until the evening.
+
+## What the research says (and what it does not)
+
+Two studies are quoted everywhere. An MIT and InsideSales.com study of more than 15,000 web leads (often credited to James Oldroyd) found the odds of reaching a lead within five minutes were roughly 100 times higher than at 30 minutes. A 2011 Harvard Business Review article, [“The Short Life of Online Sales Leads”](https://hbr.org/2011/03/the-short-life-of-online-sales-leads), audited 2,241 US companies and found that those that tried to contact a lead within an hour were far more likely to qualify it than those that waited longer.
+
+Treat the exact multipliers with care. Both studies are old, mostly about B2B leads, and the figures get repeated and inflated in vendor marketing. The direction is solid, though: the longer a lead waits, the colder it gets. Surveys of companies also keep showing that very few answer within five minutes.
+
+> **Not a promise**
+> These studies show a pattern, not a guaranteed result for your business. The way to know is to measure your own response time and conversion before and after you change anything.
+
+## Why small businesses are slow
+
+- **Leads arrive in too many places.** A website form, Google, Facebook, the phone, a text. Nobody owns all of them.
+- **The person who can answer is busy doing the work.** That is a sign of a healthy business, and also the cause of the delay.
+- **There is no rule for what happens next.** A reply happens when someone remembers, not on a schedule.
+- **Follow-up depends on memory.** One reply is rarely enough, and the second and third touch are where many jobs are won.
+
+## A five-step plan
+
+### 1. Put every lead in one place
+
+Forms, calls that were missed, messages and emails should all create the same record in one pipeline. If a lead is not in the list, nobody will answer it.
+
+### 2. Acknowledge instantly
+
+An automatic reply within a minute says: we got it, here is what happens next, and here is when you will hear from a person. It does not replace a real conversation. It stops the lead from drifting to the next tab.
+
+### 3. Give every lead an owner and a deadline
+
+Each new lead is assigned to a named person with a time limit, for example 15 minutes during business hours. If the deadline passes, the system reminds the owner and then the backup.
+
+### 4. Let AI prepare, and a person decide
+
+AI is useful for the first draft: summarising what the lead asked for, suggesting a reply, checking the calendar for open slots. The person approves and sends anything that makes a promise about price, scope or time.
+
+### 5. Follow up on a schedule
+
+Set a simple cadence, for example a message the same day, a call the next day and a final note on day four. The system schedules it, and a reply from the customer stops it.
+
+## What to measure
+
+| Metric | How to measure it | What good looks like |
+|---|---|---|
+| Time to first reply | Lead created to first message sent | Minutes during business hours, agreed in advance |
+| Leads with a follow-up | Share of leads that got a second touch | Every lead, unless the customer replied |
+| Lead to quote | Share of leads that reach a quote | Rising against your own baseline |
+| Quote to job | Share of quotes that close | Tracked, not assumed to improve |
+
+Measure for two to four weeks before you change anything. That baseline is the only way to tell whether the new process helped.
+
+## Where AI helps and where it should not
+
+Good uses: instant acknowledgement, sorting leads by type and urgency, drafting a reply, booking a call into a free slot, reminding the owner. Bad uses: quoting a price on its own, promising a date, or answering a sensitive question without a person. Keep a person in the loop for anything that commits the business.
+
+## Start small
+
+You do not need a new system to begin. For one week, write down when each lead arrives and when it gets its first reply. The gap will probably surprise you, and it is also your first baseline.
+
+[Talk to us about lead-to-revenue automation](/services/ai-operations#lead-to-revenue-automation)
+
+~ Published by Fands, November 2026. Study figures are quoted as reported and may not apply to your business; no client outcome is claimed.
+
+## Frequently asked questions
+
+### How fast should a small business reply to a new lead?
+
+Within minutes during business hours is a good target. Studies suggest the odds of reaching a lead fall sharply after the first five to thirty minutes, but set your own target from your measured baseline.
+
+### Can AI reply to leads automatically?
+
+Yes, for acknowledgements, sorting, drafting and booking a call into a free slot. Keep a person in the loop for quotes, dates and sensitive questions.
+
+### What if nobody can answer outside business hours?
+
+Send an instant acknowledgement that says when a person will reply, and schedule the first call for the start of the next business day. The lead then knows what to expect.
+
+## Sources and further reading
+
+- [The Short Life of Online Sales Leads](https://hbr.org/2011/03/the-short-life-of-online-sales-leads) (Harvard Business Review, 2011)

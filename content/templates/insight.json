@@ -1,0 +1,57 @@
+{
+  "slug": "short-keyword-rich-slug",
+  "draft": true,
+  "date": "2026-01-01",
+  "order": 50,
+  "label": "Field Guide 008",
+  "category": "AI strategy",
+  "tags": [
+    "tag one",
+    "tag two",
+    "tag three"
+  ],
+  "cover": "/img/insights/short-keyword-rich-slug.svg",
+  "cover_alt": "Describe what the cover image shows in one sentence",
+  "card_title": "Card headline, under 70 characters",
+  "card_summary": "One or two sentences that make a reader click.",
+  "card_cta": "Read the guide",
+  "crumb": "Short breadcrumb name",
+  "eyebrow": "FANDS FIELD GUIDE 008 · 6 MIN READ",
+  "headline_main": "First line of the headline",
+  "headline_mid": "plain words",
+  "headline_em": "orange words.",
+  "subtitle": "The promise of the article in one or two sentences.",
+  "takeaways": [
+    "Point one",
+    "Point two",
+    "Point three"
+  ],
+  "body": "Opening paragraph that states the problem.\n\n## First section\n\nText.\n\n### A subsection\n\nText with an [internal link](/services/ai-operations) and a [source](https://example.com).\n\n## Second section\n\n- item\n- item\n\n## Third section\n\nText.\n\n[Call to action link](/contact)\n\n~ Published by Fands. Note on assumptions.",
+  "faq": [
+    {
+      "q": "A question people really ask?",
+      "a": "A direct answer in one to three sentences."
+    },
+    {
+      "q": "Another question?",
+      "a": "Another answer."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Source title",
+      "publisher": "Publisher, year",
+      "url": "https://example.com/article"
+    }
+  ],
+  "original": false,
+  "closing_main": "First line",
+  "closing_mid": "plain",
+  "closing_em": "word.",
+  "closing_text": "One sentence inviting a conversation.",
+  "closing_button": "Button text",
+  "seo_title": "Title under 60 characters | Fands",
+  "seo_description": "A description of 70 to 160 characters that includes the main topic and a reason to read.",
+  "schema_headline": "Headline for structured data",
+  "schema_description": "Description for structured data."
+}

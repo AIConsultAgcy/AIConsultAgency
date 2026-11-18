@@ -121,28 +121,57 @@ collections:
       - {name: slug, label: URL slug, widget: string, hint: "Lowercase words joined by hyphens. The page is /insights/<slug>. Do not change it after publishing."}
       - {name: draft, label: Draft (hide from the site), widget: boolean, default: false, required: false}
       - {name: date, label: Publication date, widget: string, hint: "Format YYYY-MM-DD, for example 2026-11-20"}
-      - {name: label, label: Label on the card (for example Field Guide 002), widget: string}
-      - {name: minutes, label: Reading time in minutes, widget: number, value_type: int}
-      - {name: cover, label: Cover image (shown on the card and at the top of the article), widget: image}
-      - {name: cover_alt, label: Cover image description, widget: string, required: false}
+      - {name: updated, label: Last updated (only if you changed the article later), widget: string, required: false, hint: "Format YYYY-MM-DD"}
+      - {name: order, label: Order among notes with the same date, widget: number, value_type: int, default: 50, required: false}
+      - {name: label, label: Label on the card (for example Field Guide 008), widget: string}
+      - {name: category, label: Category, widget: string, default: AI for small business}
+      - {name: tags, label: Tags (3 to 5, used for SEO and related notes), widget: list, field: {name: tag, label: Tag, widget: string}}
+      - {name: minutes, label: Reading time in minutes (about 200 words per minute), widget: number, value_type: int, required: false}
+      - {name: cover, label: Cover image (1600x1000, JPG, PNG or SVG), widget: image}
+      - {name: cover_alt, label: Cover image description (what the image shows, for search and accessibility), widget: string}
       - {name: cover_caption, label: Cover caption, widget: string, required: false}
       - {name: card_title, label: Card headline, widget: string}
-      - {name: card_summary, label: Card summary, widget: text}
+      - {name: card_summary, label: Card summary (one or two sentences), widget: text}
       - {name: card_cta, label: Card button text, widget: string, default: Read the guide, required: false}
       - {name: crumb, label: Breadcrumb name, widget: string}
       - {name: eyebrow, label: Small label above the headline, widget: string}
       - {name: headline_main, label: Headline (first line), widget: string}
       - {name: headline_mid, label: Headline (second line, plain words before the orange ones), widget: string, required: false}
       - {name: headline_em, label: Headline (orange words), widget: string, required: false}
-      - {name: subtitle, label: Subtitle, widget: text}
-      - {name: body, label: Article text, widget: markdown, hint: "Headings: ## Title. Lists: - item. Tables: | a | b |. Note box: > **Title**. Small print: ~ text. Photos: ![description](/img/uploads/photo.jpg). Use Raw mode for tables."}
+      - {name: subtitle, label: Subtitle (the promise of the article), widget: text}
+      - label: Author (leave empty for the Fands team)
+        name: author
+        widget: object
+        required: false
+        fields:
+          - {name: name, label: Name, widget: string}
+          - {name: url, label: Profile address, widget: string, required: false}
+      - {label: Key takeaways (3 to 5 short points shown at the top), name: takeaways, widget: list, field: {name: point, label: Point, widget: text}}
+      - {name: body, label: Article text, widget: markdown, hint: "Headings: ## Section and ### Subsection (the table of contents is built from them). Lists: - item. Tables: | a | b |. Note box: > **Title**. Small print: ~ text. Photos: ![description](/img/uploads/photo.jpg). Link to services and other notes with /paths, and to sources with full https links. Use Raw mode for tables."}
+      - label: FAQ (at least 2 questions people really ask)
+        name: faq
+        widget: list
+        summary: "{{fields.q}}"
+        fields:
+          - {name: q, label: Question, widget: string}
+          - {name: a, label: Answer (1 to 3 sentences), widget: text}
+      - label: Sources and further reading (https links)
+        name: sources
+        widget: list
+        required: false
+        summary: "{{fields.title}}"
+        fields:
+          - {name: title, label: Title, widget: string}
+          - {name: publisher, label: Publisher and year, widget: string, required: false}
+          - {name: url, label: Address (https), widget: string}
+      - {name: original, label: Original method or opinion (no outside sources needed), widget: boolean, default: false, required: false}
       - {name: closing_main, label: Closing block (first line), widget: string, default: Find the first, required: false}
       - {name: closing_mid, label: Closing block (plain word), widget: string, default: useful, required: false}
       - {name: closing_em, label: Closing block (orange word), widget: string, default: "system.", required: false}
       - {name: closing_text, label: Closing block text, widget: string, default: Tell us which handoff you would start with., required: false}
       - {name: closing_button, label: Closing block button, widget: string, default: Request a workflow review, required: false}
-      - {name: seo_title, label: Search result title, widget: string}
-      - {name: seo_description, label: Search result description, widget: text}
+      - {name: seo_title, label: Search result title (60 characters or fewer), widget: string}
+      - {name: seo_description, label: Search result description (70 to 160 characters), widget: text}
       - {name: schema_headline, label: Structured data headline, widget: string, required: false}
       - {name: schema_description, label: Structured data description, widget: text, required: false}
 

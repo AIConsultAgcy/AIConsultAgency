@@ -26,7 +26,13 @@ def inline(s):
     return s
 
 
-def md_to_html(md, table_class=''):
+def slugify(text):
+    t = re.sub(r'<[^>]+>', '', text).lower()
+    t = re.sub(r'[^a-z0-9]+', '-', t).strip('-')
+    return t or 'section'
+
+
+def md_to_html(md, table_class='', headings=None):
     """Render the Markdown subset used on the site.
 
     ## Heading          -> h2          ### Heading -> h3
@@ -38,13 +44,21 @@ def md_to_html(md, table_class=''):
     """
     blocks = [b for b in re.split(r'\n\s*\n', md.strip().replace('\r\n', '\n')) if b.strip()]
     out = []
+    seen = {}
     for block in blocks:
         lines = [l.rstrip() for l in block.split('\n')]
         first = lines[0]
-        if first.startswith('## ') and len(lines) == 1:
-            out.append('<h2>' + inline(first[3:].strip()) + '</h2>')
-        elif first.startswith('### ') and len(lines) == 1:
-            out.append('<h3>' + inline(first[4:].strip()) + '</h3>')
+        if (first.startswith('## ') or first.startswith('### ')) and len(lines) == 1:
+            level = 2 if first.startswith('## ') else 3
+            text = first[level + 1:].strip()
+            hid = slugify(text)
+            n = seen.get(hid, 0)
+            seen[hid] = n + 1
+            if n:
+                hid = f'{hid}-{n + 1}'
+            if headings is not None:
+                headings.append((level, re.sub(r'\*\*|\*', '', re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', text)), hid))
+            out.append(f'<h{level} id="{hid}">' + inline(text) + f'</h{level}>')
         elif all(re.match(r'\s*[-*] ', l) for l in lines):
             out.append('<ul>' + ''.join('<li>' + inline(re.sub(r'^\s*[-*] ', '', l)) + '</li>' for l in lines) + '</ul>')
         elif all(re.match(r'\s*\d+\. ', l) for l in lines):
@@ -53,8 +67,8 @@ def md_to_html(md, table_class=''):
             rows = [[c.strip() for c in l.strip().strip('|').split('|')] for l in lines if not re.match(r'^\|?\s*:?-{2,}', l.strip().lstrip('|'))]
             head, body = rows[0], rows[1:]
             cls = f' class="{table_class}"' if table_class else ''
-            out.append(f'<table{cls}><thead><tr>' + ''.join('<th>' + inline(c) + '</th>' for c in head) + '</tr></thead><tbody>'
-                       + ''.join('<tr>' + ''.join('<td>' + inline(c) + '</td>' for c in r) + '</tr>' for r in body) + '</tbody></table>')
+            out.append(f'<div class="table-wrap"><table{cls}><thead><tr>' + ''.join('<th>' + inline(c) + '</th>' for c in head) + '</tr></thead><tbody>'
+                       + ''.join('<tr>' + ''.join('<td>' + inline(c) + '</td>' for c in r) + '</tr>' for r in body) + '</tbody></table></div>')
         elif first.startswith('>'):
             text = [re.sub(r'^>\s?', '', l) for l in lines]
             m = re.match(r'^\*\*(.+?)\*\*\s*$', text[0])
@@ -307,6 +321,9 @@ def case_page(c):
 
 
 # ---------- Field Notes articles ----------
+DEFAULT_AUTHOR = {'name': 'Fands Team', 'url': 'https://fands.io/about'}
+
+
 def post_path(p):
     return '/insights/' + p['slug']
 
@@ -318,9 +335,22 @@ def post_date_label(p):
         return ''
 
 
+def long_date(iso):
+    d = datetime.date.fromisoformat(iso)
+    return f'{d:%B} {d.day}, {d.year}'
+
+
+def _words(md):
+    return len(re.findall(r"[A-Za-z0-9$%][A-Za-z0-9$%'’.-]*", re.sub(r'\]\([^)]*\)', ' ', md)))
+
+
+def post_minutes(p):
+    return int(p.get('minutes') or max(1, round(_words(p['body']) / 200)))
+
+
 def post_card(p, heading='h2', with_date=True):
     cover = p.get('cover', '/img/insights/first-workflow-cover.svg')
-    tags = f'<span class="tag">{esc(p["label"])}</span><span class="tag outline">{esc(str(p["minutes"]))} min read</span>'
+    tags = f'<span class="tag">{esc(p["label"])}</span><span class="tag outline">{post_minutes(p)} min read</span>'
     if with_date and post_date_label(p):
         tags += f'<span class="tag outline">{post_date_label(p)}</span>'
     return (f'<article class="post-card">\n        <a class="post-cover" href="{post_path(p)}" tabindex="-1" aria-hidden="true"><img src="{cover}" alt="" width="1600" height="1000" loading="lazy" decoding="async"></a>\n'
@@ -333,30 +363,258 @@ def post_cards_html():
     return '\n      '.join(post_card(p) for p in load_posts() if not p.get('draft'))
 
 
+def related_posts(p, n=3):
+    others = [o for o in load_posts() if o['slug'] != p['slug'] and not o.get('draft')]
+    mine = set(p.get('tags', []))
+    others.sort(key=lambda o: -len(mine & set(o.get('tags', []))))  # stable: ties stay newest first
+    return others[:n]
+
+
+def toc_html(heads, extra):
+    h2 = [h for h in heads if h[0] == 2]
+    if len(h2) < 3:
+        return ''
+    items = ''
+    i = 0
+    while i < len(heads):
+        lvl, text, hid = heads[i]
+        if lvl == 2:
+            subs = ''
+            j = i + 1
+            while j < len(heads) and heads[j][0] == 3:
+                subs += f'<li><a href="#{heads[j][2]}">{esc(heads[j][1])}</a></li>'
+                j += 1
+            items += f'<li><a href="#{hid}">{esc(text)}</a>' + (f'<ol>{subs}</ol>' if subs else '') + '</li>'
+            i = j
+        else:
+            i += 1
+    items += ''.join(f'<li><a href="#{hid}">{esc(t)}</a></li>' for t, hid in extra)
+    return f'<nav class="toc" aria-label="In this article"><details open><summary class="toc-title">In this article</summary><ol>{items}</ol></details></nav>'
+
+
+def author_ld(p):
+    a = p.get('author') or DEFAULT_AUTHOR
+    if a.get('name') in (None, 'Fands Team', 'Fands'):
+        return {"@type": "Organization", "name": "Fands", "url": "https://fands.io/", "@id": "https://fands.io/#org"}
+    return {"@type": "Person", "name": a['name'], "url": a.get('url', 'https://fands.io/about'), "worksFor": {"@id": "https://fands.io/#org"}}
+
+
 def post_page(p):
     url = 'https://fands.io' + post_path(p)
     crumbs = [['Field Notes', '/insights'], [p['crumb'], post_path(p)]]
+    cover = p.get('cover', '')
+    cw, ch = _og_size(cover) if cover else (1600, 1000)
+    updated = p.get('updated') or p.get('date', '')
+    minutes = post_minutes(p)
+    author = p.get('author') or DEFAULT_AUTHOR
+    category = p.get('category', 'AI for small business')
     meta = {'out': f'insights/{p["slug"]}.html', 'path': post_path(p), 'title': p['seo_title'], 'description': p['seo_description'],
-            'priority': 0.6, 'type': 'WebPage', 'crumbs': crumbs, 'og_type': 'article'}
-    ld = {"@context": "https://schema.org", "@type": "Article", "headline": p.get('schema_headline', p['card_title']),
-          "description": p.get('schema_description', p['seo_description']), "datePublished": p.get('date', ''),
-          "author": {"@id": "https://fands.io/#org"}, "publisher": {"@id": "https://fands.io/#org"}, "mainEntityOfPage": url,
-          "image": "https://fands.io/brand/og-v2.png"}
+            'priority': 0.6, 'type': 'WebPage', 'crumbs': crumbs, 'og_type': 'article', 'lastmod': updated}
+    if cover:
+        meta.update(og_image='https://fands.io' + cover, og_w=cw, og_h=ch, og_alt=p.get('cover_alt', p['card_title']))
+    head = [f'<meta property="article:published_time" content="{p.get("date", "")}">', f'<meta property="article:modified_time" content="{updated}">',
+            f'<meta property="article:section" content="{esc(category)}">', f'<meta property="article:author" content="{esc(author.get("name", "Fands Team"))}">']
+    head += [f'<meta property="article:tag" content="{esc(t)}">' for t in p.get('tags', [])]
+    head.append(f'<link rel="alternate" type="text/markdown" href="{post_path(p)}.md" title="{esc(p["card_title"])} (Markdown)">')
+    meta['head_extra'] = '\n'.join(head) + '\n'
+
+    headings = []
+    body_html = md_to_html(p['body'], headings=headings)
+    extra = []
+    faq = p.get('faq') or []
+    sources = p.get('sources') or []
+    if faq:
+        extra.append(('Frequently asked questions', 'faq'))
+    if sources:
+        extra.append(('Sources and further reading', 'sources'))
+
+    dates = f'Published <time datetime="{p["date"]}">{long_date(p["date"])}</time>' + (f' · Updated <time datetime="{updated}">{long_date(updated)}</time>' if updated != p['date'] else '')
+    byline = f'<p class="byline">By <a href="{author.get("url", "/about")}">{esc(author.get("name", "Fands Team"))}</a> · {dates} · {minutes} min read</p>'
+
+    parts = [f'''<main id="main">
+  <section class="page-head">{{{{crumbs}}}}<p class="eyebrow">{esc(p['eyebrow'])}</p><h1>{_lines(p['headline_main'], p.get('headline_em'), p.get('headline_mid', ''))}</h1><p>{esc(p['subtitle'])}</p>{byline}</section>
+  {cover_figure(p)}''']
+    main = []
+    if p.get('takeaways'):
+        main.append('<aside class="takeaways" aria-labelledby="takeaways-title"><p class="takeaways-title" id="takeaways-title">Key takeaways</p><ul>' +
+                    ''.join(f'<li>{inline(esc_keep(t))}</li>' for t in p['takeaways']) + '</ul></aside>')
+    main.append(f'<article class="post-body">\n    {body_html}\n  </article>')
+    if faq:
+        main.append('<section class="faq-block" aria-labelledby="faq"><h2 id="faq">Frequently asked questions</h2>' +
+                    ''.join(f'<h3>{esc(f["q"])}</h3><p>{inline(esc_keep(f["a"]))}</p>' for f in faq) + '</section>')
+    if sources:
+        main.append('<section class="sources" aria-labelledby="sources"><h2 id="sources">Sources and further reading</h2><ol>' +
+                    ''.join(f'<li><a href="{s["url"]}" target="_blank" rel="noopener noreferrer">{esc(s["title"])}</a>' + (f' <span>{esc(s["publisher"])}</span>' if s.get('publisher') else '') + '</li>' for s in sources) +
+                    '</ol></section>')
+    main.append(f'<aside class="author-box"><p class="eyebrow">WRITTEN BY</p><p class="author-name">{esc(author.get("name", "Fands Team"))}</p>'
+                '<p>We are an AI implementation agency for small and mid-size businesses. We find where AI will pay off, build it into the way your team already works and measure the result.</p>'
+                '<a class="arrow-link" href="/about">About Fands {{i:right:15}}</a></aside>')
+    main.append('<aside class="subscribe-card"><p class="subscribe-title">One useful idea, every two weeks.</p><p>Workflow breakdowns and measurement methods for small and mid-size businesses. No hype.</p>'
+                '<a class="button orange" href="/insights#field-notes-signup">Get Field Notes {{i:up-right:18}}</a></aside>')
+    from urllib.parse import quote
+    enc = quote(url, safe='')
+    share = (f'<div class="share"><p class="toc-title">Share</p>'
+             f'<a href="https://www.linkedin.com/sharing/share-offsite/?url={enc}" target="_blank" rel="noopener noreferrer" data-track="Share: LinkedIn - {esc(p["slug"])}">LinkedIn</a>'
+             f'<a href="https://twitter.com/intent/tweet?url={enc}&text={quote(p["card_title"])}" target="_blank" rel="noopener noreferrer" data-track="Share: X - {esc(p["slug"])}">X</a>'
+             f'<button type="button" data-copy="{url}">Copy link</button>'
+             f'<a class="md-link" href="{post_path(p)}.md" data-track="Markdown view - {esc(p["slug"])}">Read as Markdown</a></div>')
+    parts.append('<div class="post-layout wrap"><aside class="post-aside">' + toc_html(headings, extra) + share + '</aside><div class="post-main">' + ''.join(main) + '</div></div>')
+    rel = related_posts(p)
+    if rel:
+        parts.append('<section class="section wrap" aria-labelledby="more-notes"><div class="section-head"><h2 id="more-notes" data-reveal>Keep<br><span>reading.</span></h2><p>More field notes on putting AI to work in a small business.</p></div><div class="post-grid">' +
+                     ''.join(post_card(o, 'h3', False) for o in rel) + '</div></section>')
     c_main = p.get('closing_main', 'Find the first')
     c_mid = p.get('closing_mid', 'useful')
     c_em = p.get('closing_em', 'system.')
     c_text = p.get('closing_text', 'Tell us which handoff you would start with.')
     c_btn = p.get('closing_button', 'Request a workflow review')
-    body = f'''<main id="main">
-  <section class="page-head">{{{{crumbs}}}}<p class="eyebrow">{esc(p['eyebrow'])}</p><h1>{_lines(p['headline_main'], p.get('headline_em'), p.get('headline_mid', ''))}</h1><p>{esc(p['subtitle'])}</p></section>
-  {cover_figure(p)}<article class="article">
-    {md_to_html(p['body'])}
-  </article>
-  <section class="closing"><div class="closing-top"><span>Start with one thing.</span><span>Make it count.</span></div><a href="/contact" class="closing-link"><h2>{esc(c_main)}<br>{esc(c_mid)} <em>{esc(c_em)}</em></h2><span class="closing-arrow">{{{{i:up-right:80}}}}</span></a><div class="closing-bottom"><p>{esc(c_text)}</p><a href="/contact">{esc(c_btn)} {{{{i:right:18}}}}</a></div></section>
-  <script type="application/ld+json">{json.dumps(ld, separators=(',', ':'), ensure_ascii=False)}</script>
-</main>
-'''
-    return meta, body
+    parts.append(f'<section class="closing"><div class="closing-top"><span>Start with one thing.</span><span>Make it count.</span></div><a href="/contact" class="closing-link"><h2>{esc(c_main)}<br>{esc(c_mid)} <em>{esc(c_em)}</em></h2><span class="closing-arrow">{{{{i:up-right:80}}}}</span></a><div class="closing-bottom"><p>{esc(c_text)}</p><a href="/contact">{esc(c_btn)} {{{{i:right:18}}}}</a></div></section>')
+
+    ld = {"@context": "https://schema.org", "@type": "BlogPosting", "headline": p.get('schema_headline', p['card_title']),
+          "description": p.get('schema_description', p['seo_description']), "datePublished": p.get('date', ''), "dateModified": updated,
+          "author": author_ld(p), "publisher": {"@id": "https://fands.io/#org"}, "mainEntityOfPage": {"@type": "WebPage", "@id": url}, "url": url,
+          "image": ['https://fands.io' + cover] if cover else ["https://fands.io/brand/og-v2.png"], "wordCount": _words(p['body']),
+          "timeRequired": f"PT{minutes}M", "articleSection": category, "inLanguage": "en-US", "isAccessibleForFree": True}
+    if p.get('tags'):
+        ld['keywords'] = ', '.join(p['tags'])
+    if sources:
+        ld['citation'] = [{"@type": "CreativeWork", "name": s['title'], "url": s['url']} for s in sources]
+    scripts = '<script type="application/ld+json">' + json.dumps(ld, separators=(',', ':'), ensure_ascii=False) + '</script>'
+    if faq:
+        fld = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": f['q'], "acceptedAnswer": {"@type": "Answer", "text": re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', f['a'])}} for f in faq]}
+        scripts += '\n  <script type="application/ld+json">' + json.dumps(fld, separators=(',', ':'), ensure_ascii=False) + '</script>'
+    parts.append(scripts + '\n</main>\n')
+    return meta, '\n  '.join(x for x in parts if x)
+
+
+def post_markdown(p):
+    # a clean Markdown version of an article, for AI assistants, agents and offline reading
+    url = 'https://fands.io' + post_path(p)
+    updated = p.get('updated') or p['date']
+    head = f"{p['headline_main']} {p.get('headline_mid', '')} {p.get('headline_em', '')}"
+    head = re.sub(r'\s+', ' ', head).strip()
+    author = (p.get('author') or DEFAULT_AUTHOR).get('name', 'Fands Team')
+    out = ['---', f'title: {json.dumps(p["card_title"], ensure_ascii=False)}', f'url: {url}', f'published: {p["date"]}', f'updated: {updated}',
+           f'author: {author}', f'category: {p.get("category", "AI for small business")}', 'tags: [' + ', '.join(p.get('tags', [])) + ']',
+           f'description: {json.dumps(p["seo_description"], ensure_ascii=False)}', f'reading_time_minutes: {post_minutes(p)}', '---', '',
+           f'# {head}', '', p['subtitle'], '']
+    if p.get('takeaways'):
+        out += ['## Key takeaways', ''] + [f'- {t}' for t in p['takeaways']] + ['']
+    out += [p['body'].strip(), '']
+    if p.get('faq'):
+        out += ['## Frequently asked questions', '']
+        for f in p['faq']:
+            out += [f'### {f["q"]}', '', f['a'], '']
+    if p.get('sources'):
+        out += ['## Sources and further reading', ''] + [f'- [{x["title"]}]({x["url"]})' + (f' ({x["publisher"]})' if x.get('publisher') else '') for x in p['sources']] + ['']
+    return '\n'.join(out).strip() + '\n'
+
+
+def llms_full():
+    posts = [p for p in load_posts() if not p.get('draft')]
+    head = '# Fands Field Notes: full text\n\n> Practical notes on putting AI to work in a small or mid-size business. Each note is also available as Markdown at its address plus .md.\n\n'
+    return head + '\n\n---\n\n'.join(post_markdown(p) for p in posts)
+
+
+def lint_posts():
+    # quality checks for Field Notes articles; returns a list of warnings (empty is good)
+    warns = []
+    for p in load_posts():
+        if p.get('draft'):
+            continue
+        sl = p['slug']
+        w = lambda m: warns.append(f'{sl}: {m}')  # noqa: E731
+        if not re.fullmatch(r'[a-z0-9]+(-[a-z0-9]+)*', sl):
+            w('slug must be lowercase words joined by hyphens')
+        if not re.fullmatch(r'\d{4}-\d{2}-\d{2}', p.get('date', '')):
+            w('date must be YYYY-MM-DD')
+        if len(p.get('seo_title', '')) > 60:
+            w(f'seo_title is {len(p["seo_title"])} characters, keep it at 60 or fewer')
+        d = len(p.get('seo_description', ''))
+        if not 70 <= d <= 160:
+            w(f'seo_description is {d} characters, aim for 70 to 160')
+        if not p.get('cover_alt'):
+            w('cover_alt is missing')
+        if not p.get('takeaways'):
+            w('add 3 to 5 key takeaways')
+        h2 = len(re.findall(r'(?m)^## ', p['body']))
+        if h2 < 3:
+            w(f'only {h2} sections (## headings), use at least 3')
+        if _words(p['body']) < 600:
+            w(f'only {_words(p["body"])} words, aim for 600 or more')
+        if not re.search(r'\]\(/[a-z]', p['body']):
+            w('no internal link in the body (link to a service, case study or another note)')
+        if not p.get('sources') and not p.get('original'):
+            w('no sources listed (add them, or mark the note as original: true when it is your own method)')
+        for s_ in p.get('sources', []):
+            if not str(s_.get('url', '')).startswith('https://'):
+                w(f'source "{s_.get("title", "?")}" needs an https URL')
+        if len(p.get('faq') or []) < 2:
+            w('add at least 2 FAQ entries')
+        if 'TODO' in p['body'] or 'lorem' in p['body'].lower():
+            w('placeholder text found in the body')
+        for m in re.finditer(r'!\[([^\]]*)\]\(', p['body']):
+            if not m.group(1).strip():
+                w('an image in the body has no description (alt text)')
+        if p.get('updated') and p['updated'] < p.get('date', ''):
+            w('updated is earlier than date')
+    return warns + lint_cases()
+
+
+def lint_cases():
+    # quality checks for case studies; returns a list of warnings
+    warns = []
+    for c in load_cases():
+        if c.get('draft'):
+            continue
+        sl = c['slug']
+        w = lambda m: warns.append(f'case {sl}: {m}')  # noqa: E731
+        if not re.fullmatch(r'[a-z0-9]+(-[a-z0-9]+)*', sl):
+            w('slug must be lowercase words joined by hyphens')
+        if len(c.get('seo_title', '')) > 60:
+            w(f'seo_title is {len(c["seo_title"])} characters, keep it at 60 or fewer')
+        d = len(c.get('seo_description', ''))
+        if not 70 <= d <= 160:
+            w(f'seo_description is {d} characters, aim for 70 to 160')
+        if len(c.get('card_title', '')) > 60:
+            w('card_title is long, keep it under 60 characters')
+        if not c.get('cover') or not (ROOT / c['cover'].lstrip('/')).exists():
+            w('cover image is missing or the file does not exist')
+        else:
+            cw, ch = _og_size(c['cover'])
+            if abs(cw / ch - 1.6) > 0.05:
+                w(f'cover is {cw}x{ch}, use 16:10 (for example 1600x1000)')
+        if not c.get('cover_alt'):
+            w('cover_alt is missing')
+        if not c.get('challenge'):
+            w('challenge text is missing')
+        if len(c.get('built') or []) < 3:
+            w('add at least 3 "what we built" cards')
+        if len(c.get('outcomes') or []) < 3:
+            w('add 3 outcomes')
+        if len(c.get('highlights') or c.get('card_kpis') or []) < 2:
+            w('add at least 2 highlights')
+        for n in c.get('services', []):
+            if n not in SERVICES:
+                w(f'unknown service "{n}": pick it from the list')
+        if not c.get('services'):
+            w('select the services behind this project')
+    return warns
+
+
+def feed_xml():
+    posts = [p for p in load_posts() if not p.get('draft')]
+    items = ''
+    for p in posts[:30]:
+        d = datetime.date.fromisoformat(p['date'])
+        pub = d.strftime('%a, %d %b %Y 08:00:00 +0000')
+        items += (f'  <item><title>{htmllib.escape(p["card_title"])}</title><link>https://fands.io{post_path(p)}</link>'
+                  f'<guid isPermaLink="true">https://fands.io{post_path(p)}</guid><pubDate>{pub}</pubDate>'
+                  f'<category>{htmllib.escape(p.get("category", "AI for small business"))}</category>'
+                  f'<description>{htmllib.escape(p["card_summary"])}</description></item>\n')
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>Fands Field Notes</title><link>https://fands.io/insights</link>'
+            '<description>Practical notes on putting AI to work in a small or mid-size business.</description><language>en-us</language>\n' + items + '</channel></rss>\n')
 
 
 def generated_pages():

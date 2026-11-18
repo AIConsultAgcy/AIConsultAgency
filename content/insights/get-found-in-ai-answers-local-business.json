@@ -21,8 +21,62 @@
   "closing_button": "Test my AI visibility",
   "schema_headline": "How to get your business named in AI answers",
   "schema_description": "A checklist for local businesses to improve their visibility in ChatGPT, Perplexity and Google AI answers.",
-  "body": "A customer used to search for a plumber, open three listings and call one. Now a growing share of them ask an assistant: \"Who is a good plumber near me who does emergency calls?\" The assistant answers with one to three names, and the rest of the market is invisible.\n\n## How big is the gap?\n\nA 2026 local visibility index from the vendor SOCi reported that AI platforms recommended only a small share of business locations: about 1.2% on ChatGPT and 7.4% on Perplexity, compared with about 36% appearing in Google's local pack. It is vendor data and the exact numbers will move, but the message is useful: being found the old way does not guarantee being named in an AI answer.\n\nThe same research reported that the business details assistants repeat are often wrong or incomplete. That is good news for a business that keeps its facts clean, because most competitors do not.\n\n## What assistants lean on\n\nDifferent systems use different sources, and they change over time. Across most of the guidance, the same signals keep appearing:\n\n| Signal | Where it lives | What to do |\n|---|---|---|\n| Your business facts | Website, Google Business Profile, directories | Same name, address, phone, hours and services everywhere |\n| Reviews | Google, Yelp, industry sites | Ask for recent reviews and reply to them |\n| Clear service pages | Your own website | One page per service and area, written in plain language |\n| Questions and answers | Your website | An FAQ that answers what customers actually ask |\n| Structured data | Your website code | Mark up the business, services, FAQs and reviews |\n| Third-party mentions | Local press, associations, directories | A few trusted listings beat many weak ones |\n\n## A seven-step checklist\n\n### 1. Fix the basics\n\nCheck that your name, address, phone and opening hours are identical on your website, your Google Business Profile and the main directories. Small inconsistencies make assistants unsure which version to trust.\n\n### 2. Write a page for every service and area\n\nA page called \"Services\" is not enough. A page called \"Emergency boiler repair in Austin\" tells both people and machines exactly what you do and where.\n\n### 3. Answer real questions\n\nCollect the questions customers ask on the phone and write short, direct answers. Put them on the page they belong to, in full sentences. Assistants prefer text that answers a question in the first line.\n\n### 4. Add structured data\n\nMark up your business, services, FAQs and reviews with schema.org data so machines do not have to guess. One analysis of ChatGPT citations found most cited pages carried schema markup, though that figure came from a vendor and was not independently verified. It costs little and it is worth doing.\n\n### 5. Collect and answer reviews\n\nRecent, specific reviews are among the strongest signals. Ask every happy customer, make it a two-click step, and reply to each review in a sentence or two.\n\n### 6. Earn a few trusted mentions\n\nA local newspaper, a trade association or a respected directory is worth more than dozens of weak listings. Ask for a link where you can.\n\n### 7. Let machines read the site\n\nKeep your pages in plain HTML, load fast, and do not hide important text behind scripts or pop-ups. Make sure you are not blocking the crawlers you want.\n\n## How to measure it\n\nThere is no official ranking for AI answers, so measure by testing. Once a month, ask three or four assistants the questions a customer would ask, for example \"best [your service] in [your city]\" and note whether you are named, which sources are cited and what they say about you. Write the results down. The trend matters more than any single answer.\n\n> **Be realistic**\n> No one can guarantee a mention. What you can do is make your business easy to understand, easy to verify and well reviewed, which also helps your normal search results.\n\n## What to avoid\n\nDo not stuff pages with keywords, publish dozens of thin city pages, or buy reviews. They are easy to spot, and they are the kind of signals both search engines and assistants learn to ignore.\n\n[See how we approach AI search visibility](/services/media-growth#ai-search-visibility)\n\n~ Published by Fands, November 2026. Figures are quoted from vendor studies and may change; no client outcome is claimed.",
+  "body": "A customer used to search for a plumber, open three listings and call one. Now a growing share of them ask an assistant: \"Who is a good plumber near me who does emergency calls?\" The assistant answers with one to three names, and the rest of the market is invisible.\n\n## How big is the gap?\n\nA 2026 local visibility index from the vendor [SOCi](https://soci.ai/news/in-ai-driven-discovery-few-brands-are-chosen-most-disappear/), covering about 350,000 locations of 2,751 multi-location brands, reported that AI platforms recommended only a small share of locations: about 1.2% on ChatGPT and 7.4% on Perplexity, compared with about 36% appearing in Google's local pack ([coverage by Search Engine Land](https://searchengineland.com/ai-local-visibility-report-2026-468085)). It is vendor data about large brands, so treat the exact numbers as direction rather than a forecast for one shop. The message is still useful: being found the old way does not guarantee being named in an AI answer.\n\nThe same research reported that the business details assistants repeat are often wrong or incomplete. That is good news for a business that keeps its facts clean, because most competitors do not.\n\n## What assistants lean on\n\nDifferent systems use different sources, and they change over time. Across most of the guidance, the same signals keep appearing:\n\n| Signal | Where it lives | What to do |\n|---|---|---|\n| Your business facts | Website, Google Business Profile, directories | Same name, address, phone, hours and services everywhere |\n| Reviews | Google, Yelp, industry sites | Ask for recent reviews and reply to them |\n| Clear service pages | Your own website | One page per service and area, written in plain language |\n| Questions and answers | Your website | An FAQ that answers what customers actually ask |\n| Structured data | Your website code | Mark up the business, services, FAQs and reviews |\n| Third-party mentions | Local press, associations, directories | A few trusted listings beat many weak ones |\n\n## A seven-step checklist\n\n### 1. Fix the basics\n\nCheck that your name, address, phone and opening hours are identical on your website, your Google Business Profile ([Google’s guide to improving local ranking](https://support.google.com/business/answer/7091)) and the main directories. Small inconsistencies make assistants unsure which version to trust.\n\n### 2. Write a page for every service and area\n\nA page called \"Services\" is not enough. A page called \"Emergency boiler repair in Austin\" tells both people and machines exactly what you do and where.\n\n### 3. Answer real questions\n\nCollect the questions customers ask on the phone and write short, direct answers. Put them on the page they belong to, in full sentences. Assistants prefer text that answers a question in the first line.\n\n### 4. Add structured data\n\nMark up your business, services, FAQs and reviews with [schema.org](https://schema.org/LocalBusiness) data so machines do not have to guess. Google explains the basics in its [introduction to structured data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data). One analysis of ChatGPT citations found most cited pages carried schema markup, though that figure came from a vendor and was not independently verified. It costs little and it is worth doing.\n\n### 5. Collect and answer reviews\n\nRecent, specific reviews are among the strongest signals. Ask every happy customer, make it a two-click step, and reply to each review in a sentence or two.\n\n### 6. Earn a few trusted mentions\n\nA local newspaper, a trade association or a respected directory is worth more than dozens of weak listings. Ask for a link where you can.\n\n### 7. Let machines read the site\n\nKeep your pages in plain HTML, load fast, and do not hide important text behind scripts or pop-ups. Make sure you are not blocking the crawlers you want.\n\n## How to measure it\n\nThere is no official ranking for AI answers, so measure by testing. Once a month, ask three or four assistants the questions a customer would ask, for example \"best [your service] in [your city]\" and note whether you are named, which sources are cited and what they say about you. Write the results down. The trend matters more than any single answer.\n\n> **Be realistic**\n> No one can guarantee a mention. What you can do is make your business easy to understand, easy to verify and well reviewed, which also helps your normal search results.\n\n## What to avoid\n\nDo not stuff pages with keywords, publish dozens of thin city pages, or buy reviews. They are easy to spot, and they are the kind of signals both search engines and assistants learn to ignore.\n\n[See how we approach AI search visibility](/services/media-growth#ai-search-visibility)\n\n~ Published by Fands, November 2026. Figures are quoted from vendor studies and may change; no client outcome is claimed.",
   "date": "2026-11-17",
   "card_cta": "Read the guide",
-  "cover": "/img/insights/get-found-in-ai-answers-local-business.svg"
+  "cover": "/img/insights/get-found-in-ai-answers-local-business.svg",
+  "category": "AI search",
+  "tags": [
+    "AI search",
+    "GEO",
+    "AEO",
+    "local SEO"
+  ],
+  "takeaways": [
+    "AI assistants name only a few local businesses, and ranking well in classic search does not guarantee a mention.",
+    "The signals are mostly basics: consistent business facts, recent reviews, clear service pages, answered questions and structured data.",
+    "Measure by testing real customer questions in several assistants each month and writing down who is named and why.",
+    "The SOCi figures describe large multi-location brands: use them as direction, not as a forecast for one business."
+  ],
+  "faq": [
+    {
+      "q": "Can I pay to be recommended by ChatGPT?",
+      "a": "No. Organic answers have no paid placement. You can make your business easier to find, verify and trust, which is what the checklist above does."
+    },
+    {
+      "q": "Do I need structured data?",
+      "a": "It is not a guarantee, but it removes guesswork for machines and costs little. Mark up the business, services, FAQs and reviews with schema.org."
+    },
+    {
+      "q": "How long until I see results?",
+      "a": "Fixes to business facts and profiles can show up within weeks. Reviews and third-party mentions build over months, so track the same questions every month."
+    }
+  ],
+  "sources": [
+    {
+      "title": "In AI-driven discovery, few brands are chosen and most disappear",
+      "publisher": "SOCi, 2026 Local Visibility Index",
+      "url": "https://soci.ai/news/in-ai-driven-discovery-few-brands-are-chosen-most-disappear/"
+    },
+    {
+      "title": "AI local visibility report 2026",
+      "publisher": "Search Engine Land",
+      "url": "https://searchengineland.com/ai-local-visibility-report-2026-468085"
+    },
+    {
+      "title": "Introduction to structured data markup in Google Search",
+      "publisher": "Google Search Central",
+      "url": "https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data"
+    },
+    {
+      "title": "Tips to improve your local ranking on Google",
+      "publisher": "Google Business Profile Help",
+      "url": "https://support.google.com/business/answer/7091"
+    },
+    {
+      "title": "LocalBusiness",
+      "publisher": "schema.org",
+      "url": "https://schema.org/LocalBusiness"
+    }
+  ]
 }

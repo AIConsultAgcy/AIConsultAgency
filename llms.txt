@@ -46,3 +46,16 @@ Fands sells implementation, not software. Clients start with a free 30-minute ca
 - [Privacy Policy](https://fands.io/privacy): How Fands collects, uses and protects personal information, how to request access or deletion, and the privacy rights of California residents.
 - [Your Privacy Choices & Data Requests](https://fands.io/privacy-choices): Opt out of analytics and the sale or sharing of personal information, and request access to, correction or deletion of your data at Fands.
 - [Terms of Service](https://fands.io/terms): The terms that govern use of fands.io, including content, submissions, disclaimers, limitation of liability and California governing law.
+
+## Field Notes as Markdown
+
+- [Win the job in the first five minutes.](https://fands.io/insights/speed-to-lead-first-five-minutes.md): Why the speed of your first reply decides who gets the job, and a practical plan to answer every new lead in minutes.
+- [How to get your business named in AI answers.](https://fands.io/insights/get-found-in-ai-answers-local-business.md): People now ask ChatGPT and Google for a recommendation. A practical checklist for local businesses to be the answer.
+- [Workflow or AI agent? Pick the simplest thing that works.](https://fands.io/insights/workflow-or-ai-agent.md): Not every problem needs an agent. A plain-English guide to choosing between a workflow and an agent, and why simple usually wins.
+- [How to measure AI ROI without a data team.](https://fands.io/insights/measure-ai-roi-small-business.md): A baseline, one metric and a monthly review. A simple method for proving that an AI project paid for itself.
+- [Keep a person in control: guardrails for AI workflows.](https://fands.io/insights/keep-a-person-in-control-ai-guardrails.md): Six guardrails that stop an AI workflow from doing something you did not intend, and why a document can be an attack.
+- [A weekly content engine for a business with no marketing team.](https://fands.io/insights/weekly-content-engine-no-marketing-team.md): One idea, five formats, one hour a week. How to stay visible with AI drafting and your voice deciding.
+- [Your first AI workflow should be boring.](https://fands.io/insights/first-workflow.md): A practical scorecard for choosing your first AI project, measuring the baseline and deciding whether it earned the next step.
+
+- [All Field Notes, full text](https://fands.io/llms-full.txt)
+- [RSS feed](https://fands.io/feed.xml)
