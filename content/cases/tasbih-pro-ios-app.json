@@ -19,15 +19,15 @@
   ],
   "crumb": "Tasbih Pro iOS app",
   "seo_title": "Tasbih Pro: iOS App Built and Published | Fands",
-  "seo_description": "Fands designed, built and published Tasbih Pro, an iOS app for dhikr and qibla, on the App Store under our own developer profile.",
-  "eyebrow": "PROJECT · DIGITAL DEVELOPMENT · OUR OWN PRODUCT",
+  "seo_description": "Fands designed, built and published Tasbih Pro, an iOS app for dhikr and qibla, on the App Store: design, development and release in one team.",
+  "eyebrow": "PROJECT · DIGITAL DEVELOPMENT · MOBILE",
   "headline_main": "A mobile app",
   "headline_em": "from idea to the App Store.",
-  "lead": "Tasbih Pro is an iOS app for dhikr and qibla that we built and released ourselves. It shows the full cycle we offer for mobile products: design, development, testing and App Store publication.",
+  "lead": "Tasbih Pro is an iOS app for dhikr and qibla that we designed, built and published on the App Store. It shows the full cycle we offer for mobile products: design, development and release.",
   "facts": [
     {
       "label": "Type",
-      "value": "iOS app, our own product"
+      "value": "iOS app, built and published by Fands"
     },
     {
       "label": "Services",
@@ -65,7 +65,7 @@
     }
   ],
   "challenge_title": "A focused app for a daily practice",
-  "challenge": "We wanted a simple companion for daily dhikr that stays out of the way: a counter that works with one tap, the qibla direction and prayer times in the same place, and progress that belongs to the user.\n\nWe took it from idea to a published product under our own developer profile, which also tested our own mobile process end to end.",
+  "challenge": "The goal was a simple companion for daily dhikr that stays out of the way: a counter that works with one tap, the qibla direction and prayer times in the same place, and progress that belongs to the user.\n\nWe took it from idea to a published product, handling design, development and the App Store release through our own developer profile.",
   "built_title": "What we built",
   "built_intro": "A native iPhone app, from the first screen to the App Store listing.",
   "built": [
@@ -107,8 +107,8 @@
       "text": "Publishing an app is more than code: store rules, review, listing text and updates. We have done all of it."
     },
     {
-      "title": "Our own product",
-      "text": "Every decision was ours, so we know what the process costs and where it slows down."
+      "title": "One team end to end",
+      "text": "Design, development and release in one place, so decisions are fast and nothing gets lost between teams."
     },
     {
       "title": "Live on the Store",
@@ -117,5 +117,6 @@
   ],
   "services": [
     "Web & App Development"
-  ]
+  ],
+  "outcomes_intro": "What a real release teaches, and what it means for your product."
 }

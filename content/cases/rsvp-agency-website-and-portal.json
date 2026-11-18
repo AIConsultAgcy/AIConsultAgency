@@ -65,7 +65,7 @@
     }
   ],
   "challenge_title": "From referrals to a system",
-  "challenge": "RSVP Agency is an experiential agency that creates brand experiences, corporate events, weddings and private celebrations across Southern California. It grew through word of mouth and promoted its services mostly locally.\n\nThat works until a five-person team needs to know where each lead stands, who follows up and what to show a client before an event is booked. Leads and conversations lived in inboxes and in people’s heads, and the old website did little to bring in new business.",
+  "challenge": "RSVP Agency is an experiential agency that creates brand experiences, corporate events, weddings and private celebrations across Southern California. It grew through word of mouth and local promotion.\n\nTo keep growing, a five-person team needs a website that works as a sales channel, a clear view of every lead and its next step, and a fast way to show a client what an event could look like before it is booked.",
   "built_title": "What we built",
   "built_intro": "A public website, a CRM and an internal portal that work as one system.",
   "built": [
@@ -96,30 +96,31 @@
     }
   ],
   "ai_title": "AI where it saves creative time",
-  "ai_text": "AI drafts event mockups and examples from a short brief. The team picks, edits and presents what is worth showing, and nothing goes to a client without a person approving it.",
+  "ai_text": "AI drafts event mockups and examples from a short brief. The team picks, edits and presents what is worth showing, so a concept can be in front of the client early in the conversation.",
   "ai_points": [
     "Mockups and examples generated from a short brief",
-    "A person selects and approves every visual",
+    "The team chooses and edits what the client sees",
     "Built into the internal portal, not a separate tool"
   ],
   "outcomes_title": "What it gives the agency",
   "outcomes": [
     {
-      "title": "Found online",
-      "text": "A website that explains the services and brings in inquiries beyond referrals."
+      "title": "A site that sells",
+      "text": "A website that explains the services and turns visitors into inquiries, beyond referrals."
     },
     {
-      "title": "One pipeline",
-      "text": "The whole team sees every lead, its stage and the next step."
+      "title": "No lead gets lost",
+      "text": "Every lead has an owner, a stage and a next step, visible to the whole team."
     },
     {
-      "title": "Faster concepts",
-      "text": "A mockup the client can react to, without building each visual by hand."
+      "title": "A faster pitch",
+      "text": "A mockup the client can react to early, without building each visual by hand."
     }
   ],
   "services": [
     "Web & App Development",
     "Lead-to-Revenue Automation",
     "Custom AI Agents & Apps"
-  ]
+  ],
+  "outcomes_intro": "A website that brings inquiries, a pipeline that keeps them moving and a portal that speeds up the pitch."
 }

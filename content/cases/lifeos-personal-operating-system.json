@@ -5,70 +5,80 @@
   "kind": "project",
   "tag_industry": "Personal productivity",
   "tag_practice": "AI Assistants",
-  "card_title": "A personal OS with an AI Telegram bot.",
-  "card_summary": "Tasks, goals, health and learning in one system, with a web app, a backend and a Telegram bot that briefs and reminds.",
+  "card_title": "An AI second brain in Telegram and Obsidian.",
+  "card_summary": "A web app and a Claude-powered Telegram assistant on an Obsidian knowledge base that never forgets.",
   "card_kpis": [
     {
-      "value": "1",
-      "label": "Knowledge graph across every platform"
+      "value": "Claude",
+      "label": "AI engine behind the assistant"
     },
     {
-      "value": "Daily",
-      "label": "AI briefs, tasks and reminders in Telegram"
+      "value": "Voice",
+      "label": "Voice messages understood in Telegram"
     }
   ],
   "crumb": "LifeOS",
-  "seo_title": "LifeOS: Personal AI Operating System | Fands",
-  "seo_description": "Fands built LifeOS from scratch: a personal system for tasks, goals, health and learning with a web app, a backend and an AI Telegram assistant on an Obsidian knowledge base.",
+  "seo_title": "LifeOS: AI Assistant with Permanent Memory | Fands",
+  "seo_description": "Fands built LifeOS: a web app and a Claude-powered Telegram assistant on an Obsidian knowledge base that remembers everything, plans, listens and analyzes.",
   "eyebrow": "PROJECT · AI ASSISTANTS · CUSTOM BUILD",
-  "headline_main": "A personal OS",
-  "headline_em": "with an AI assistant.",
-  "lead": "LifeOS is a system we built from scratch to track tasks, plans, goals, health, learning and the rest of daily life in one place. A Telegram bot powered by AI briefs the user, assigns tasks and sends reminders, and everything feeds one knowledge graph.",
+  "headline_main": "An AI second brain",
+  "headline_em": "that never forgets.",
+  "lead": "LifeOS is a system we built from scratch that holds tasks, plans, goals, health and learning in one place. An AI agent lives inside an Obsidian knowledge base, so nothing is ever lost, and it works with the user through a web app and a Telegram bot that plans, answers, listens to voice messages and analyzes.",
   "facts": [
     {
       "label": "Type",
-      "value": "Custom system built from scratch"
+      "value": "Custom AI system built from scratch"
     },
     {
       "label": "Services",
-      "value": "Custom AI Agents & Apps · Web & App Development"
+      "value": "Custom AI Agents & Apps · Internal Knowledge Assistant & Analytics · Web & App Development"
     },
     {
       "label": "Delivered",
-      "value": "Backend, web app, Telegram AI assistant, Obsidian knowledge base"
+      "value": "Backend, web app, Telegram assistant, Obsidian knowledge base"
     },
     {
-      "label": "Interface",
-      "value": "Web and Telegram"
+      "label": "AI engine",
+      "value": "Claude API (Anthropic)"
     }
   ],
   "schema_headline": "LifeOS: a personal AI operating system",
   "schema_description": "Fands built a personal system for tasks, goals, health and learning with a backend, a web app, a Telegram AI assistant and an Obsidian knowledge base.",
   "cover": "/img/cases/lifeos-personal-operating-system.jpg",
-  "cover_alt": "LifeOS web app settings screen showing the Telegram bot schedule: morning brief, evening review, weekly review and goal nudges, with a sidebar of tasks, goals, health and areas",
+  "cover_alt": "LifeOS web app settings screen with the Telegram assistant schedule: morning brief, evening review, weekly review and goal nudges, next to a sidebar of tasks, goals, health and areas",
   "highlights": [
+    {
+      "value": "Obsidian",
+      "label": "A permanent memory the agent can always search"
+    },
     {
       "value": "Web + Telegram",
       "label": "A dashboard and a chat, one system"
     },
     {
-      "value": "4",
-      "label": "Scheduled AI touchpoints: morning brief, evening review, weekly review, goal nudges"
-    },
-    {
-      "value": "1",
-      "label": "Knowledge graph in Obsidian"
+      "value": "Claude",
+      "label": "AI engine behind planning, answers and analysis"
     }
   ],
-  "challenge_title": "One place for the whole day",
-  "challenge": "Tasks live in one app, notes in another, health and learning in a third, and none of them talk to each other. The result is constant switching and nothing that sees the whole picture.\n\nWe built a single system from scratch that tracks tasks, plans, goals, health, learning and the rest of daily life, and talks to the user where they already are: in Telegram.",
+  "challenge_title": "One place, and a memory that lasts",
+  "challenge": "Tasks usually live in one app, notes in another, health and learning in a third. Worse, anything that happened months ago is effectively gone: nobody can find it, and no assistant knows it.\n\nWe built one system from scratch with a single long-term memory at its heart, an Obsidian knowledge base, and an AI agent that lives inside it. It talks to the user where they already are: in Telegram.",
   "built_title": "What we built",
-  "built_intro": "A backend, a web app and an AI assistant on one knowledge base.",
+  "built_intro": "A backend, a web app, a Telegram assistant and a knowledge base that ties them together.",
   "built": [
     {
+      "icon": "compass",
+      "title": "A permanent memory in Obsidian",
+      "text": "Every task, note and conversation lands in an Obsidian vault configured across platforms. Nothing is lost, and everything is connected in one knowledge graph."
+    },
+    {
+      "icon": "message",
+      "title": "A Telegram assistant",
+      "text": "Answers questions, plans the day, sets reminders, listens to voice messages and runs analyses. It briefs the user in the morning and reviews the evening and the week."
+    },
+    {
       "icon": "calendar",
-      "title": "Today, upcoming and goals",
-      "text": "A web app with a daily view, upcoming items, all tasks, projects, goals and areas of life."
+      "title": "A web app",
+      "text": "A daily view, upcoming items, all tasks, projects, goals and areas of life, with the same data the bot works with."
     },
     {
       "icon": "heart-pulse",
@@ -76,50 +86,42 @@
       "text": "Health tracking with Apple Health, and a learning area for language study."
     },
     {
-      "icon": "message",
-      "title": "An AI assistant in Telegram",
-      "text": "A bot that briefs the user in the morning, reviews the evening and the week, nudges goals and sends reminders."
-    },
-    {
-      "icon": "compass",
-      "title": "A connected knowledge graph",
-      "text": "An Obsidian vault configured across platforms, so notes, tasks and goals form one connected graph."
+      "icon": "sparkles",
+      "title": "Claude under the hood",
+      "text": "The assistant runs on the Claude API from Anthropic, with the vault as its knowledge and memory."
     },
     {
       "icon": "gauge",
       "title": "Cost control",
       "text": "Daily and monthly limits on the AI budget: the bot refuses model calls past the cap."
-    },
-    {
-      "icon": "key-round",
-      "title": "Your own data",
-      "text": "Everything is stored in plain files the user owns, not in a closed app."
     }
   ],
-  "ai_title": "An assistant that comes to you",
-  "ai_text": "The assistant reads the user’s tasks, plans and notes and turns them into a short briefing, the next tasks and timely reminders. It works with the user’s own data, inside a spending cap, and the user stays in charge of what is planned and done.",
+  "ai_title": "An agent that remembers everything",
+  "ai_text": "The agent lives inside the knowledge base. When the user asks about something from months ago, it searches the vault and finds it, then plans, answers, listens to voice messages and runs analyses on top of that memory. It works with the user’s own data, inside a spending cap.",
   "ai_points": [
-    "Morning brief, evening review and weekly review",
-    "Goal nudges and reminders",
-    "Daily and monthly limits on AI spend"
+    "Long-term memory in Obsidian: nothing gets lost",
+    "Questions, planning, voice messages and analysis",
+    "Claude API with daily and monthly spend caps"
   ],
-  "outcomes_title": "Why it matters for clients",
+  "outcomes_title": "Why it matters for your business",
   "outcomes": [
     {
-      "title": "The same pattern for a business",
-      "text": "One place for the work, an assistant that briefs the team and a knowledge base that stays connected."
+      "title": "A memory that lasts",
+      "text": "Decisions, notes and history stay findable, however long ago they happened."
     },
     {
-      "title": "AI with limits",
-      "text": "Budget caps and a person in control, built in from the start."
+      "title": "An assistant that knows the context",
+      "text": "It answers from your own data, not from guesses."
     },
     {
-      "title": "Foundation for assistants",
-      "text": "This is the base of the assistants we build for companies."
+      "title": "The base for company assistants",
+      "text": "The same design powers internal knowledge assistants we build for businesses."
     }
   ],
   "services": [
     "Custom AI Agents & Apps",
+    "Internal Knowledge Assistant & Analytics",
     "Web & App Development"
-  ]
+  ],
+  "outcomes_intro": "The same pattern works for a team or a company."
 }

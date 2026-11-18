@@ -65,7 +65,7 @@
     }
   ],
   "challenge_title": "Too many sources, too much retyping",
-  "challenge": "Real estate agencies in Saudi Arabia work with many developers and a constant flow of new projects. Information sits in brochures, messages and spreadsheets, so finding what is available, where it is and who sells it takes time.\n\nEvery agency also retypes the same project data, which is slow and leads to mistakes.",
+  "challenge": "Real estate agencies in Saudi Arabia work with many developers and a constant flow of new projects. Keeping track of what is available, where it is and who sells it is a data problem, and entering every project by hand does not scale.\n\nWe built a portal that puts projects on a map, keeps developers and properties in shared databases and loads new project data automatically.",
   "built_title": "What we built",
   "built_intro": "A web portal where agencies find projects by location and work from one shared set of data.",
   "built": [
@@ -87,7 +87,7 @@
     {
       "icon": "sparkles",
       "title": "AI-assisted project import",
-      "text": "New projects are read, structured and added to the database automatically, then checked by a person."
+      "text": "New projects are read by AI, structured and added to the database automatically, instead of being typed in by staff."
     },
     {
       "icon": "users",
@@ -96,30 +96,31 @@
     }
   ],
   "ai_title": "AI removes the typing",
-  "ai_text": "The slow step was entering project data. AI reads incoming project material, extracts the fields that matter and places them in the right records. A person reviews what was added, so the database stays trustworthy.",
+  "ai_text": "The slow step was entering project data. AI reads incoming project material, extracts the fields that matter and places them in the right records, so new projects reach the database without manual typing.",
   "ai_points": [
     "Project material read and structured automatically",
     "Fields placed into the right records",
-    "A person reviews before it goes live"
+    "New projects reach the database without manual typing"
   ],
   "outcomes_title": "What it gives agencies",
   "outcomes": [
     {
-      "title": "One place",
+      "title": "One source of truth",
       "text": "Developers, projects and available properties in a single portal."
     },
     {
-      "title": "Location first",
-      "text": "A map that makes the place the starting point of the search."
+      "title": "Search by place",
+      "text": "A map that makes location the starting point of every search."
     },
     {
-      "title": "Less data entry",
-      "text": "A database that grows without a team typing in every project."
+      "title": "Less manual work",
+      "text": "A database that grows through AI import, not through a team typing in every project."
     }
   ],
   "services": [
     "Web & App Development",
     "Custom AI Agents & Apps",
     "Business Process Automation"
-  ]
+  ],
+  "outcomes_intro": "Faster search for agents and a database that keeps up with the market."
 }
