@@ -67,6 +67,7 @@ collections:
         fields:
           - {name: value, label: Number or word, widget: string}
           - {name: label, label: What it means, widget: string}
+      - {name: challenge_label, label: Starting point, small label (default THE STARTING POINT), widget: string, required: false}
       - {name: challenge_title, label: Starting point, section title, widget: string}
       - {name: challenge, label: Starting point, text (separate paragraphs with a blank line), widget: text}
       - {name: built_title, label: What we built, section title, widget: string, default: What we built}
@@ -79,6 +80,7 @@ collections:
           - {name: icon, label: Icon, widget: select, options: [workflow, plug, code, sparkles, search, globe, building, chart, target, message, clock, pen, shield-check, key-round, users, gauge, calendar, heart-pulse, store, briefcase, megaphone, compass, house], default: sparkles}
           - {name: title, label: Title, widget: string}
           - {name: text, label: Text, widget: text}
+      - {name: ai_label, label: AI section small label (default HOW AI IS USED), widget: string, required: false}
       - {name: ai_title, label: AI section title (leave the AI fields empty if the project has no AI), widget: string, required: false}
       - {name: ai_text, label: AI section text, widget: text, required: false}
       - {label: AI section points, name: ai_points, widget: list, required: false, field: {name: point, label: Point, widget: string}}
