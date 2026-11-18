@@ -357,7 +357,7 @@
 
 /* blog posts: reading progress, section links, current section in the contents list, copy link */
 (function () {
-  var body = document.querySelector('.post-body');
+  var body = document.querySelector('.post-article');
   if (!body) return;
   var bar = document.createElement('div');
   bar.className = 'read-progress'; bar.setAttribute('aria-hidden', 'true'); document.body.appendChild(bar);
@@ -369,7 +369,7 @@
   }
   addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
   update();
-  var heads = document.querySelectorAll('.post-body h2[id], .post-body h3[id], .faq-block h2[id], .sources h2[id]');
+  var heads = document.querySelectorAll('.post-article h2[id], .post-article h3[id], .faq-block h2[id], .sources h2[id]');
   heads.forEach(function (h) {
     var a = document.createElement('a');
     a.className = 'h-anchor'; a.href = '#' + h.id; a.setAttribute('aria-label', 'Link to this section'); a.textContent = '#';

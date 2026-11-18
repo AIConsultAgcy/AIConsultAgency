@@ -438,7 +438,7 @@ def post_page(p):
     if p.get('takeaways'):
         main.append('<aside class="takeaways" aria-labelledby="takeaways-title"><p class="takeaways-title" id="takeaways-title">Key takeaways</p><ul>' +
                     ''.join(f'<li>{inline(esc_keep(t))}</li>' for t in p['takeaways']) + '</ul></aside>')
-    main.append(f'<article class="post-body">\n    {body_html}\n  </article>')
+    main.append(f'<article class="post-article">\n    {body_html}\n  </article>')
     if faq:
         main.append('<section class="faq-block" aria-labelledby="faq"><h2 id="faq">Frequently asked questions</h2>' +
                     ''.join(f'<h3>{esc(f["q"])}</h3><p>{inline(esc_keep(f["a"]))}</p>' for f in faq) + '</section>')
