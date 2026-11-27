@@ -22,8 +22,10 @@ Fands sells implementation, not software. Clients start with a free 30-minute ca
 ## Case studies
 
 - [AI Case Studies for Small Businesses](https://fands.io/case-studies): Projects Fands delivered: a website and CRM for an event agency, a real estate portal with AI import, an iOS app and a personal AI operating system.
+- [EOI: Content, AI Search Visibility and Lead Capture](https://fands.io/case-studies/eoi-leadership-growth-engine): How Fands gave EOI, a leadership coaching and retreats practice, client video proof, AI search visibility, full tracking, a lead magnet and qualified booking.
 - [Estate Saudi: Real Estate Portal with AI Import](https://fands.io/case-studies/estate-saudi-real-estate-portal): Fands built Estate Saudi, a web portal for real estate agencies in Saudi Arabia with an interactive map, a developer database and AI-automated project loading.
 - [LifeOS: AI Assistant with Permanent Memory](https://fands.io/case-studies/lifeos-personal-operating-system): Fands built LifeOS: a web app and a Claude-powered Telegram assistant on an Obsidian knowledge base that remembers everything, plans, listens and analyzes.
+- [Rihla Partners: AI Prospecting and Brief Routing](https://fands.io/case-studies/rihla-partners-pipeline): How Fands built an AI prospecting engine and self-routing brief intake for Rihla Partners, a creator partnerships firm for travel and hospitality brands.
 - [RSVP Agency: Website, CRM and AI Portal](https://fands.io/case-studies/rsvp-agency-website-and-portal): How Fands built an optimized website, a HubSpot CRM with a sales pipeline and an internal AI portal for RSVP Agency, a five-person event agency.
 - [Tasbih Pro: iOS App Built and Published](https://fands.io/case-studies/tasbih-pro-ios-app): Fands designed, built and published Tasbih Pro, an iOS app for dhikr and qibla, on the App Store: design, development and release in one team.
 

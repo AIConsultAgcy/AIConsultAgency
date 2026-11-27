@@ -1,0 +1,126 @@
+{
+  "slug": "eoi-leadership-growth-engine",
+  "order": 5,
+  "feature": false,
+  "kind": "project",
+  "tag_industry": "Leadership coaching",
+  "tag_practice": "Media & Growth",
+  "card_title": "A growth engine for a leadership practice.",
+  "card_summary": "Client video, AI search visibility, a lead magnet and qualified booking for a coaching and retreats firm.",
+  "card_kpis": [
+    {
+      "value": "3",
+      "label": "Client videos live on the homepage"
+    },
+    {
+      "value": "47/100",
+      "label": "AI visibility baseline, tracked monthly"
+    }
+  ],
+  "crumb": "EOI",
+  "seo_title": "EOI: Content, AI Search Visibility and Lead Capture | Fands",
+  "seo_description": "How Fands gave EOI, a leadership coaching and retreats practice, client video proof, AI search visibility, full tracking, a lead magnet and qualified booking.",
+  "eyebrow": "PROJECT · MEDIA & GROWTH · AI SEARCH",
+  "headline_main": "A practice that grew on referrals",
+  "headline_em": "now gets found and chosen.",
+  "lead": "EOI is a leadership coaching, team facilitation and retreats practice founded by Fands co-founder Faris Batayneh. Its site looked good but sold nothing on its own. We added proof, made the firm readable to AI assistants, measured every step and gave visitors a reason to leave their name.",
+  "facts": [
+    {
+      "label": "Industry",
+      "value": "Leadership coaching and retreats"
+    },
+    {
+      "label": "Services",
+      "value": "AI Content Engine · AI Search Visibility (GEO/AEO) · Lead-to-Revenue Automation"
+    },
+    {
+      "label": "Delivered",
+      "value": "Client video section, AI search setup, tracking, lead magnet, qualified booking"
+    },
+    {
+      "label": "Website",
+      "value": "theeoi.com"
+    }
+  ],
+  "schema_headline": "Content, AI search visibility and lead capture for a leadership practice",
+  "schema_description": "Fands added client video proof, GEO and AEO foundations, GA4 and Meta tracking, a lead magnet and a qualified booking flow for EOI.",
+  "cover": "/img/cases/eoi-leadership-growth-engine.jpg",
+  "cover_alt": "EOI homepage Client voices section: three participant videos under the headline What it was like, in their words",
+  "link": {
+    "url": "https://www.theeoi.com",
+    "label": "Visit theeoi.com"
+  },
+  "highlights": [
+    {
+      "value": "3",
+      "label": "Participant videos with captions, filmed at an EOI gathering"
+    },
+    {
+      "value": "llms.txt",
+      "label": "Plus Organization, Person and Service schema for AI assistants"
+    },
+    {
+      "value": "5",
+      "label": "Questions that qualify a call before it reaches the calendar"
+    }
+  ],
+  "challenge_title": "Good work, no proof on the page",
+  "challenge": "EOI wins clients in the room. Online, the site had no testimonials, no way to capture a visitor who was not ready to book, and a bare calendar anyone could fill. An audit scored its visibility to AI assistants at 47 out of 100, and there was no tracking to show what any visitor did.\n\nBuyers of coaching now ask ChatGPT and Google who to hire, then check for proof. EOI needed to be findable, believable and measurable.",
+  "built_title": "What we built",
+  "built_intro": "Proof, visibility, measurement and capture, inside the site the firm already had.",
+  "built": [
+    {
+      "icon": "message",
+      "title": "Client voices",
+      "text": "Three short participant videos, captioned, in a custom section on the homepage. Each play is tracked from start to finish."
+    },
+    {
+      "icon": "sparkles",
+      "title": "AI search visibility",
+      "text": "An llms.txt file, structured data for the firm, its founder and four services, and rewritten titles and descriptions so assistants can describe EOI correctly."
+    },
+    {
+      "icon": "chart",
+      "title": "Full tracking",
+      "text": "Google Analytics 4, a Google Tag Manager container and a Meta pixel, owned by the firm, so every visit, play and form has a number."
+    },
+    {
+      "icon": "target",
+      "title": "A lead magnet",
+      "text": "Before the Offsite, a guide for leaders planning a team retreat, delivered as a PDF in exchange for a name, email and role."
+    },
+    {
+      "icon": "calendar",
+      "title": "Qualified booking",
+      "text": "A five-question form now sits in front of the calendar, so every call arrives with context."
+    }
+  ],
+  "ai_title": "Visible to the assistants buyers ask",
+  "ai_text": "We treated AI assistants as a new front door. The firm, its founder and its services are described in machine-readable form, the site answers the questions buyers actually ask, and the baseline score is tracked so progress is measured, not assumed.",
+  "ai_points": [
+    "llms.txt and schema for the firm, founder and services",
+    "Titles and descriptions written for how buyers ask",
+    "A 47/100 baseline tracked every month"
+  ],
+  "outcomes_title": "Why it matters for your business",
+  "outcomes": [
+    {
+      "title": "Proof before the first call",
+      "text": "Real clients on video do the persuading a homepage cannot."
+    },
+    {
+      "title": "Found where buyers now look",
+      "text": "AI assistants can find, understand and recommend the firm."
+    },
+    {
+      "title": "Every step measured",
+      "text": "From the first visit to the booked call, each step has a number."
+    }
+  ],
+  "services": [
+    "AI Content Engine",
+    "AI Search Visibility (GEO/AEO) + Local SEO",
+    "Lead-to-Revenue Automation"
+  ],
+  "outcomes_intro": "The same system fits any firm that sells expertise and wins on trust."
+}

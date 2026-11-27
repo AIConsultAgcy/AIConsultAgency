@@ -177,10 +177,15 @@ def case_path(c):
 BADGE = ('<span class="cs-badge" aria-hidden="true"><svg viewBox="0 0 64 64" width="22" height="22"><rect y="24" width="40" height="40" fill="#e0e6eb"/><rect x="24" width="40" height="40" fill="#e0e6eb"/><rect x="24" y="24" width="16" height="16" fill="#ff7547"/></svg>FANDS PROJECT</span>')
 
 
+def badge(c):
+    # "badge_bottom": true moves the badge to the bottom right when the cover has text in its top left corner
+    return BADGE.replace('cs-badge', 'cs-badge br', 1) if c.get('badge_bottom') else BADGE
+
+
 def case_card(c):
     feature = ' feature' if c.get('feature') else ''
     kpis = ''.join(f'<div><strong>{esc(k["value"])}</strong><span>{esc(k["label"])}</span></div>' for k in c.get('card_kpis', []))
-    cover = (f'<span class="case-cover"><img {responsive(c["cover"], "(max-width: 767px) 92vw, 33vw")} alt="" width="1600" height="1000" loading="lazy" decoding="async">' + BADGE + '</span>') if c.get('cover') else ''
+    cover = (f'<span class="case-cover"><img {responsive(c["cover"], "(max-width: 767px) 92vw, 33vw")} alt="" width="1600" height="1000" loading="lazy" decoding="async">' + badge(c) + '</span>') if c.get('cover') else ''
     return (f'<a class="case-card{feature}" href="{case_path(c)}">{cover}<div class="tags"><span class="tag">{esc(c["tag_industry"])}</span>'
             f'<span class="tag outline">{esc(c["tag_practice"])}</span></div><h3>{esc(c["card_title"])}</h3><p>{esc(c["card_summary"])}</p>'
             f'<div class="kpis">{kpis}</div><b>Read the case {{{{i:right:15}}}}</b></a>')
@@ -283,7 +288,7 @@ def case_page(c):
 
     if cover:
         cap = f'<figcaption>{esc(c["cover_caption"])}</figcaption>' if c.get('cover_caption') else ''
-        out.append(f'''  <figure class="cs-cover wrap"><div class="cs-frame"><img {responsive(cover, '(max-width: 1100px) 100vw, 1040px')} alt="{esc(c.get('cover_alt', name))}" width="{cw}" height="{ch}" fetchpriority="high" decoding="async">{BADGE}</div>{cap}</figure>''')
+        out.append(f'''  <figure class="cs-cover wrap"><div class="cs-frame"><img {responsive(cover, '(max-width: 1100px) 100vw, 1040px')} alt="{esc(c.get('cover_alt', name))}" width="{cw}" height="{ch}" fetchpriority="high" decoding="async">{badge(c)}</div>{cap}</figure>''')
 
     stats = c.get('highlights') or c.get('card_kpis') or []
     if stats:

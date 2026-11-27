@@ -1,0 +1,69 @@
+{
+  "slug": "rihla-partners-pipeline",
+  "order": 6,
+  "feature": false,
+  "badge_bottom": true,
+  "kind": "project",
+  "tag_industry": "Travel and hospitality partnerships",
+  "tag_practice": "AI Operations",
+  "card_title": "A pipeline that finds its own leads.",
+  "card_summary": "AI agents watch for hotel openings and route launches, find the contact and draft the first note. Inbound briefs route themselves.",
+  "card_kpis": [
+    { "value": "16", "label": "Prospects found from public trigger events" },
+    { "value": "8", "label": "Outreach drafts ready for approval" }
+  ],
+  "crumb": "Rihla Partners",
+  "seo_title": "Rihla Partners: AI Prospecting and Brief Routing | Fands",
+  "seo_description": "How Fands built an AI prospecting engine and self-routing brief intake for Rihla Partners, a creator partnerships firm for travel and hospitality brands.",
+  "eyebrow": "PROJECT · AI OPERATIONS · LEAD TO REVENUE",
+  "headline_main": "A partnerships firm",
+  "headline_em": "with a pipeline that fills itself.",
+  "lead": "Rihla Partners connects travel and hospitality brands with creators, founded by Fands co-founder Faris Batayneh. Its best prospects announce themselves: a hotel opens, an airline launches a route. We built agents that catch those moments, find the right person and draft the first note, plus an intake that sorts every inbound brief.",
+  "facts": [
+    { "label": "Industry", "value": "Creator partnerships for travel and hospitality" },
+    { "label": "Services", "value": "Lead-to-Revenue Automation · Business Process Automation · Custom AI Agents & Apps" },
+    { "label": "Delivered", "value": "Prospecting agents, pipeline ledger, brief intake with routing and auto-reply" },
+    { "label": "Website", "value": "rihlapartners.com" }
+  ],
+  "schema_headline": "AI prospecting and brief routing for a travel partnerships firm",
+  "schema_description": "Fands built agents that find prospects from public trigger events, verify contacts and draft outreach, plus a brief intake that routes and answers itself.",
+  "cover": "/img/cases/rihla-partners-pipeline.jpg",
+  "cover_alt": "The Rihla prospect radar: trigger events such as resort openings and new air routes, each with a score, a contact status and a drafted first note",
+  "link": { "url": "https://rihlapartners.com", "label": "Visit rihlapartners.com" },
+  "highlights": [
+    { "value": "16", "label": "Prospects found, each tied to a dated public event" },
+    { "value": "8", "label": "First notes drafted and waiting for a yes" },
+    { "value": "2", "label": "Budget bands flagged for a same-day reply" }
+  ],
+  "challenge_title": "The right moment, every week",
+  "challenge": "A hotel that just reopened or an airline that just launched a route needs content now. That is the best moment to pitch a creator partnership, and it passes in weeks. Spotting those moments by hand means reading trade news every day, then hunting for a marketing contact that is rarely published.\n\nOn the other side, inbound briefs arrived as plain form emails, with no way to tell a large budget from a small one or to answer the sender while they waited.",
+  "built_title": "What we built",
+  "built_intro": "Outbound that finds its own leads, and inbound that sorts itself.",
+  "built": [
+    { "icon": "search", "title": "A trigger radar", "text": "Every week an agent scans for openings, renovations, route launches and campaigns, and keeps only events from the last 30 days with a public source." },
+    { "icon": "target", "title": "Scoring", "text": "Each prospect gets a score out of ten with the reason written down, so the strongest fits rise to the top." },
+    { "icon": "users", "title": "Contact finding", "text": "A second pass checks the event and looks for the right marketing or press contact on the brand's own pages." },
+    { "icon": "pen", "title": "Drafted first notes", "text": "Outreach is drafted around the event itself and saved as a draft. Nothing is sent without approval." },
+    { "icon": "workflow", "title": "A pipeline ledger", "text": "One running record of every thread: status, date, contact, event, score and next step, with repeats suppressed." },
+    { "icon": "mail", "title": "Self-routing briefs", "text": "Inbound briefs reach the inbox with every field laid out, larger budgets are flagged PRIORITY, and the sender gets an instant reply with the most relevant case study." }
+  ],
+  "ai_title": "Agents find the moment. A person sends the note.",
+  "ai_text": "The agents do the reading, scoring, contact hunting and first drafts. The founder reviews a short list and approves what goes out. Every prospect carries the source of its trigger event, so nothing rests on a guess.",
+  "ai_points": [
+    "Weekly scans for openings, launches and campaigns",
+    "A score and a written reason for every prospect",
+    "Drafts only: a person approves every send"
+  ],
+  "outcomes_title": "Why it matters for your business",
+  "outcomes": [
+    { "title": "Pitch at the right moment", "text": "Reach out while the news is fresh, not months later." },
+    { "title": "Prospecting without the hours", "text": "The reading and research happen before you sit down." },
+    { "title": "No inbound left waiting", "text": "Big briefs are flagged, and every sender hears back at once." }
+  ],
+  "services": [
+    "Lead-to-Revenue Automation",
+    "Business Process Automation",
+    "Custom AI Agents & Apps"
+  ],
+  "outcomes_intro": "The same engine fits any firm whose buyers announce when they need help."
+}
